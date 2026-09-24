@@ -1,0 +1,136 @@
+/* =========================================================
+   GEONEXUS — FRIENDLY BUTTON SYSTEM
+   Loaded last so shared interaction rules stay consistent
+   ========================================================= */
+
+:where(button, a[role="button"], input[type="button"], input[type="submit"], input[type="reset"]) {
+    -webkit-tap-highlight-color: transparent;
+}
+
+:where(button, a[role="button"]) {
+    min-height: 42px;
+    line-height: 1.2;
+    text-align: center;
+}
+
+:where(button, a[role="button"]):focus-visible {
+    outline: 3px solid rgba(var(--primary-rgb), 0.28);
+    outline-offset: 3px;
+}
+
+:where(button, a[role="button"]):disabled,
+:where(button, a[role="button"])[aria-disabled="true"] {
+    cursor: not-allowed;
+    filter: saturate(0.65);
+}
+
+/* Shared variants used across pages. */
+:where(.btn, .btn-primary, .btn-secondary, .btn-success, .btn-warning, .btn-danger, .btn-info, .btn-outline, .btn-ghost) {
+    min-height: 42px;
+    padding: 10px 18px;
+    gap: 8px;
+    border-radius: 12px;
+    font-size: 0.875rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+:where(.btn-sm, .btn-small) {
+    min-height: 36px;
+    padding: 8px 13px;
+    gap: 6px;
+    border-radius: 10px;
+    font-size: 0.8125rem;
+}
+
+:where(.btn-lg, .btn-large) {
+    min-height: 48px;
+    padding: 13px 22px;
+    gap: 9px;
+    border-radius: 14px;
+    font-size: 0.9375rem;
+}
+
+:where(.btn-xl) {
+    min-height: 54px;
+    padding: 15px 26px;
+    border-radius: 15px;
+    font-size: 1rem;
+}
+
+:where(.btn-icon, .icon-button, .ai-icon-btn, .icon-danger-button) {
+    width: 42px;
+    min-width: 42px;
+    height: 42px;
+    min-height: 42px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    border-radius: 12px;
+}
+
+:where(.btn-icon.btn-sm, .icon-button.btn-sm) {
+    width: 36px;
+    min-width: 36px;
+    height: 36px;
+    min-height: 36px;
+}
+
+:where(.btn-icon.btn-lg, .icon-button.btn-lg) {
+    width: 48px;
+    min-width: 48px;
+    height: 48px;
+    min-height: 48px;
+}
+
+:where(button, a[role="button"]) svg {
+    width: 1.1em;
+    height: 1.1em;
+    flex: 0 0 auto;
+}
+
+:where(.btn, .btn-primary, .btn-secondary, .btn-success, .btn-warning, .btn-danger, .btn-info, .btn-outline, .btn-ghost) svg {
+    width: 1.05em;
+    height: 1.05em;
+}
+
+:where(.btn-full-width, .btn-block) {
+    width: 100%;
+}
+
+/* Keep actions usable on narrow screens without overflowing cards. */
+:where(.button-group, .btn-group, .form-actions, .modal-actions, .cta-buttons, .hero-actions) {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+@media (max-width: 640px) {
+    :where(.button-group, .btn-group, .form-actions, .modal-actions, .cta-buttons, .hero-actions) {
+        width: 100%;
+    }
+
+    :where(.button-group, .btn-group, .form-actions, .modal-actions, .cta-buttons, .hero-actions) > :where(button, a[role="button"]) {
+        flex: 0 1 auto;
+        width: 100%;
+        max-width: 360px;
+        height: auto;
+    }
+
+    :where(.btn, .btn-primary, .btn-secondary, .btn-success, .btn-warning, .btn-danger, .btn-info, .btn-outline, .btn-ghost):not(.btn-icon) {
+        min-height: 44px;
+    }
+
+    :where(.btn-lg, .btn-large, .btn-xl):not(.btn-icon) {
+        min-height: 48px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    :where(button, a[role="button"]) {
+        transition-duration: 0.01ms !important;
+    }
+}

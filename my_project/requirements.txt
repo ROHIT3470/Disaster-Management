@@ -1,0 +1,6 @@
+earthaccess
+google-genai
+Pillow
+pymongo
+requests
+tqdm

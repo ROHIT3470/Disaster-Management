@@ -1,0 +1,1514 @@
+/* =========================================================
+   GEONEXUS — PREMIUM DASHBOARD PAGE
+   AURORA COMMAND COLOR REFRESH
+   Interactive • Animated • Responsive • Enterprise UI
+   ========================================================= */
+
+/* =========================================================
+   COLOR TOKENS
+   ========================================================= */
+
+:root {
+    --gx-cyan: #06b6d4;
+    --gx-cyan-dark: #0891b2;
+    --gx-cyan-soft: rgba(6, 182, 212, 0.12);
+
+    --gx-teal: #14b8a6;
+    --gx-teal-dark: #0f766e;
+    --gx-teal-soft: rgba(20, 184, 166, 0.12);
+
+    --gx-violet: #8b5cf6;
+    --gx-violet-dark: #7c3aed;
+    --gx-violet-soft: rgba(139, 92, 246, 0.12);
+
+    --gx-emerald: #10b981;
+    --gx-emerald-dark: #059669;
+
+    --gx-amber: #f59e0b;
+    --gx-amber-dark: #d97706;
+
+    --gx-rose: #f43f5e;
+    --gx-rose-dark: #e11d48;
+
+    --gx-navy: #0f172a;
+    --gx-slate: #334155;
+    --gx-muted: #64748b;
+
+    --gx-gradient-primary:
+        linear-gradient(135deg, #06b6d4 0%, #14b8a6 48%, #8b5cf6 100%);
+
+    --gx-gradient-dark:
+        linear-gradient(135deg, #0f172a 0%, #164e63 48%, #312e81 100%);
+
+    --gx-gradient-success:
+        linear-gradient(135deg, #10b981, #06b6d4);
+
+    --gx-gradient-warning:
+        linear-gradient(135deg, #f59e0b, #f97316);
+
+    --gx-gradient-danger:
+        linear-gradient(135deg, #f43f5e, #be123c);
+
+    --gx-dashboard-glow:
+        0 0 30px rgba(6, 182, 212, 0.12),
+        0 0 55px rgba(139, 92, 246, 0.07);
+}
+
+/* =========================================================
+   DASHBOARD PAGE ROOT
+   ========================================================= */
+
+.dashboard-page,
+.dashboard-content {
+    position: relative;
+    isolation: isolate;
+}
+
+.dashboard-page::before,
+.dashboard-content::before {
+    content: "";
+
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(circle at 85% 10%,
+            rgba(6, 182, 212, 0.075),
+            transparent 28%),
+        radial-gradient(circle at 10% 80%,
+            rgba(139, 92, 246, 0.055),
+            transparent 30%),
+        radial-gradient(circle at 50% 45%,
+            rgba(20, 184, 166, 0.025),
+            transparent 38%);
+}
+
+/* =========================================================
+   THREAT ADVISORY BANNER
+   ========================================================= */
+
+.threat-advisory-banner {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: var(--spacing-xl);
+    padding: var(--spacing-xl);
+    margin-bottom: var(--spacing-2xl);
+
+    overflow: hidden;
+
+    border-radius: var(--radius-xl);
+
+    backdrop-filter: blur(14px);
+
+    box-shadow:
+        0 8px 28px rgba(15, 23, 42, 0.08);
+
+    animation:
+        dashboardSlideDown 0.55s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.threat-advisory-banner::before {
+    content: "";
+
+    position: absolute;
+    top: 0;
+    left: -120%;
+
+    width: 80%;
+    height: 100%;
+
+    pointer-events: none;
+
+    background:
+        linear-gradient(90deg,
+            transparent,
+            rgba(255, 255, 255, 0.38),
+            transparent);
+
+    transform: skewX(-20deg);
+
+    animation:
+        advisoryShimmer 5s ease-in-out infinite;
+}
+
+@keyframes advisoryShimmer {
+
+    0%,
+    55% {
+        left: -120%;
+    }
+
+    75%,
+    100% {
+        left: 140%;
+    }
+}
+
+/* =========================================================
+   CRITICAL ADVISORY — ROSE / MAGENTA
+   ========================================================= */
+
+.threat-advisory-banner.critical {
+    background:
+        linear-gradient(135deg,
+            rgba(244, 63, 94, 0.12),
+            rgba(190, 24, 93, 0.07));
+
+    border:
+        1px solid rgba(244, 63, 94, 0.30);
+
+    border-left:
+        4px solid var(--gx-rose);
+
+    box-shadow:
+        0 8px 30px rgba(244, 63, 94, 0.10),
+        inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+/* =========================================================
+   WARNING ADVISORY — AMBER / ORANGE
+   ========================================================= */
+
+.threat-advisory-banner.warning {
+    background:
+        linear-gradient(135deg,
+            rgba(245, 158, 11, 0.12),
+            rgba(249, 115, 22, 0.07));
+
+    border:
+        1px solid rgba(245, 158, 11, 0.30);
+
+    border-left:
+        4px solid var(--gx-amber);
+
+    box-shadow:
+        0 8px 30px rgba(245, 158, 11, 0.09),
+        inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+/* =========================================================
+   ADVISORY CONTENT
+   ========================================================= */
+
+.advisory-left {
+    position: relative;
+    z-index: 1;
+
+    display: flex;
+    align-items: flex-start;
+
+    gap: var(--spacing-lg);
+
+    flex: 1;
+    min-width: 0;
+}
+
+.advisory-pulse-icon {
+    position: relative;
+
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    background:
+        linear-gradient(135deg,
+            rgba(244, 63, 94, 0.16),
+            rgba(139, 92, 246, 0.10));
+
+    border:
+        1px solid rgba(244, 63, 94, 0.24);
+
+    border-radius: var(--radius-lg);
+
+    box-shadow:
+        0 0 0 5px rgba(244, 63, 94, 0.04),
+        0 8px 22px rgba(244, 63, 94, 0.10);
+
+    animation:
+        advisoryIconPulse 2s ease-in-out infinite;
+}
+
+.advisory-pulse-icon::after {
+    content: "";
+
+    position: absolute;
+    inset: -5px;
+
+    border:
+        1px solid rgba(244, 63, 94, 0.25);
+
+    border-radius: inherit;
+
+    animation:
+        advisoryRing 2s ease-out infinite;
+}
+
+@keyframes advisoryIconPulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.04);
+    }
+}
+
+@keyframes advisoryRing {
+    0% {
+        opacity: 0.7;
+        transform: scale(0.9);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(1.25);
+    }
+}
+
+.siren-pulse-fast {
+    color: var(--gx-rose);
+
+    animation:
+        sirenPulse 0.85s ease-in-out infinite;
+}
+
+@keyframes sirenPulse {
+
+    0%,
+    100% {
+        transform: rotate(-8deg) scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: rotate(8deg) scale(1.1);
+        opacity: 0.75;
+    }
+}
+
+.advisory-text {
+    display: flex;
+    flex-direction: column;
+
+    gap: var(--spacing-sm);
+
+    min-width: 0;
+}
+
+.advisory-title-row {
+    display: flex;
+    align-items: center;
+
+    gap: var(--spacing-md);
+
+    flex-wrap: wrap;
+}
+
+.threat-tag {
+    padding: 4px 10px;
+
+    border-radius: 5px;
+
+    font-size: 10px;
+    font-weight: 750;
+
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+
+    white-space: nowrap;
+
+    box-shadow:
+        0 3px 8px rgba(15, 23, 42, 0.10);
+
+    animation:
+        tagAppear 0.5s ease 0.2s both;
+}
+
+@keyframes tagAppear {
+    from {
+        opacity: 0;
+        transform: translateY(-4px) scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.threat-tag.red {
+    background:
+        linear-gradient(135deg,
+            #f43f5e,
+            #be123c);
+
+    color: white;
+
+    box-shadow:
+        0 5px 15px rgba(244, 63, 94, 0.22);
+}
+
+.advisory-title-row strong {
+    color: var(--gray-900);
+
+    font-size: 15px;
+    font-weight: 750;
+}
+
+.advisory-text p {
+    color: var(--gray-600);
+
+    font-size: 13px;
+    line-height: 1.65;
+
+    margin: 0;
+}
+
+.advisory-actions {
+    position: relative;
+    z-index: 2;
+
+    display: flex;
+
+    gap: var(--spacing-md);
+
+    flex-shrink: 0;
+}
+
+/* =========================================================
+   ADVISORY BUTTONS
+   ========================================================= */
+
+.advisory-btn {
+    position: relative;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    padding: 10px 16px;
+
+    border-radius: var(--radius-lg);
+
+    font-size: 13px;
+    font-weight: 650;
+
+    cursor: pointer;
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    transition:
+        transform var(--transition-sm),
+        box-shadow var(--transition-sm),
+        background var(--transition-sm),
+        border-color var(--transition-sm),
+        color var(--transition-sm);
+}
+
+.advisory-btn::before {
+    content: "";
+
+    position: absolute;
+    top: 0;
+    left: -100%;
+
+    width: 70%;
+    height: 100%;
+
+    background:
+        linear-gradient(90deg,
+            transparent,
+            rgba(255, 255, 255, 0.30),
+            transparent);
+
+    transform: skewX(-20deg);
+
+    transition:
+        left 0.55s ease;
+}
+
+.advisory-btn:hover::before {
+    left: 140%;
+}
+
+.advisory-btn:hover {
+    transform: translateY(-2px);
+}
+
+.advisory-btn:active {
+    transform: translateY(0) scale(0.97);
+}
+
+.advisory-btn.primary {
+    background:
+        var(--gx-gradient-primary);
+
+    color: white;
+
+    border: 1px solid rgba(255, 255, 255, 0.12);
+
+    box-shadow:
+        0 5px 18px rgba(6, 182, 212, 0.24),
+        0 5px 20px rgba(139, 92, 246, 0.12);
+}
+
+.advisory-btn.primary:hover {
+    box-shadow:
+        0 9px 26px rgba(6, 182, 212, 0.30),
+        0 9px 28px rgba(139, 92, 246, 0.18);
+}
+
+.advisory-btn.secondary {
+    background:
+        rgba(255, 255, 255, 0.92);
+
+    border:
+        1px solid var(--gray-300);
+
+    color: var(--gray-700);
+}
+
+.advisory-btn.secondary:hover {
+    background: white;
+
+    border-color:
+        rgba(6, 182, 212, 0.40);
+
+    color:
+        var(--gx-teal-dark);
+
+    box-shadow:
+        0 5px 18px rgba(6, 182, 212, 0.10);
+}
+
+/* =========================================================
+   MISSION OVERVIEW PANEL
+   ========================================================= */
+
+.mission-overview-panel {
+    position: relative;
+
+    background:
+        linear-gradient(145deg,
+            #ffffff 0%,
+            #f0fdfa 62%,
+            #f5f3ff 100%);
+
+    border:
+        1px solid rgba(203, 213, 225, 0.90);
+
+    border-radius: var(--radius-xl);
+
+    padding: var(--spacing-2xl);
+
+    margin-bottom: var(--spacing-2xl);
+
+    box-shadow:
+        var(--shadow-md);
+
+    overflow: hidden;
+
+    animation:
+        dashboardFadeUp 0.55s ease 0.08s both;
+}
+
+.mission-overview-panel::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 3px;
+
+    background:
+        linear-gradient(90deg,
+            #06b6d4,
+            #14b8a6,
+            #8b5cf6);
+
+    background-size: 200% 100%;
+
+    animation:
+        auroraBar 8s ease-in-out infinite;
+}
+
+@keyframes auroraBar {
+
+    0%,
+    100% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+.mission-overview-panel::after {
+    content: "";
+
+    position: absolute;
+
+    width: 220px;
+    height: 220px;
+
+    top: -130px;
+    right: -100px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(circle,
+            rgba(6, 182, 212, 0.13),
+            rgba(139, 92, 246, 0.06),
+            transparent 70%);
+
+    pointer-events: none;
+}
+
+.overview-copy {
+    position: relative;
+    z-index: 1;
+
+    margin-bottom: var(--spacing-xl);
+}
+
+.eyebrow-tag {
+    display: block;
+
+    font-size: 11px;
+    font-weight: 750;
+
+    color: var(--gx-teal-dark);
+
+    text-transform: uppercase;
+    letter-spacing: 1.1px;
+
+    margin-bottom: var(--spacing-sm);
+}
+
+.overview-copy h2 {
+    font-size: 24px;
+    line-height: 1.25;
+
+    color: var(--gray-900);
+
+    margin-bottom: var(--spacing-md);
+
+    letter-spacing: -0.4px;
+}
+
+.overview-copy p {
+    max-width: 900px;
+
+    color: var(--gray-600);
+
+    font-size: 15px;
+    line-height: 1.75;
+}
+
+.overview-metrics {
+    position: relative;
+    z-index: 1;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(180px, 1fr));
+
+    gap: var(--spacing-lg);
+
+    margin-top: var(--spacing-xl);
+}
+
+.overview-metric-card {
+    position: relative;
+
+    min-height: 105px;
+
+    padding: var(--spacing-lg);
+
+    background:
+        linear-gradient(135deg,
+            #f8fafc,
+            #ffffff);
+
+    border:
+        1px solid var(--gray-200);
+
+    border-radius: var(--radius-lg);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    gap: var(--spacing-sm);
+
+    overflow: hidden;
+
+    transition:
+        transform var(--transition-sm),
+        box-shadow var(--transition-sm),
+        border-color var(--transition-sm);
+}
+
+.overview-metric-card::before {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    bottom: 0;
+
+    width: 100%;
+    height: 3px;
+
+    background:
+        linear-gradient(90deg,
+            #06b6d4,
+            #14b8a6,
+            #8b5cf6);
+
+    transform: scaleX(0);
+
+    transform-origin: left;
+
+    transition:
+        transform 0.35s ease;
+}
+
+.overview-metric-card:hover {
+    transform: translateY(-5px);
+
+    box-shadow:
+        var(--gx-dashboard-glow);
+
+    border-color:
+        rgba(6, 182, 212, 0.35);
+}
+
+.overview-metric-card:hover::before {
+    transform: scaleX(1);
+}
+
+.overview-metric-card strong {
+    font-size: 24px;
+    font-weight: 750;
+    line-height: 1.1;
+
+    color: var(--gray-900);
+}
+
+.overview-metric-card span {
+    font-size: 12px;
+    font-weight: 650;
+
+    color: var(--gray-600);
+}
+
+/* =========================================================
+   EMPHASIS METRIC — AURORA
+   ========================================================= */
+
+.overview-metric-card.emphasis {
+    background:
+        var(--gx-gradient-primary);
+
+    border: none;
+
+    color: white;
+
+    box-shadow:
+        0 8px 24px rgba(6, 182, 212, 0.18),
+        0 8px 25px rgba(139, 92, 246, 0.10);
+}
+
+.overview-metric-card.emphasis::before {
+    background:
+        rgba(255, 255, 255, 0.72);
+}
+
+.overview-metric-card.emphasis strong,
+.overview-metric-card.emphasis span {
+    color: white;
+}
+
+.overview-metric-card.emphasis:hover {
+    box-shadow:
+        0 14px 34px rgba(6, 182, 212, 0.24),
+        0 14px 36px rgba(139, 92, 246, 0.16);
+}
+
+/* =========================================================
+   RESPONSE OPERATIONS PANEL
+   ========================================================= */
+
+.response-operations-panel {
+    position: relative;
+
+    background:
+        linear-gradient(145deg,
+            #ffffff,
+            #f8fafc);
+
+    border:
+        1px solid rgba(203, 213, 225, 0.90);
+
+    border-radius: var(--radius-xl);
+
+    padding: var(--spacing-2xl);
+
+    margin-bottom: var(--spacing-2xl);
+
+    box-shadow:
+        var(--shadow-md);
+
+    overflow: hidden;
+
+    animation:
+        dashboardFadeUp 0.55s ease 0.18s both;
+}
+
+.response-operations-panel::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 3px;
+
+    background:
+        linear-gradient(90deg,
+            #10b981,
+            #06b6d4,
+            #8b5cf6);
+}
+
+.response-header {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: var(--spacing-lg);
+
+    margin-bottom: var(--spacing-xl);
+}
+
+.response-header h3 {
+    font-size: 18px;
+
+    color: var(--gray-900);
+
+    font-weight: 750;
+}
+
+.card-action-link {
+    display: inline-flex;
+    align-items: center;
+
+    gap: var(--spacing-sm);
+
+    font-size: 13px;
+    font-weight: 650;
+
+    color: var(--gx-teal-dark);
+
+    transition:
+        gap var(--transition-sm),
+        color var(--transition-sm),
+        transform var(--transition-sm);
+}
+
+.card-action-link:hover {
+    gap: var(--spacing-md);
+
+    color:
+        var(--gx-cyan-dark);
+
+    transform: translateX(2px);
+}
+
+/* =========================================================
+   RESPONSE WORKFLOW
+   ========================================================= */
+
+.response-workflow-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(260px, 1fr));
+
+    gap: var(--spacing-lg);
+}
+
+.workflow-step {
+    position: relative;
+
+    min-height: 105px;
+
+    padding: var(--spacing-lg);
+
+    background:
+        linear-gradient(135deg,
+            #f8fafc,
+            #ffffff);
+
+    border:
+        1px solid var(--gray-200);
+
+    border-radius: var(--radius-lg);
+
+    display: flex;
+
+    gap: var(--spacing-lg);
+
+    overflow: hidden;
+
+    transition:
+        transform var(--transition-sm),
+        background var(--transition-sm),
+        border-color var(--transition-sm),
+        box-shadow var(--transition-sm);
+}
+
+.workflow-step::after {
+    content: "";
+
+    position: absolute;
+
+    width: 90px;
+    height: 90px;
+
+    right: -35px;
+    bottom: -45px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(circle,
+            rgba(6, 182, 212, 0.10),
+            rgba(139, 92, 246, 0.05),
+            transparent 70%);
+
+    transition:
+        transform 0.45s ease;
+}
+
+.workflow-step:hover {
+    background:
+        linear-gradient(135deg,
+            #ffffff,
+            #f0fdfa);
+
+    border-color:
+        rgba(6, 182, 212, 0.30);
+
+    transform:
+        translateY(-4px);
+
+    box-shadow:
+        var(--gx-dashboard-glow);
+}
+
+.workflow-step:hover::after {
+    transform: scale(1.7);
+}
+
+.step-icon {
+    position: relative;
+    z-index: 1;
+
+    width: 44px;
+    height: 44px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: var(--radius-lg);
+
+    flex-shrink: 0;
+
+    color: white;
+    font-weight: 650;
+
+    box-shadow:
+        0 6px 16px rgba(15, 23, 42, 0.12);
+
+    transition:
+        transform var(--transition-sm),
+        box-shadow var(--transition-sm);
+}
+
+.workflow-step:hover .step-icon {
+    transform:
+        translateY(-2px) rotate(-3deg) scale(1.04);
+}
+
+/* =========================================================
+   WORKFLOW COLOR VARIANTS
+   ========================================================= */
+
+.step-icon.blue {
+    background:
+        linear-gradient(135deg,
+            #06b6d4,
+            #0891b2);
+
+    box-shadow:
+        0 7px 18px rgba(6, 182, 212, 0.20);
+}
+
+.step-icon.amber {
+    background:
+        linear-gradient(135deg,
+            #f59e0b,
+            #f97316);
+
+    box-shadow:
+        0 7px 18px rgba(245, 158, 11, 0.20);
+}
+
+.step-icon.emerald {
+    background:
+        linear-gradient(135deg,
+            #10b981,
+            #059669);
+
+    box-shadow:
+        0 7px 18px rgba(16, 185, 129, 0.20);
+}
+
+.step-icon.violet {
+    background:
+        linear-gradient(135deg,
+            #8b5cf6,
+            #7c3aed);
+
+    box-shadow:
+        0 7px 18px rgba(139, 92, 246, 0.20);
+}
+
+.workflow-step strong {
+    position: relative;
+    z-index: 1;
+
+    display: block;
+
+    margin-bottom: 4px;
+
+    font-size: 14px;
+
+    color: var(--gray-900);
+
+    font-weight: 700;
+}
+
+.workflow-step p {
+    position: relative;
+    z-index: 1;
+
+    margin: 0;
+
+    font-size: 12px;
+    line-height: 1.55;
+
+    color: var(--gray-600);
+}
+
+/* =========================================================
+   RISK GRID
+   ========================================================= */
+
+.risk-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(280px, 1fr));
+
+    gap: var(--spacing-xl);
+
+    margin-bottom: var(--spacing-2xl);
+
+    animation:
+        dashboardFadeUp 0.55s ease 0.25s both;
+}
+
+/* =========================================================
+   DASHBOARD GRID PRO
+   ========================================================= */
+
+.dashboard-grid-pro {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 2fr) minmax(300px, 1fr);
+
+    gap: var(--spacing-xl);
+
+    margin-bottom: var(--spacing-2xl);
+
+    animation:
+        dashboardFadeUp 0.55s ease 0.3s both;
+}
+
+.dash-col-left,
+.dash-col-right {
+    display: flex;
+    flex-direction: column;
+
+    gap: var(--spacing-xl);
+
+    min-width: 0;
+}
+
+/* =========================================================
+   LIVE MAP — DEEP OBSIDIAN / CYAN
+   ========================================================= */
+
+.dashboard-live-map-wrap {
+    position: relative;
+
+    margin-top: var(--spacing-lg);
+
+    min-height: 420px;
+
+    border-radius: var(--radius-xl);
+
+    overflow: hidden;
+
+    border:
+        1px solid rgba(6, 182, 212, 0.20);
+
+    background:
+        linear-gradient(135deg,
+            #020617 0%,
+            #0f172a 48%,
+            #172554 100%);
+
+    box-shadow:
+        0 12px 32px rgba(15, 23, 42, 0.18),
+        0 0 40px rgba(6, 182, 212, 0.06);
+
+    transition:
+        box-shadow var(--transition-sm),
+        transform var(--transition-sm);
+}
+
+.dashboard-live-map-wrap:hover {
+    box-shadow:
+        0 18px 46px rgba(15, 23, 42, 0.25),
+        0 0 42px rgba(6, 182, 212, 0.10);
+}
+
+.dashboard-live-map-wrap::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    pointer-events: none;
+
+    z-index: 5;
+
+    border:
+        1px solid rgba(6, 182, 212, 0.15);
+
+    border-radius: inherit;
+
+    box-shadow:
+        inset 0 0 35px rgba(6, 182, 212, 0.035);
+}
+
+.live-server-map-card {
+    position: relative;
+
+    overflow: hidden;
+
+    height: 100%;
+}
+
+.dashboard-live-map-wrap .gis-map-card {
+    height: 100%;
+
+    border-radius: 0;
+
+    border: none;
+
+    background:
+        rgba(2, 6, 23, 0.96);
+
+    box-shadow: none;
+}
+
+.dashboard-live-map-wrap .gis-map-frame {
+    min-height: 360px;
+}
+
+.dashboard-live-map-wrap .leaflet-map-root {
+    min-height: 360px;
+
+    height: 100%;
+}
+
+/* =========================================================
+   MAP LOADING EFFECT
+   ========================================================= */
+
+.dashboard-live-map-wrap.loading,
+.dashboard-live-map-wrap.is-loading {
+    background:
+        linear-gradient(90deg,
+            #020617 20%,
+            #164e63 42%,
+            #312e81 55%,
+            #020617 80%);
+
+    background-size: 400% 100%;
+
+    animation:
+        mapSkeleton 1.7s ease infinite;
+}
+
+@keyframes mapSkeleton {
+    0% {
+        background-position: 100% 0;
+    }
+
+    100% {
+        background-position: -100% 0;
+    }
+}
+
+/* =========================================================
+   GENERAL DASHBOARD BUTTON ENHANCEMENT
+   ========================================================= */
+
+.dashboard-page button,
+.dashboard-content button {
+    -webkit-tap-highlight-color: transparent;
+}
+
+.dashboard-page button:not(:disabled),
+.dashboard-content button:not(:disabled) {
+    cursor: pointer;
+}
+
+.dashboard-page button:not(:disabled):hover,
+.dashboard-content button:not(:disabled):hover {
+    filter: brightness(1.035);
+}
+
+.dashboard-page button:not(:disabled):active,
+.dashboard-content button:not(:disabled):active {
+    transform: scale(0.98);
+}
+
+/* =========================================================
+   DASHBOARD FOCUS STATES
+   ========================================================= */
+
+.dashboard-page button:focus-visible,
+.dashboard-page a:focus-visible,
+.dashboard-content button:focus-visible,
+.dashboard-content a:focus-visible {
+    outline:
+        3px solid rgba(6, 182, 212, 0.32);
+
+    outline-offset: 3px;
+}
+
+/* =========================================================
+   DASHBOARD FADE / SLIDE ANIMATIONS
+   ========================================================= */
+
+@keyframes dashboardFadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes dashboardSlideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-18px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =========================================================
+   RESPONSIVE — 1200PX
+   ========================================================= */
+
+@media (max-width: 1200px) {
+    .dashboard-grid-pro {
+        grid-template-columns:
+            minmax(0, 1.5fr) minmax(280px, 1fr);
+    }
+
+    .overview-metrics {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* =========================================================
+   RESPONSIVE — 1024PX
+   ========================================================= */
+
+@media (max-width: 1024px) {
+    .dashboard-grid-pro {
+        grid-template-columns: 1fr;
+    }
+
+    .threat-advisory-banner {
+        flex-direction: column;
+        align-items: stretch;
+
+        gap: var(--spacing-lg);
+    }
+
+    .advisory-actions {
+        width: 100%;
+
+        display: grid;
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .advisory-btn {
+        width: 100%;
+    }
+
+    .dashboard-live-map-wrap {
+        min-height: 400px;
+    }
+}
+
+/* =========================================================
+   RESPONSIVE — 768PX
+   ========================================================= */
+
+@media (max-width: 768px) {
+    .threat-advisory-banner {
+        padding: var(--spacing-lg);
+    }
+
+    .advisory-left {
+        gap: var(--spacing-md);
+    }
+
+    .advisory-pulse-icon {
+        width: 42px;
+        height: 42px;
+    }
+
+    .mission-overview-panel,
+    .response-operations-panel {
+        padding: var(--spacing-lg);
+    }
+
+    .overview-copy h2 {
+        font-size: 21px;
+    }
+
+    .overview-copy p {
+        font-size: 14px;
+    }
+
+    .overview-metrics {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .response-workflow-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .risk-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .response-header {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: var(--spacing-md);
+    }
+
+    .dashboard-live-map-wrap {
+        min-height: 360px;
+    }
+
+    .dashboard-live-map-wrap .gis-map-frame,
+    .dashboard-live-map-wrap .leaflet-map-root {
+        min-height: 320px;
+    }
+}
+
+/* =========================================================
+   RESPONSIVE — 600PX
+   ========================================================= */
+
+@media (max-width: 600px) {
+    .advisory-title-row {
+        align-items: flex-start;
+    }
+
+    .advisory-text p {
+        font-size: 12px;
+    }
+
+    .advisory-actions {
+        grid-template-columns: 1fr;
+    }
+
+    .overview-metrics {
+        grid-template-columns: 1fr;
+    }
+
+    .overview-metric-card {
+        min-height: 95px;
+    }
+
+    .workflow-step {
+        padding: 15px;
+
+        gap: 13px;
+    }
+
+    .dashboard-live-map-wrap {
+        min-height: 330px;
+
+        border-radius: var(--radius-lg);
+    }
+}
+
+/* =========================================================
+   RESPONSIVE — 480PX
+   ========================================================= */
+
+@media (max-width: 480px) {
+    .threat-advisory-banner {
+        padding: 15px;
+    }
+
+    .advisory-left {
+        align-items: flex-start;
+    }
+
+    .advisory-pulse-icon {
+        width: 38px;
+        height: 38px;
+    }
+
+    .advisory-title-row {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: var(--spacing-xs);
+    }
+
+    .overview-copy h2 {
+        font-size: 19px;
+    }
+
+    .overview-copy p {
+        font-size: 13px;
+    }
+
+    .response-header h3 {
+        font-size: 16px;
+    }
+
+    .card-action-link {
+        font-size: 12px;
+    }
+
+    .workflow-step {
+        min-height: 0;
+    }
+
+    .step-icon {
+        width: 40px;
+        height: 40px;
+    }
+
+    .dashboard-live-map-wrap {
+        min-height: 290px;
+    }
+
+    .dashboard-live-map-wrap .gis-map-frame,
+    .dashboard-live-map-wrap .leaflet-map-root {
+        min-height: 280px;
+    }
+}
+
+/* =========================================================
+   ACCESSIBILITY / REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .threat-advisory-banner,
+    .mission-overview-panel,
+    .response-operations-panel,
+    .risk-grid,
+    .dashboard-grid-pro,
+    .advisory-pulse-icon,
+    .advisory-pulse-icon::after,
+    .siren-pulse-fast,
+    .threat-tag,
+    .threat-advisory-banner::before,
+    .dashboard-live-map-wrap.loading,
+    .dashboard-live-map-wrap.is-loading,
+    .mission-overview-panel::before {
+        animation: none !important;
+    }
+
+    .advisory-btn,
+    .overview-metric-card,
+    .workflow-step,
+    .step-icon,
+    .card-action-link,
+    .dashboard-live-map-wrap {
+        transition: none !important;
+    }
+}

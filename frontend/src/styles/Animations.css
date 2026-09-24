@@ -1,0 +1,1223 @@
+/* ============================================================
+   GEONEXUS / DISASTER MANAGEMENT
+   GLOBAL PREMIUM ANIMATION SYSTEM — AURORA COMMAND THEME
+   ============================================================ */
+
+/* ============================================================
+   COLOR SYSTEM
+   ============================================================ */
+
+:root {
+    --gx-primary: #06b6d4;
+    --gx-primary-dark: #0891b2;
+    --gx-primary-soft: rgba(6, 182, 212, 0.12);
+
+    --gx-secondary: #8b5cf6;
+    --gx-secondary-soft: rgba(139, 92, 246, 0.12);
+
+    --gx-accent: #14b8a6;
+    --gx-accent-soft: rgba(20, 184, 166, 0.12);
+
+    --gx-success: #10b981;
+    --gx-warning: #f59e0b;
+    --gx-danger: #f43f5e;
+
+    --gx-ink: #0f172a;
+    --gx-slate: #334155;
+    --gx-muted: #64748b;
+
+    --gx-glow:
+        0 0 24px rgba(6, 182, 212, 0.20),
+        0 0 48px rgba(139, 92, 246, 0.10);
+
+    --gx-gradient:
+        linear-gradient(135deg,
+            #06b6d4 0%,
+            #14b8a6 42%,
+            #8b5cf6 100%);
+
+    --gx-gradient-dark:
+        linear-gradient(135deg,
+            #0f172a 0%,
+            #164e63 45%,
+            #312e81 100%);
+}
+
+/* ============================================================
+   ROOT PERFORMANCE
+   ============================================================ */
+
+html {
+    scroll-behavior: smooth;
+}
+
+* {
+    -webkit-tap-highlight-color: transparent;
+}
+
+button,
+a,
+input,
+select,
+textarea {
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* ============================================================
+   PREMIUM GLOBAL MOTION
+   ============================================================ */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 25px, 0);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translate3d(0, -20px, 0);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translate3d(-35px, 0, 0);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translate3d(35px, 0, 0);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.92);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes scaleUp {
+    from {
+        transform: scale(0.96);
+    }
+
+    to {
+        transform: scale(1);
+    }
+}
+
+/* ============================================================
+   FLOAT / BOUNCE
+   ============================================================ */
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+@keyframes gentleBounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+/* ============================================================
+   AURORA PULSE / GLOW
+   ============================================================ */
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.05);
+        opacity: 0.72;
+    }
+}
+
+@keyframes softPulse {
+
+    0%,
+    100% {
+        box-shadow:
+            0 0 0 0 rgba(6, 182, 212, 0),
+            0 0 0 rgba(139, 92, 246, 0);
+    }
+
+    50% {
+        box-shadow:
+            0 0 0 8px rgba(6, 182, 212, 0.10),
+            0 0 28px rgba(139, 92, 246, 0.12);
+    }
+}
+
+@keyframes glowPulse {
+
+    0%,
+    100% {
+        opacity: 0.72;
+        filter: brightness(1);
+    }
+
+    50% {
+        opacity: 1;
+        filter: brightness(1.25);
+    }
+}
+
+@keyframes auroraFlow {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* ============================================================
+   SPINNING
+   ============================================================ */
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes slowRotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ============================================================
+   LOADING
+   ============================================================ */
+
+@keyframes loadingBar {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    50% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -800px 0;
+    }
+
+    100% {
+        background-position: 800px 0;
+    }
+}
+
+/* ============================================================
+   RADAR
+   ============================================================ */
+
+@keyframes radarPulse {
+    0% {
+        transform: scale(0.45);
+        opacity: 0.8;
+        border-color: rgba(6, 182, 212, 0.65);
+    }
+
+    100% {
+        transform: scale(2.7);
+        opacity: 0;
+        border-color: rgba(139, 92, 246, 0);
+    }
+}
+
+/* ============================================================
+   BLINK
+   ============================================================ */
+
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.35;
+    }
+}
+
+/* ============================================================
+   PAGE TRANSITION
+   ============================================================ */
+
+.page-transition {
+    width: 100%;
+    min-height: 100%;
+    animation: fadeInUp 0.38s ease-out both;
+}
+
+/* ============================================================
+   APP LOADING
+   ============================================================ */
+
+.app-loading {
+    min-height: 100vh;
+    min-height: 100dvh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    gap: 20px;
+    padding: 30px;
+
+    text-align: center;
+
+    animation: fadeIn 0.4s ease-out both;
+}
+
+.loading-orbit {
+    position: relative;
+
+    width: 70px;
+    height: 70px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.loading-orbit::before,
+.loading-orbit::after {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    border-radius: 50%;
+
+    border: 2px solid rgba(6, 182, 212, 0.18);
+}
+
+.loading-orbit::before {
+    animation: slowRotate 2s linear infinite;
+}
+
+.loading-orbit::after {
+    inset: 8px;
+
+    border-color: rgba(139, 92, 246, 0.35);
+
+    animation: slowRotate 1.3s linear infinite reverse;
+}
+
+.loading-spinner {
+    width: 38px;
+    height: 38px;
+
+    border-radius: 50%;
+
+    border: 4px solid rgba(20, 184, 166, 0.16);
+    border-top-color: var(--gx-primary);
+
+    animation: spin 0.8s linear infinite;
+}
+
+.loading-content {
+    animation: fadeInUp 0.6s ease-out 0.1s backwards;
+}
+
+.loading-content h2 {
+    margin: 0;
+}
+
+.loading-content p {
+    margin: 8px 0 0;
+    opacity: 0.7;
+}
+
+/* ============================================================
+   ERROR PAGE
+   ============================================================ */
+
+.app-error-page {
+    min-height: 100vh;
+    min-height: 100dvh;
+
+    display: grid;
+    place-items: center;
+
+    padding: 24px;
+}
+
+.app-error-card {
+    width: min(100%, 520px);
+
+    padding: 40px;
+
+    text-align: center;
+
+    border-radius: 24px;
+
+    animation: scaleIn 0.45s ease-out both;
+
+    box-shadow:
+        0 25px 60px rgba(15, 23, 42, 0.14),
+        0 2px 10px rgba(15, 23, 42, 0.05);
+}
+
+.app-error-icon {
+    width: 70px;
+    height: 70px;
+
+    margin: 0 auto 20px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 50%;
+
+    font-size: 32px;
+
+    animation: gentleBounce 2s ease-in-out infinite;
+}
+
+/* ============================================================
+   HOME PAGE
+   ============================================================ */
+
+.home-page {
+    animation: fadeIn 0.6s ease-out both;
+}
+
+.hero-content {
+    animation: fadeInLeft 0.8s ease-out both;
+}
+
+.hero-visual {
+    animation: fadeInRight 0.8s ease-out both;
+}
+
+.hero-badge {
+    animation: fadeInUp 0.6s ease-out 0.1s backwards;
+}
+
+.hero-title {
+    animation: fadeInUp 0.7s ease-out 0.2s backwards;
+}
+
+.hero-description {
+    animation: fadeInUp 0.7s ease-out 0.3s backwards;
+}
+
+.hero-actions {
+    animation: fadeInUp 0.7s ease-out 0.4s backwards;
+}
+
+.hero-stats {
+    animation: fadeInUp 0.7s ease-out 0.5s backwards;
+}
+
+/* ============================================================
+   HERO VISUAL
+   ============================================================ */
+
+.hero-visual img,
+.hero-image,
+.hero-illustration {
+    transition:
+        transform 0.45s ease,
+        filter 0.45s ease;
+}
+
+.hero-visual:hover img,
+.hero-visual:hover .hero-image,
+.hero-visual:hover .hero-illustration {
+    transform: translateY(-6px) scale(1.015);
+    filter: saturate(1.08);
+}
+
+/* ============================================================
+   FEATURE CARDS
+   ============================================================ */
+
+.feature-card {
+    position: relative;
+    overflow: hidden;
+
+    animation: fadeInUp 0.6s ease-out both;
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        border-color 0.3s ease;
+}
+
+.feature-card:nth-child(1) {
+    animation-delay: 0.08s;
+}
+
+.feature-card:nth-child(2) {
+    animation-delay: 0.16s;
+}
+
+.feature-card:nth-child(3) {
+    animation-delay: 0.24s;
+}
+
+.feature-card:nth-child(4) {
+    animation-delay: 0.32s;
+}
+
+.feature-card:nth-child(5) {
+    animation-delay: 0.40s;
+}
+
+.feature-card:nth-child(6) {
+    animation-delay: 0.48s;
+}
+
+.feature-card::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    pointer-events: none;
+
+    background:
+        linear-gradient(135deg,
+            rgba(6, 182, 212, 0.14),
+            rgba(139, 92, 246, 0.08) 45%,
+            transparent 70%);
+
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--gx-glow);
+}
+
+.feature-card:hover::before {
+    opacity: 1;
+}
+
+/* ============================================================
+   UNIVERSAL INTERACTIVE CARDS
+   ============================================================ */
+
+.card,
+.panel,
+.dashboard-card,
+.stat-card,
+.chart-card,
+.info-card,
+.alert-card,
+.workflow-step {
+    transition:
+        transform 0.28s ease,
+        box-shadow 0.28s ease,
+        border-color 0.28s ease;
+}
+
+.card:hover,
+.panel:hover,
+.dashboard-card:hover,
+.stat-card:hover,
+.chart-card:hover,
+.info-card:hover {
+    transform: translateY(-4px);
+}
+
+/* ============================================================
+   BUTTON SYSTEM
+   ============================================================ */
+
+button,
+.btn,
+a[role="button"] {
+    position: relative;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.25s ease,
+        background-color 0.25s ease,
+        border-color 0.25s ease,
+        color 0.25s ease,
+        opacity 0.25s ease;
+}
+
+button:not(:disabled):hover,
+.btn:not(:disabled):hover,
+a[role="button"]:hover {
+    transform: translateY(-2px);
+}
+
+button:not(:disabled):active,
+.btn:not(:disabled):active,
+a[role="button"]:active {
+    transform: translateY(0) scale(0.97);
+}
+
+button:disabled,
+.btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+}
+
+/* ============================================================
+   AURORA BUTTON SHINE
+   ============================================================ */
+
+.btn-primary,
+.btn-primary-hero,
+.btn-primary-large,
+button.primary,
+button[type="submit"] {
+    overflow: hidden;
+}
+
+.btn-primary::after,
+.btn-primary-hero::after,
+.btn-primary-large::after,
+button.primary::after,
+button[type="submit"]::after {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: -120%;
+
+    width: 70%;
+    height: 100%;
+
+    transform: skewX(-20deg);
+
+    background:
+        linear-gradient(90deg,
+            transparent,
+            rgba(255, 255, 255, 0.30),
+            transparent);
+
+    transition: left 0.55s ease;
+
+    pointer-events: none;
+}
+
+.btn-primary:hover::after,
+.btn-primary-hero:hover::after,
+.btn-primary-large:hover::after,
+button.primary:hover::after,
+button[type="submit"]:hover::after {
+    left: 140%;
+}
+
+/* ============================================================
+   ICON BUTTONS
+   ============================================================ */
+
+.icon-button,
+button[aria-label] {
+    transition:
+        transform 0.2s ease,
+        background-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.icon-button:hover,
+button[aria-label]:hover {
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 8px 24px rgba(6, 182, 212, 0.16);
+}
+
+.icon-button:active,
+button[aria-label]:active {
+    transform: scale(0.94);
+}
+
+/* ============================================================
+   LINKS / NAVIGATION
+   ============================================================ */
+
+.nav-link,
+.nav-item,
+.sidebar-link {
+    transition:
+        transform 0.2s ease,
+        color 0.2s ease,
+        background-color 0.2s ease,
+        padding-left 0.2s ease;
+}
+
+.nav-link:hover,
+.nav-item:hover,
+.sidebar-link:hover {
+    transform: translateX(3px);
+}
+
+.sidebar-link.active,
+.nav-link.active {
+    animation: scaleIn 0.25s ease-out both;
+}
+
+/* ============================================================
+   SIDEBAR / NAV ICON MOTION
+   ============================================================ */
+
+.sidebar-link svg,
+.nav-link svg {
+    transition:
+        transform 0.25s ease,
+        opacity 0.25s ease;
+}
+
+.sidebar-link:hover svg,
+.nav-link:hover svg {
+    transform: scale(1.1);
+}
+
+/* ============================================================
+   STATISTICS
+   ============================================================ */
+
+.stat-item strong,
+.stat-value {
+    animation: gentleBounce 3s ease-in-out infinite;
+}
+
+/* ============================================================
+   LIVE MONITORING
+   ============================================================ */
+
+.status-online,
+.online-indicator,
+.live-indicator {
+    animation: softPulse 2s ease-in-out infinite;
+}
+
+.status-dot,
+.live-dot {
+    animation: blink 1.5s ease-in-out infinite;
+}
+
+.live-badge {
+    animation: glowPulse 2s ease-in-out infinite;
+}
+
+/* ============================================================
+   ALERTS
+   ============================================================ */
+
+.alert-card {
+    animation: fadeInUp 0.45s ease-out both;
+}
+
+.alert-card:nth-child(1) {
+    animation-delay: 0.05s;
+}
+
+.alert-card:nth-child(2) {
+    animation-delay: 0.10s;
+}
+
+.alert-card:nth-child(3) {
+    animation-delay: 0.15s;
+}
+
+.alert-card:nth-child(4) {
+    animation-delay: 0.20s;
+}
+
+.alert-card:nth-child(5) {
+    animation-delay: 0.25s;
+}
+
+.alert-critical,
+.critical-alert {
+    animation:
+        fadeInUp 0.45s ease-out both,
+        softPulse 2.5s ease-in-out infinite;
+}
+
+/* ============================================================
+   MAP / GIS
+   ============================================================ */
+
+.map-marker,
+.risk-marker {
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.radar-ring {
+    animation: radarPulse 2.5s linear infinite;
+}
+
+.map-loading {
+    animation: fadeIn 0.3s ease-out;
+}
+
+/* ============================================================
+   WORKFLOW
+   ============================================================ */
+
+.workflow-step {
+    animation: fadeInUp 0.6s ease-out both;
+}
+
+.workflow-step:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.workflow-step:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.workflow-step:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.workflow-step:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+.workflow-arrow {
+    animation: gentleBounce 2s ease-in-out infinite;
+}
+
+/* ============================================================
+   FORM CONTROLS
+   ============================================================ */
+
+input,
+select,
+textarea {
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease;
+}
+
+input:hover,
+select:hover,
+textarea:hover {
+    border-color: rgba(6, 182, 212, 0.55);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    transform: translateY(-1px);
+    box-shadow:
+        0 0 0 3px rgba(6, 182, 212, 0.10),
+        0 8px 24px rgba(139, 92, 246, 0.08);
+}
+
+/* ============================================================
+   FOCUS ACCESSIBILITY
+   ============================================================ */
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid rgba(6, 182, 212, 0.38);
+    outline-offset: 3px;
+}
+
+/* ============================================================
+   TABLES
+   ============================================================ */
+
+table tbody tr {
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+table tbody tr:hover {
+    transform: translateX(2px);
+}
+
+/* ============================================================
+   PROGRESS BARS
+   ============================================================ */
+
+.progress-bar-fill,
+.progress-fill {
+    animation: scaleUp 0.8s ease-out both;
+    transform-origin: left center;
+}
+
+/* ============================================================
+   SKELETON LOADING
+   ============================================================ */
+
+.skeleton,
+.loading-skeleton {
+    position: relative;
+
+    overflow: hidden;
+
+    background: rgba(100, 116, 139, 0.10);
+}
+
+.skeleton::after,
+.loading-skeleton::after {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background:
+        linear-gradient(90deg,
+            transparent,
+            rgba(6, 182, 212, 0.13),
+            rgba(139, 92, 246, 0.10),
+            transparent);
+
+    background-size: 800px 100%;
+
+    animation: shimmer 1.5s linear infinite;
+}
+
+/* ============================================================
+   CTA / AURORA BACKGROUND MOTION
+   ============================================================ */
+
+.cta-section {
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-section::before {
+    content: "";
+
+    position: absolute;
+
+    width: 320px;
+    height: 320px;
+
+    top: -160px;
+    right: -100px;
+
+    border-radius: 50%;
+
+    border: 1px solid rgba(6, 182, 212, 0.18);
+
+    box-shadow:
+        0 0 60px rgba(6, 182, 212, 0.10),
+        inset 0 0 60px rgba(139, 92, 246, 0.06);
+
+    animation: slowRotate 20s linear infinite;
+
+    pointer-events: none;
+}
+
+.cta-section::after {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(circle at 20% 20%,
+            rgba(6, 182, 212, 0.12),
+            transparent 30%),
+        radial-gradient(circle at 80% 80%,
+            rgba(139, 92, 246, 0.12),
+            transparent 32%);
+
+    background-size: 160% 160%;
+
+    animation: auroraFlow 12s ease-in-out infinite;
+}
+
+/* ============================================================
+   TOOLTIP
+   ============================================================ */
+
+[data-tooltip] {
+    position: relative;
+}
+
+[data-tooltip]::after {
+    content: attr(data-tooltip);
+
+    position: absolute;
+    z-index: 9999;
+
+    left: 50%;
+    bottom: calc(100% + 10px);
+
+    transform:
+        translateX(-50%) translateY(5px);
+
+    padding: 8px 11px;
+
+    border-radius: 8px;
+
+    background: rgba(15, 23, 42, 0.96);
+    color: #ffffff;
+
+    border: 1px solid rgba(6, 182, 212, 0.22);
+
+    box-shadow:
+        0 10px 30px rgba(15, 23, 42, 0.25),
+        0 0 20px rgba(6, 182, 212, 0.08);
+
+    font-size: 12px;
+    line-height: 1;
+
+    white-space: nowrap;
+
+    pointer-events: none;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition:
+        opacity 0.2s ease,
+        transform 0.2s ease,
+        visibility 0.2s ease;
+}
+
+[data-tooltip]:hover::after,
+[data-tooltip]:focus-visible::after {
+    opacity: 1;
+    visibility: visible;
+
+    transform:
+        translateX(-50%) translateY(0);
+}
+
+/* ============================================================
+   OPTIONAL AURORA UTILITY CLASSES
+   ============================================================ */
+
+.aurora-gradient {
+    background: var(--gx-gradient);
+}
+
+.aurora-gradient-dark {
+    background: var(--gx-gradient-dark);
+}
+
+.aurora-text {
+    background: var(--gx-gradient);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.aurora-glow {
+    box-shadow: var(--gx-glow);
+}
+
+.aurora-border {
+    border-color: rgba(6, 182, 212, 0.35);
+}
+
+/* ============================================================
+   MOBILE
+   ============================================================ */
+
+@media (max-width: 1024px) {
+    .hero-section {
+        min-height: auto;
+        gap: 30px;
+    }
+
+    .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .workflow-steps {
+        flex-direction: column;
+    }
+
+    .workflow-arrow {
+        transform: rotate(90deg);
+        margin: 10px 0;
+    }
+
+    .impact-visual {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .page-transition {
+        animation-duration: 0.3s;
+    }
+
+    .app-error-card {
+        padding: 30px 22px;
+        border-radius: 18px;
+    }
+
+    .hero-content,
+    .hero-visual {
+        animation-name: fadeInUp;
+    }
+}
+
+@media (max-width: 640px) {
+    .hero-section {
+        padding: 40px 16px;
+    }
+
+    .hero-title {
+        font-size: 1.75rem;
+    }
+
+    .features-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .section-header h2 {
+        font-size: 1.75rem;
+    }
+
+    .cta-section {
+        padding: 60px 16px;
+    }
+
+    .workflow-step {
+        padding: 24px 16px;
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .hero-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    button,
+    .btn {
+        min-height: 42px;
+    }
+}
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ============================================================
+   PRINT
+   ============================================================ */
+
+@media print {
+
+    *,
+    *::before,
+    *::after {
+        animation: none !important;
+        transition: none !important;
+        box-shadow: none !important;
+    }
+}

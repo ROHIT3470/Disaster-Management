@@ -1,0 +1,1099 @@
+/* =========================================================
+   LEGAL PAGES
+   CONTACT • PRIVACY • TERMS
+   Premium Enterprise UI / UX
+   ========================================================= */
+
+.legal-page {
+    min-height: 100vh;
+    padding: 64px 28px;
+    background:
+        radial-gradient(circle at 15% 5%,
+            rgba(59, 130, 246, 0.07),
+            transparent 30%),
+        radial-gradient(circle at 85% 85%,
+            rgba(6, 182, 212, 0.05),
+            transparent 30%),
+        var(--background);
+    animation: fadeIn 0.45s ease both;
+}
+
+.contact-page {
+    padding-top: 24px;
+}
+
+
+/* =========================================================
+   HEADERS
+   ========================================================= */
+
+.contact-header,
+.legal-header {
+    max-width: 850px;
+    margin: 0 auto 52px;
+    text-align: center;
+}
+
+.legal-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+}
+
+.legal-header svg {
+    width: 42px;
+    height: 42px;
+    padding: 9px;
+
+    color: var(--primary);
+
+    background: var(--primary-lighter);
+    border: 1px solid var(--primary-light);
+    border-radius: var(--radius-xl);
+
+    box-shadow:
+        0 8px 22px rgba(59, 130, 246, 0.12);
+
+    animation:
+        fadeInScale 0.5s ease both;
+}
+
+.contact-header h1,
+.legal-header h1 {
+    position: relative;
+
+    margin-bottom: 12px;
+
+    font-size: clamp(2rem, 4vw, 2.9rem);
+    font-weight: 800;
+
+    background:
+        linear-gradient(135deg,
+            var(--gray-900),
+            var(--primary-dark));
+
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    animation:
+        slideInDown 0.45s ease both;
+}
+
+.contact-header h1::after,
+.legal-header h1::after {
+    content: "";
+
+    display: block;
+
+    width: 54px;
+    height: 4px;
+
+    margin: 13px auto 0;
+
+    background: var(--gradient-primary);
+    border-radius: var(--radius-full);
+
+    animation:
+        scaleIn 0.5s ease 0.15s both;
+}
+
+.contact-header p,
+.legal-header p {
+    max-width: 720px;
+    margin-inline: auto;
+
+    color: var(--text-secondary);
+
+    font-size: 1.05rem;
+    line-height: 1.75;
+
+    animation:
+        fadeIn 0.5s ease 0.12s both;
+}
+
+
+/* =========================================================
+   CONTACT GRID
+   ========================================================= */
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+
+    gap: 40px;
+
+    max-width: 1200px;
+    margin: 0 auto 56px;
+
+    align-items: start;
+}
+
+.contact-info-section,
+.contact-form-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    animation:
+        fadeIn 0.5s ease both;
+}
+
+.contact-info-section {
+    animation-name: slideInLeft;
+}
+
+.contact-form-section {
+    animation-name: slideInRight;
+}
+
+.contact-info-section h2,
+.contact-form-section h2 {
+    margin-bottom: 5px;
+
+    color: var(--text-primary);
+
+    font-size: 1.5rem;
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   CONTACT METHODS
+   ========================================================= */
+
+.contact-method {
+    position: relative;
+
+    display: flex;
+    align-items: flex-start;
+
+    gap: 16px;
+
+    padding: 20px;
+
+    background:
+        linear-gradient(135deg,
+            rgba(255, 255, 255, 0.98),
+            rgba(248, 250, 252, 0.98));
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+
+    box-shadow: var(--shadow-sm);
+
+    overflow: hidden;
+
+    transition:
+        transform var(--transition),
+        box-shadow var(--transition),
+        border-color var(--transition);
+}
+
+.contact-method::before {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    top: 0;
+    bottom: 0;
+
+    width: 3px;
+
+    background: var(--gradient-primary);
+
+    transform: scaleY(0);
+    transform-origin: bottom;
+
+    transition:
+        transform var(--transition-lg);
+}
+
+.contact-method:hover {
+    transform: translateY(-5px);
+
+    border-color:
+        rgba(59, 130, 246, 0.28);
+
+    box-shadow:
+        var(--shadow-lg);
+}
+
+.contact-method:hover::before {
+    transform: scaleY(1);
+}
+
+.contact-method h3 {
+    margin-bottom: 4px;
+
+    color: var(--text-primary);
+
+    font-size: 1.05rem;
+    font-weight: 750;
+}
+
+.contact-method p {
+    color: var(--text-primary);
+
+    font-size: 0.95rem;
+    font-weight: 600;
+
+    overflow-wrap: anywhere;
+}
+
+.contact-method span {
+    display: block;
+
+    margin-top: 4px;
+
+    color: var(--text-secondary);
+
+    font-size: 0.82rem;
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   CONTACT ICON
+   ========================================================= */
+
+.contact-icon {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 50px;
+    height: 50px;
+
+    flex: 0 0 50px;
+
+    color: white;
+
+    background: var(--gradient-primary);
+
+    border-radius: var(--radius-lg);
+
+    box-shadow:
+        0 8px 18px rgba(59, 130, 246, 0.22);
+
+    overflow: hidden;
+
+    transition:
+        transform var(--transition),
+        box-shadow var(--transition);
+}
+
+.contact-icon::after {
+    content: "";
+
+    position: absolute;
+    inset: -50%;
+
+    background:
+        linear-gradient(120deg,
+            transparent 35%,
+            rgba(255, 255, 255, 0.28) 50%,
+            transparent 65%);
+
+    transform:
+        translateX(-100%) rotate(15deg);
+
+    transition:
+        transform 0.7s ease;
+}
+
+.contact-method:hover .contact-icon {
+    transform:
+        translateY(-2px) scale(1.05);
+
+    box-shadow:
+        0 12px 25px rgba(59, 130, 246, 0.28);
+}
+
+.contact-method:hover .contact-icon::after {
+    transform:
+        translateX(100%) rotate(15deg);
+}
+
+
+/* =========================================================
+   CONTACT FORM
+   ========================================================= */
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+
+    padding: 28px;
+
+    background:
+        linear-gradient(135deg,
+            rgba(255, 255, 255, 0.98),
+            rgba(248, 250, 252, 0.98));
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-2xl);
+
+    box-shadow: var(--shadow-md);
+
+    position: relative;
+    overflow: hidden;
+}
+
+.contact-form::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 3px;
+
+    background:
+        var(--gradient-primary);
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.form-group label {
+    margin-bottom: 0;
+
+    color: var(--text-primary);
+
+    font-size: 0.88rem;
+    font-weight: 700;
+}
+
+.form-group input,
+.form-group textarea {
+    padding: 12px 15px;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+
+    color: var(--text-primary);
+
+    font-family: inherit;
+    font-size: 0.94rem;
+
+    transition:
+        border-color var(--transition),
+        box-shadow var(--transition),
+        transform var(--transition),
+        background-color var(--transition);
+}
+
+.form-group input:hover,
+.form-group textarea:hover {
+    border-color: var(--gray-400);
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: var(--primary);
+
+    box-shadow:
+        0 0 0 4px rgba(59, 130, 246, 0.1),
+        0 5px 15px rgba(59, 130, 246, 0.05);
+
+    transform: translateY(-1px);
+}
+
+.form-group textarea {
+    min-height: 155px;
+    resize: vertical;
+}
+
+
+/* =========================================================
+   SUBMIT BUTTON
+   ========================================================= */
+
+.btn-submit {
+    position: relative;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    align-self: flex-start;
+
+    gap: 9px;
+
+    min-height: 46px;
+
+    padding: 12px 24px;
+
+    color: white;
+
+    background: var(--gradient-primary);
+
+    border: none;
+    border-radius: var(--radius-lg);
+
+    box-shadow:
+        0 7px 18px rgba(59, 130, 246, 0.24);
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    overflow: hidden;
+
+    transition:
+        transform var(--transition),
+        box-shadow var(--transition),
+        filter var(--transition);
+}
+
+.btn-submit::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background:
+        linear-gradient(120deg,
+            transparent 25%,
+            rgba(255, 255, 255, 0.22) 50%,
+            transparent 75%);
+
+    transform: translateX(-120%);
+
+    transition:
+        transform 0.7s ease;
+}
+
+.btn-submit:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 12px 28px rgba(59, 130, 246, 0.32);
+
+    filter: brightness(1.05);
+}
+
+.btn-submit:hover::before {
+    transform: translateX(120%);
+}
+
+.btn-submit:active {
+    transform: translateY(0) scale(0.98);
+}
+
+
+/* =========================================================
+   SUCCESS MESSAGE
+   ========================================================= */
+
+.success-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 14px;
+
+    min-height: 280px;
+
+    padding: 40px 28px;
+
+    text-align: center;
+
+    background:
+        linear-gradient(135deg,
+            rgba(16, 185, 129, 0.07),
+            rgba(20, 184, 166, 0.04));
+
+    border:
+        1px solid rgba(16, 185, 129, 0.28);
+
+    border-radius: var(--radius-2xl);
+
+    box-shadow:
+        0 12px 35px rgba(16, 185, 129, 0.08);
+
+    animation:
+        fadeInScale 0.45s ease both;
+}
+
+.success-message svg {
+    width: 52px;
+    height: 52px;
+
+    padding: 11px;
+
+    color: var(--success);
+
+    background: var(--success-light);
+
+    border-radius: 50%;
+
+    box-shadow:
+        0 0 0 8px rgba(16, 185, 129, 0.07);
+
+    animation:
+        bounce-gentle 0.7s ease both;
+}
+
+@keyframes bounce-gentle {
+    0% {
+        opacity: 0;
+        transform: scale(0.7);
+    }
+
+    60% {
+        transform: scale(1.08);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.success-message h3 {
+    color: var(--success-dark);
+
+    font-size: 1.3rem;
+    font-weight: 800;
+}
+
+.success-message p {
+    max-width: 500px;
+
+    color: var(--text-secondary);
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   LEGAL CONTENT
+   ========================================================= */
+
+.legal-content {
+    max-width: 900px;
+    margin: 0 auto;
+
+    padding: 36px 40px;
+
+    background:
+        linear-gradient(135deg,
+            rgba(255, 255, 255, 0.98),
+            rgba(248, 250, 252, 0.98));
+
+    border:
+        1px solid var(--border);
+
+    border-radius:
+        var(--radius-2xl);
+
+    box-shadow:
+        var(--shadow-md);
+
+    animation:
+        fadeIn 0.5s ease both;
+}
+
+.legal-content section {
+    position: relative;
+
+    margin-bottom: 34px;
+    padding-bottom: 34px;
+
+    border-bottom:
+        1px solid var(--border);
+}
+
+.legal-content section:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.legal-content h2 {
+    margin-bottom: 15px;
+
+    color: var(--text-primary);
+
+    font-size: 1.4rem;
+    font-weight: 800;
+}
+
+.legal-content h3 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+
+    color: var(--text-primary);
+
+    font-size: 1.08rem;
+    font-weight: 750;
+}
+
+.legal-content p {
+    margin-bottom: 12px;
+
+    color: var(--text-secondary);
+
+    font-size: 0.96rem;
+    line-height: 1.85;
+}
+
+.legal-content p:last-child {
+    margin-bottom: 0;
+}
+
+.legal-content ul {
+    margin:
+        12px 0 14px 20px;
+
+    list-style:
+        none;
+}
+
+.legal-content li {
+    position: relative;
+
+    margin-bottom: 9px;
+    padding-left: 19px;
+
+    color: var(--text-secondary);
+
+    font-size: 0.94rem;
+    line-height: 1.7;
+}
+
+.legal-content li::before {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    top: 0.72em;
+
+    width: 6px;
+    height: 6px;
+
+    background:
+        var(--primary);
+
+    border-radius: 50%;
+
+    box-shadow:
+        0 0 0 3px var(--primary-light);
+}
+
+
+/* =========================================================
+   INFO BOX
+   ========================================================= */
+
+.info-box {
+    position: relative;
+
+    margin-bottom: 18px;
+    padding: 20px 22px 20px 24px;
+
+    background:
+        linear-gradient(135deg,
+            var(--primary-lighter),
+            rgba(236, 254, 255, 0.55));
+
+    border:
+        1px solid rgba(59, 130, 246, 0.16);
+
+    border-left:
+        4px solid var(--primary);
+
+    border-radius:
+        var(--radius-lg);
+
+    box-shadow:
+        var(--shadow-xs);
+
+    transition:
+        transform var(--transition),
+        box-shadow var(--transition);
+}
+
+.info-box:hover {
+    transform:
+        translateX(3px);
+
+    box-shadow:
+        var(--shadow-sm);
+}
+
+.info-box h3 {
+    margin-top: 0;
+    margin-bottom: 8px;
+
+    color: var(--primary-dark);
+}
+
+
+/* =========================================================
+   SECURITY INFO
+   ========================================================= */
+
+.security-info {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 18px;
+
+    margin-top: 18px;
+    padding: 22px;
+
+    background:
+        linear-gradient(135deg,
+            rgba(37, 99, 235, 0.07),
+            rgba(14, 165, 233, 0.04));
+
+    border:
+        1px solid rgba(37, 99, 235, 0.18);
+
+    border-radius:
+        var(--radius-xl);
+
+    box-shadow:
+        var(--shadow-xs);
+
+    transition:
+        transform var(--transition),
+        box-shadow var(--transition);
+}
+
+.security-info:hover {
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        var(--shadow-md);
+}
+
+.security-info>svg {
+    width: 30px;
+    height: 30px;
+
+    flex-shrink: 0;
+
+    padding: 6px;
+
+    color: var(--primary);
+
+    background:
+        var(--primary-light);
+
+    border-radius:
+        var(--radius-md);
+}
+
+.security-info ul {
+    margin: 0;
+}
+
+
+/* =========================================================
+   BACK BUTTON
+   ========================================================= */
+
+.btn-back {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    min-height: 44px;
+
+    padding: 11px 20px;
+
+    color: var(--primary);
+
+    background:
+        var(--surface);
+
+    border:
+        1px solid var(--border);
+
+    border-radius:
+        var(--radius-lg);
+
+    box-shadow:
+        var(--shadow-xs);
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        transform var(--transition),
+        color var(--transition),
+        background-color var(--transition),
+        border-color var(--transition),
+        box-shadow var(--transition);
+}
+
+.btn-back:hover {
+    color: white;
+
+    background:
+        var(--gradient-primary);
+
+    border-color:
+        transparent;
+
+    transform:
+        translateX(-3px);
+
+    box-shadow:
+        0 8px 20px rgba(59, 130, 246, 0.22);
+}
+
+.btn-back:active {
+    transform:
+        translateX(-1px) scale(0.98);
+}
+
+
+/* =========================================================
+   FOOTERS
+   ========================================================= */
+
+.contact-footer,
+.legal-footer {
+    max-width: 1200px;
+
+    margin:
+        42px auto 0;
+
+    padding-top:
+        24px;
+
+    text-align: center;
+
+    color: var(--text-secondary);
+
+    border-top:
+        1px solid var(--border);
+
+    animation:
+        fadeIn 0.5s ease 0.2s both;
+}
+
+.contact-footer a,
+.legal-footer a {
+    color: var(--primary);
+    font-weight: 650;
+}
+
+.contact-footer a:hover,
+.legal-footer a:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   DARK MODE
+   ========================================================= */
+
+[data-theme="dark"] .legal-page,
+body.dark .legal-page {
+    background:
+        radial-gradient(circle at 15% 5%,
+            rgba(59, 130, 246, 0.10),
+            transparent 30%),
+        var(--background);
+}
+
+[data-theme="dark"] .contact-method,
+[data-theme="dark"] .contact-form,
+[data-theme="dark"] .legal-content,
+body.dark .contact-method,
+body.dark .contact-form,
+body.dark .legal-content {
+    background:
+        linear-gradient(135deg,
+            rgba(30, 41, 59, 0.98),
+            rgba(15, 23, 42, 0.98));
+
+    border-color:
+        var(--border);
+}
+
+[data-theme="dark"] .contact-method p,
+[data-theme="dark"] .contact-method h3,
+[data-theme="dark"] .legal-content h2,
+[data-theme="dark"] .legal-content h3,
+body.dark .contact-method p,
+body.dark .contact-method h3,
+body.dark .legal-content h2,
+body.dark .legal-content h3 {
+    color:
+        var(--text-primary);
+}
+
+[data-theme="dark"] .form-group input,
+[data-theme="dark"] .form-group textarea,
+body.dark .form-group input,
+body.dark .form-group textarea {
+    background:
+        var(--dark-bg);
+
+    color:
+        var(--text-primary);
+
+    border-color:
+        var(--dark-border);
+}
+
+
+/* =========================================================
+   RESPONSIVE — TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+    .legal-page {
+        padding:
+            48px 20px;
+    }
+
+    .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+
+    .contact-info-section,
+    .contact-form-section {
+        animation-name: fadeIn;
+    }
+
+    .legal-content {
+        padding:
+            30px;
+    }
+}
+
+
+/* =========================================================
+   RESPONSIVE — MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+    .legal-page {
+        padding:
+            34px 12px;
+    }
+
+    .contact-header,
+    .legal-header {
+        margin-bottom: 34px;
+    }
+
+    .contact-header h1,
+    .legal-header h1 {
+        font-size:
+            clamp(1.8rem, 9vw, 2.35rem);
+    }
+
+    .contact-header p,
+    .legal-header p {
+        font-size:
+            0.94rem;
+    }
+
+    .contact-grid {
+        gap: 24px;
+    }
+
+    .contact-method {
+        padding:
+            16px;
+    }
+
+    .contact-icon {
+        width: 44px;
+        height: 44px;
+        flex-basis: 44px;
+    }
+
+    .contact-form {
+        padding:
+            21px 16px;
+    }
+
+    .btn-submit {
+        width: 100%;
+    }
+
+    .legal-content {
+        padding:
+            24px 18px;
+
+        border-radius:
+            var(--radius-xl);
+    }
+
+    .legal-content section {
+        margin-bottom: 28px;
+        padding-bottom: 28px;
+    }
+
+    .legal-content h2 {
+        font-size:
+            1.2rem;
+    }
+
+    .legal-content p,
+    .legal-content li {
+        font-size:
+            0.9rem;
+    }
+
+    .security-info {
+        flex-direction: column;
+        gap: 12px;
+        padding: 18px;
+    }
+
+    .info-box {
+        padding:
+            17px 17px 17px 20px;
+    }
+
+    .btn-back {
+        width: 100%;
+    }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .legal-page *,
+    .legal-page *::before,
+    .legal-page *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
