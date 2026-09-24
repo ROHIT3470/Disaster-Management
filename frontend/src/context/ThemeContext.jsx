@@ -1,4 +1,4 @@
-﻿import {
+import {
   createContext,
   useCallback,
   useContext,
@@ -27,32 +27,32 @@ const THEME_PALETTE = {
     secondary: "#10b981",
     secondaryStrong: "#059669",
     secondarySoft: "#ecfdf5",
-    background: "#f4f9ff",
-    backgroundAlt: "#edf6ff",
+    background: "#f1f5f9",
+    backgroundAlt: "#e2e8f0",
     surface: "#ffffff",
-    surfaceStrong: "#f8fbff",
-    surfaceMuted: "#eef6ff",
+    surfaceStrong: "#f8fafc",
+    surfaceMuted: "#e2e8f0",
     text: "#0f172a",
     textSecondary: "#475569",
-    border: "rgba(148, 163, 184, 0.3)",
-    shadow: "0 24px 64px rgba(37, 99, 235, 0.12)",
+    border: "rgba(148, 163, 184, 0.35)",
+    shadow: "0 20px 50px rgba(15, 23, 42, 0.08)",
   },
   dark: {
-    primary: "#60a5fa",
-    primaryStrong: "#93c5fd",
-    primarySoft: "#172554",
-    secondary: "#34d399",
-    secondaryStrong: "#6ee7b7",
-    secondarySoft: "#052e2b",
-    background: "#06131f",
-    backgroundAlt: "#0d1b2a",
+    primary: "#38bdf8",
+    primaryStrong: "#0ea5e9",
+    primarySoft: "#0c1f38",
+    secondary: "#10b981",
+    secondaryStrong: "#34d399",
+    secondarySoft: "#052e25",
+    background: "#080d1a",
+    backgroundAlt: "#0c1427",
     surface: "#0f172a",
-    surfaceStrong: "#111f36",
-    surfaceMuted: "#142033",
-    text: "#e2e8f0",
-    textSecondary: "#cbd5e1",
-    border: "rgba(148, 163, 184, 0.22)",
-    shadow: "0 24px 64px rgba(2, 6, 23, 0.52)",
+    surfaceStrong: "#131f38",
+    surfaceMuted: "#172544",
+    text: "#f8fafc",
+    textSecondary: "#94a3b8",
+    border: "rgba(255, 255, 255, 0.09)",
+    shadow: "0 24px 64px rgba(0, 0, 0, 0.55)",
   },
 };
 
@@ -76,10 +76,10 @@ const getStoredTheme = () => {
       return storedTheme;
     }
 
-    return THEMES.LIGHT;
+    return THEMES.DARK;
   } catch (error) {
     console.warn("Theme storage unavailable:", error);
-    return THEMES.LIGHT;
+    return THEMES.DARK;
   }
 };
 

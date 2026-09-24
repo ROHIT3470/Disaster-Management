@@ -1,89 +1,108 @@
 /* ============================================================
-   GEONEXUS VISUAL REFRESH
-   Calm command-center palette with high-contrast operational accents
+   GEONEXUS VISUAL FOUNDATION
+   Obsidian Command (Dark Flagship) & Tactical Daylight (Light)
    ============================================================ */
 
-:root {
-    --primary: #0f766e;
-    --primary-dark: #115e59;
-    --primary-light: #ccfbf1;
-    --primary-lighter: #f0fdfa;
-    --primary-rgb: 15, 118, 110;
-
-    --accent: #06b6d4;
-    --accent-dark: #0891b2;
-    --accent-light: #cffafe;
-    --accent-rgb: 6, 182, 212;
-
-    --secondary: #f59e0b;
-    --secondary-dark: #d97706;
-    --secondary-light: #fef3c7;
-    --secondary-rgb: 245, 158, 11;
-
-    --background: #f4f8f7;
-    --background-alt: #eaf3f2;
-    --surface: #ffffff;
-    --surface-strong: #fbfefd;
-    --surface-muted: #eef7f6;
-    --text-primary: #102a2b;
-    --text-secondary: #496364;
-    --text-muted: #708586;
-    --border: rgba(45, 93, 91, 0.16);
-
-    --gradient-primary: linear-gradient(135deg, #0f766e 0%, #06b6d4 100%);
-    --gradient-command: linear-gradient(135deg, #102a2b 0%, #115e59 56%, #06b6d4 100%);
-    --gradient-subtle: linear-gradient(135deg, #f8fcfb 0%, #eaf7f4 100%);
-    --shadow-sm: 0 4px 14px rgba(16, 42, 43, 0.06);
-    --shadow-md: 0 12px 28px rgba(16, 42, 43, 0.09);
-    --shadow-lg: 0 20px 42px rgba(16, 42, 43, 0.12);
-}
-
+:root,
 [data-theme="dark"],
 .dark {
-    --primary: #2dd4bf;
-    --primary-dark: #5eead4;
-    --primary-light: #123c3a;
-    --primary-lighter: #102b2b;
-    --primary-rgb: 45, 212, 191;
+    --primary: #38bdf8;
+    --primary-dark: #0284c7;
+    --primary-light: #0c2445;
+    --primary-lighter: #071529;
+    --primary-rgb: 56, 189, 248;
 
-    --accent: #22d3ee;
-    --accent-dark: #67e8f9;
-    --accent-light: #123b45;
-    --accent-rgb: 34, 211, 238;
+    --accent: #00e5ff;
+    --accent-dark: #00b4d8;
+    --accent-light: #0b2e3e;
+    --accent-rgb: 0, 229, 255;
 
-    --secondary: #fbbf24;
-    --secondary-dark: #fcd34d;
-    --secondary-light: #4a3510;
-    --secondary-rgb: 251, 191, 36;
+    --secondary: #10b981;
+    --secondary-dark: #059669;
+    --secondary-light: #052e25;
+    --secondary-rgb: 16, 185, 129;
 
-    --background: #08191d;
-    --background-alt: #0d2529;
-    --surface: #10282c;
-    --surface-strong: #143237;
-    --surface-muted: #173b40;
-    --text-primary: #e5f6f3;
-    --text-secondary: #b3d1ce;
-    --text-muted: #82a4a2;
-    --border: rgba(164, 221, 215, 0.16);
+    --success: #10b981;
+    --warning: #f59e0b;
+    --danger: #ef4444;
 
-    --gradient-primary: linear-gradient(135deg, #0f766e 0%, #0891b2 100%);
-    --gradient-command: linear-gradient(135deg, #071619 0%, #115e59 58%, #0891b2 100%);
-    --gradient-subtle: linear-gradient(135deg, #10282c 0%, #123b3c 100%);
-    --shadow-sm: 0 4px 16px rgba(0, 0, 0, 0.22);
-    --shadow-md: 0 14px 32px rgba(0, 0, 0, 0.28);
-    --shadow-lg: 0 24px 50px rgba(0, 0, 0, 0.34);
+    --background: #070c18;
+    --background-alt: #0b1326;
+    --surface: #0f1a30;
+    --surface-strong: #132242;
+    --surface-muted: #17274c;
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+    --border: rgba(255, 255, 255, 0.08);
+
+    --gradient-primary: linear-gradient(135deg, #0284c7 0%, #38bdf8 100%);
+    --gradient-command: linear-gradient(135deg, #080d1a 0%, #0f1c38 55%, #0284c7 100%);
+    --gradient-subtle: linear-gradient(135deg, #0f1a30 0%, #132242 100%);
+    --shadow-sm: 0 4px 16px rgba(0, 0, 0, 0.25);
+    --shadow-md: 0 12px 30px rgba(0, 0, 0, 0.35);
+    --shadow-lg: 0 20px 48px rgba(0, 0, 0, 0.45);
+}
+
+[data-theme="light"],
+.theme-light {
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+    --primary-light: #dbeafe;
+    --primary-lighter: #eff6ff;
+    --primary-rgb: 37, 99, 235;
+
+    --accent: #0284c7;
+    --accent-dark: #0369a1;
+    --accent-light: #e0f2fe;
+    --accent-rgb: 2, 132, 199;
+
+    --secondary: #10b981;
+    --secondary-dark: #059669;
+    --secondary-light: #d1fae5;
+    --secondary-rgb: 16, 185, 129;
+
+    --success: #059669;
+    --warning: #d97706;
+    --danger: #dc2626;
+
+    --background: #f1f5f9;
+    --background-alt: #e2e8f0;
+    --surface: #ffffff;
+    --surface-strong: #f8fafc;
+    --surface-muted: #e2e8f0;
+    --text-primary: #0f172a;
+    --text-secondary: #334155;
+    --text-muted: #64748b;
+    --border: rgba(148, 163, 184, 0.35);
+
+    --gradient-primary: linear-gradient(135deg, #2563eb 0%, #38bdf8 100%);
+    --gradient-command: linear-gradient(135deg, #1e293b 0%, #2563eb 60%, #38bdf8 100%);
+    --gradient-subtle: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
+    --shadow-sm: 0 2px 10px rgba(15, 23, 42, 0.05);
+    --shadow-md: 0 8px 24px rgba(15, 23, 42, 0.08);
+    --shadow-lg: 0 16px 36px rgba(15, 23, 42, 0.12);
 }
 
 html,
 body {
-    background: var(--background);
+    background-color: var(--background);
     color: var(--text-primary);
+    transition: background-color 0.25s ease, color 0.25s ease;
 }
 
-body {
+[data-theme="dark"] body,
+body.theme-dark {
     background-image:
-        radial-gradient(circle at 8% 4%, rgba(var(--accent-rgb), 0.08), transparent 26rem),
-        radial-gradient(circle at 92% 88%, rgba(var(--primary-rgb), 0.08), transparent 30rem);
+        radial-gradient(circle at 10% 8%, rgba(56, 189, 248, 0.05), transparent 28rem),
+        radial-gradient(circle at 90% 92%, rgba(139, 92, 246, 0.04), transparent 30rem);
+}
+
+[data-theme="light"] body,
+body.theme-light {
+    background-image:
+        radial-gradient(circle at 10% 8%, rgba(37, 99, 235, 0.04), transparent 26rem),
+        radial-gradient(circle at 90% 92%, rgba(16, 185, 129, 0.04), transparent 28rem);
 }
 
 .app-container,
@@ -91,101 +110,6 @@ body {
 .dashboard-shell {
     background: transparent;
     color: var(--text-primary);
-}
-
-.navbar {
-    background: linear-gradient(110deg, rgba(8, 26, 29, 0.98), rgba(15, 62, 62, 0.97) 62%, rgba(8, 47, 58, 0.98));
-    border-bottom-color: rgba(103, 232, 249, 0.18);
-    box-shadow: 0 12px 32px rgba(8, 26, 29, 0.22);
-}
-
-.navbar::after {
-    background: linear-gradient(90deg, transparent, #2dd4bf, #22d3ee, transparent);
-}
-
-.brand-icon-box {
-    background: var(--gradient-primary);
-    box-shadow: 0 8px 22px rgba(var(--primary-rgb), 0.28), 0 0 0 1px rgba(255, 255, 255, 0.12) inset;
-}
-
-.sidebar {
-    background: linear-gradient(180deg, #0d262a 0%, #102f33 52%, #0b2024 100%);
-    border-right-color: rgba(103, 232, 249, 0.14);
-    box-shadow: 10px 0 30px rgba(8, 26, 29, 0.12);
-}
-
-.sidebar-link:hover,
-.sidebar-link.active {
-    background: linear-gradient(90deg, rgba(45, 212, 191, 0.18), rgba(34, 211, 238, 0.08));
-    color: #d8fffa;
-}
-
-.sidebar-link.active {
-    box-shadow: inset 3px 0 0 #2dd4bf;
-}
-
-.card,
-.card-elevated,
-.card-outline,
-.card-glass,
-.stat-card,
-.dashboard-card {
-    background: var(--surface);
-    border-color: var(--border);
-    box-shadow: var(--shadow-sm);
-}
-
-.card:hover,
-.card-elevated:hover,
-.dashboard-card:hover {
-    box-shadow: var(--shadow-md);
-}
-
-.btn-primary {
-    background: var(--gradient-primary);
-    box-shadow: 0 8px 18px rgba(var(--primary-rgb), 0.22);
-}
-
-.btn-outline {
-    color: var(--primary);
-    border-color: rgba(var(--primary-rgb), 0.46);
-}
-
-.btn-outline:hover:not(:disabled) {
-    background: var(--primary);
-}
-
-.input-group input,
-.input-group textarea,
-.input-group select {
-    color: var(--text-primary);
-    background: var(--surface-strong);
-    border-color: var(--border);
-}
-
-.input-group input:focus,
-.input-group textarea:focus,
-.input-group select:focus {
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.14);
-}
-
-.page-header,
-.section-header {
-    color: var(--text-primary);
-}
-
-.home-page {
-    --home-bg: var(--background);
-    --home-surface: var(--surface);
-    --home-surface-soft: var(--surface-muted);
-    --home-text: var(--text-primary);
-    --home-text-secondary: var(--text-secondary);
-    --home-border: var(--border);
-}
-
-.home-page .hero-title {
-    color: #f4fffd;
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -1218,24 +1218,29 @@ select:focus-visible {
 html.dark,
 body.dark,
 [data-theme="dark"] {
-    --background: var(--dark-bg);
-    --surface: var(--dark-bg-secondary);
+    --dark-bg: #070c18;
+    --dark-bg-secondary: #0f1a30;
+    --dark-border: rgba(255, 255, 255, 0.08);
 
-    --text-primary: #ecfdf5;
-    --text-secondary: #b9d1cc;
+    --background: #070c18;
+    --surface: #0f1a30;
 
-    --border: var(--dark-border);
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
 
-    --gray-50: #071312;
-    --gray-100: #0d201d;
-    --gray-200: #14302b;
-    --gray-300: #28514a;
-    --gray-400: #5f8179;
-    --gray-500: #8da9a2;
-    --gray-600: #b9d1cc;
-    --gray-700: #d4e3df;
-    --gray-800: #e5efec;
-    --gray-900: #ecfdf5;
+    --border: rgba(255, 255, 255, 0.08);
+
+    --gray-50: #0a1122;
+    --gray-100: #0f1a30;
+    --gray-200: #142240;
+    --gray-300: #18284e;
+    --gray-400: #475569;
+    --gray-500: #64748b;
+    --gray-600: #94a3b8;
+    --gray-700: #cbd5e1;
+    --gray-800: #e2e8f0;
+    --gray-900: #f8fafc;
 }
 
 html.dark body,
