@@ -680,8 +680,9 @@ function DashboardLayout() {
 
         <main
           id="main-content"
-          className="content-container"
+          className="content-container dashboard-content-container"
           tabIndex={-1}
+          aria-label="GeoNexus dashboard content"
         >
           <PageTransition>
             <Outlet />
@@ -690,6 +691,7 @@ function DashboardLayout() {
       </div>
 
       <SOSModal />
+
       <SituationReportModal />
     </div>
   );
@@ -747,6 +749,7 @@ function AppRoutes() {
   return (
     <>
       <PageEffects />
+
       <NetworkStatus />
 
       <Routes>
@@ -840,6 +843,7 @@ function AppRoutes() {
           >
 
             {/* COMMAND DASHBOARD */}
+
             <Route
               index
               element={
@@ -848,6 +852,7 @@ function AppRoutes() {
             />
 
             {/* LIVE MONITORING */}
+
             <Route
               path="monitoring"
               element={
@@ -856,6 +861,7 @@ function AppRoutes() {
             />
 
             {/* GIS RISK MAP */}
+
             <Route
               path="risk-map"
               element={
@@ -864,6 +870,7 @@ function AppRoutes() {
             />
 
             {/* ALERT CENTER */}
+
             <Route
               path="alerts"
               element={
@@ -872,6 +879,7 @@ function AppRoutes() {
             />
 
             {/* AI SIMULATION */}
+
             <Route
               path="simulation"
               element={
@@ -880,6 +888,7 @@ function AppRoutes() {
             />
 
             {/* HISTORICAL DATA */}
+
             <Route
               path="history"
               element={
@@ -888,6 +897,7 @@ function AppRoutes() {
             />
 
             {/* EMERGENCY HUB */}
+
             <Route
               path="emergency-hub"
               element={
@@ -896,6 +906,7 @@ function AppRoutes() {
             />
 
             {/* AI ASSISTANT */}
+
             <Route
               path="ai-assistant"
               element={
@@ -904,6 +915,7 @@ function AppRoutes() {
             />
 
             {/* LEARNING ALIAS */}
+
             <Route
               path="learning"
               element={
@@ -912,6 +924,7 @@ function AppRoutes() {
             />
 
             {/* ADMIN */}
+
             <Route
               path="admin"
               element={
@@ -927,6 +940,7 @@ function AppRoutes() {
             </Route>
 
             {/* UNKNOWN DASHBOARD MODULE */}
+
             <Route
               path="*"
               element={
@@ -936,6 +950,7 @@ function AppRoutes() {
                 />
               }
             />
+
           </Route>
 
           {/* ==================================================
@@ -1031,6 +1046,7 @@ function AppRoutes() {
               />
             }
           />
+
         </Route>
 
         {/* ==================================================
@@ -1068,6 +1084,7 @@ function App() {
             basename={basename}
           >
             <ToastContainer />
+
             <AppRoutes />
           </BrowserRouter>
         </AuthProvider>

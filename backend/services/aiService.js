@@ -29,7 +29,7 @@ function getClient() {
   return _client;
 }
 
-const MODEL = process.env.GEMINI_MODEL || "gemini-3.6-flash";
+const MODEL = process.env.GEMINI_MODEL || "gemini-3.5-flash";
 
 // ============================================================
 // SYSTEM PROMPT — GEONEXUS LEARNING & COMMAND ASSISTANT
@@ -104,7 +104,9 @@ function getContextFallbackResponse(message, context) {
   const lowerMessage = message.toLowerCase();
   const liveData = context?.liveData || {};
   const alerts = Array.isArray(liveData.alerts) ? liveData.alerts : [];
-  const predictions = Array.isArray(liveData.predictions) ? liveData.predictions : [];
+  const predictions = Array.isArray(liveData.predictions)
+    ? liveData.predictions
+    : [];
   const sensors = Array.isArray(liveData.sensors) ? liveData.sensors : [];
   const latestPrediction = predictions[0];
 
@@ -153,7 +155,11 @@ function getContextFallbackResponse(message, context) {
     ].join("\n");
   }
 
-  if (lowerMessage.includes("sensor") || lowerMessage.includes("reading") || lowerMessage.includes("telemetry")) {
+  if (
+    lowerMessage.includes("sensor") ||
+    lowerMessage.includes("reading") ||
+    lowerMessage.includes("telemetry")
+  ) {
     if (!sensors.length) {
       return "### GeoNexus Sensor Context\n\nNo sensor readings are available in the current GeoNexus context.";
     }
@@ -173,7 +179,11 @@ function getContextFallbackResponse(message, context) {
   const offlineNotice =
     "_Gemini is temporarily unavailable, so this explanation uses GeoNexus's existing safety rules and does not infer current conditions._";
 
-  if (lowerMessage.includes("flood") || lowerMessage.includes("rain") || lowerMessage.includes("water")) {
+  if (
+    lowerMessage.includes("flood") ||
+    lowerMessage.includes("rain") ||
+    lowerMessage.includes("water")
+  ) {
     return [
       "### Flood Risk Learning Guide",
       "",
@@ -288,7 +298,10 @@ export async function generateLearningResponse({
 
     // 25-second timeout to balance responsiveness with model generation latency
     const timeoutPromise = new Promise((_, reject) =>
-      setTimeout(() => reject(new Error("Gemini API request timed out")), 25000)
+      setTimeout(
+        () => reject(new Error("Gemini API request timed out")),
+        25000,
+      ),
     );
 
     const response = await Promise.race([generatePromise, timeoutPromise]);
@@ -300,7 +313,10 @@ export async function generateLearningResponse({
 
     return text;
   } catch (error) {
-    console.error("[AI Service Error] Using grounded context response:", error.message);
+    console.error(
+      "[AI Service Error] Using grounded context response:",
+      error.message,
+    );
     return getContextFallbackResponse(message, context);
   }
 }
@@ -349,7 +365,10 @@ Return clear Markdown with sections:
     contents: prompt,
     config: { temperature: 0.3, maxOutputTokens: 800 },
   });
-  return res.text?.trim() || "Immediate action: Move to high ground safely. Call 112.";
+  return (
+    res.text?.trim() ||
+    "Immediate action: Move to high ground safely. Call 112."
+  );
 }
 
 export async function safetyAuditorAgent(situation, plan, location = "India") {
@@ -387,10 +406,19 @@ AUDIT THE PLAN AND OUTPUT ONLY MARKDOWN:
     contents: prompt,
     config: { temperature: 0.2, maxOutputTokens: 800 },
   });
-  return res.text?.trim() || "Safety Audit: Verified. Avoid moving water and electrical equipment.";
+  return (
+    res.text?.trim() ||
+    "Safety Audit: Verified. Avoid moving water and electrical equipment."
+  );
 }
 
-export async function emergencyWriterAgent(situation, plan, audit, location = "India", memory = "") {
+export async function emergencyWriterAgent(
+  situation,
+  plan,
+  audit,
+  location = "India",
+  memory = "",
+) {
   const prompt = `You are the FINAL EMERGENCY RESPONSE WRITER for GeoNexus.
 
 Create a short, clear, actionable emergency response for a person experiencing an urgent hazard.
@@ -439,7 +467,12 @@ OUTPUT ONLY MARKDOWN:
   return res.text?.trim() || plan;
 }
 
-export async function safetyReviewerAgent(situation, draft, audit, location = "India") {
+export async function safetyReviewerAgent(
+  situation,
+  draft,
+  audit,
+  location = "India",
+) {
   const prompt = `You are the FINAL SAFETY REVIEWER for an emergency disaster response chatbot.
 Your job is to produce the safest possible final response for the user.
 
@@ -472,7 +505,11 @@ RETURN ONLY THE FINAL POLISHED MARKDOWN RESPONSE.`;
   return res.text?.trim() || draft;
 }
 
-export async function runEmergencyPipeline({ situation, location = "India", memory = "" }) {
+export async function runEmergencyPipeline({
+  situation,
+  location = "India",
+  memory = "",
+}) {
   try {
     // Stage 1: Planning
     const plan = await plannerAgent(situation, location, memory);
@@ -481,10 +518,21 @@ export async function runEmergencyPipeline({ situation, location = "India", memo
     const audit = await safetyAuditorAgent(situation, plan, location);
 
     // Stage 3: Writing Draft
-    const draft = await emergencyWriterAgent(situation, plan, audit, location, memory);
+    const draft = await emergencyWriterAgent(
+      situation,
+      plan,
+      audit,
+      location,
+      memory,
+    );
 
     // Stage 4: Safety Review
-    const finalResponse = await safetyReviewerAgent(situation, draft, audit, location);
+    const finalResponse = await safetyReviewerAgent(
+      situation,
+      draft,
+      audit,
+      location,
+    );
 
     return {
       success: true,
@@ -493,10 +541,27 @@ export async function runEmergencyPipeline({ situation, location = "India", memo
       draft,
       finalResponse,
       agents: [
-        { name: "Planner Agent", status: "completed", summary: "Synthesized immediate life preservation sequence." },
-        { name: "Safety Auditor", status: "completed", summary: "Scanned for floodwater, electrical, and structural hazards." },
-        { name: "Response Writer", status: "completed", summary: "Formatted crisp action-first instructions." },
-        { name: "Safety Reviewer", status: "completed", summary: "Verified adherence to zero-risk safety protocols." },
+        {
+          name: "Planner Agent",
+          status: "completed",
+          summary: "Synthesized immediate life preservation sequence.",
+        },
+        {
+          name: "Safety Auditor",
+          status: "completed",
+          summary:
+            "Scanned for floodwater, electrical, and structural hazards.",
+        },
+        {
+          name: "Response Writer",
+          status: "completed",
+          summary: "Formatted crisp action-first instructions.",
+        },
+        {
+          name: "Safety Reviewer",
+          status: "completed",
+          summary: "Verified adherence to zero-risk safety protocols.",
+        },
       ],
     };
   } catch (error) {
@@ -524,14 +589,31 @@ export async function runEmergencyPipeline({ situation, location = "India", memo
     return {
       success: true,
       plan: "Standard emergency life-safety sequence initiated.",
-      audit: "Life safety audit confirmed: avoid all contact with moving water.",
+      audit:
+        "Life safety audit confirmed: avoid all contact with moving water.",
       draft: fallbackGuidance,
       finalResponse: fallbackGuidance,
       agents: [
-        { name: "Planner Agent", status: "fallback", summary: "Safety-first rulebook protocol active." },
-        { name: "Safety Auditor", status: "fallback", summary: "Hazard avoidance rules validated." },
-        { name: "Response Writer", status: "fallback", summary: "Urgent evacuation instructions compiled." },
-        { name: "Safety Reviewer", status: "fallback", summary: "Emergency protocol certified." },
+        {
+          name: "Planner Agent",
+          status: "fallback",
+          summary: "Safety-first rulebook protocol active.",
+        },
+        {
+          name: "Safety Auditor",
+          status: "fallback",
+          summary: "Hazard avoidance rules validated.",
+        },
+        {
+          name: "Response Writer",
+          status: "fallback",
+          summary: "Urgent evacuation instructions compiled.",
+        },
+        {
+          name: "Safety Reviewer",
+          status: "fallback",
+          summary: "Emergency protocol certified.",
+        },
       ],
     };
   }
@@ -549,92 +631,115 @@ export function getStudyModules() {
       title: "Flash Flood Dynamics & Hydrology",
       icon: "Droplets",
       level: "Intermediate",
-      summary: "Explore rainfall intensity thresholds, catchment saturation, and rapid surge mechanics.",
+      summary:
+        "Explore rainfall intensity thresholds, catchment saturation, and rapid surge mechanics.",
       keyConcepts: [
         {
           term: "Infiltration Excess Runoff",
-          description: "When rainfall intensity exceeds soil infiltration capacity, immediate surface runoff occurs regardless of underlying moisture.",
+          description:
+            "When rainfall intensity exceeds soil infiltration capacity, immediate surface runoff occurs regardless of underlying moisture.",
         },
         {
           term: "Critical Soil Moisture (>= 80%)",
-          description: "Once soil saturation passes 80%, pore space is exhausted, resulting in 95%+ runoff generation.",
+          description:
+            "Once soil saturation passes 80%, pore space is exhausted, resulting in 95%+ runoff generation.",
         },
         {
           term: "River Surge Threshold (>= 0.25 m/h)",
-          description: "A rate of river level change exceeding 0.25 m/h triggers automated downstream warning sirens.",
+          description:
+            "A rate of river level change exceeding 0.25 m/h triggers automated downstream warning sirens.",
         },
       ],
-      datasetLink: "Grounded in india_flash_flood_5000.csv and Forecast Rainfall Data",
-      takeaway: "Flash floods can escalate within 1–2 hours of localized heavy rainfall (>50 mm/h). Early telemetry alerts save lives.",
+      datasetLink:
+        "Grounded in india_flash_flood_5000.csv and Forecast Rainfall Data",
+      takeaway:
+        "Flash floods can escalate within 1–2 hours of localized heavy rainfall (>50 mm/h). Early telemetry alerts save lives.",
     },
     {
       id: "slope-stability",
       title: "Landslide Mechanics & Slope Stability",
       icon: "Mountain",
       level: "Advanced",
-      summary: "Understand shear strength reduction, pore water pressure, and slope angles in mountainous terrain.",
+      summary:
+        "Understand shear strength reduction, pore water pressure, and slope angles in mountainous terrain.",
       keyConcepts: [
         {
           term: "Factor of Safety (FoS)",
-          description: "The ratio of resisting shear strength to driving gravitational shear stress. FoS < 1.0 indicates slope failure.",
+          description:
+            "The ratio of resisting shear strength to driving gravitational shear stress. FoS < 1.0 indicates slope failure.",
         },
         {
           term: "Critical Slope Angle (>= 25°)",
-          description: "Slopes steeper than 25° with sparse vegetation have exponentially higher landslide risk under continuous precipitation.",
+          description:
+            "Slopes steeper than 25° with sparse vegetation have exponentially higher landslide risk under continuous precipitation.",
         },
         {
           term: "Pore Pressure Liquefaction",
-          description: "Water pressure trapped inside soil pores reduces effective stress, causing soil to behave like a viscous liquid.",
+          description:
+            "Water pressure trapped inside soil pores reduces effective stress, causing soil to behave like a viscous liquid.",
         },
       ],
-      datasetLink: "Grounded in GeoNexus Geotechnical Telemetry & Slope Stability Models",
-      takeaway: "Slope stabilization requires continuous monitoring of pore water pressure and prompt evacuation when thresholds are breached.",
+      datasetLink:
+        "Grounded in GeoNexus Geotechnical Telemetry & Slope Stability Models",
+      takeaway:
+        "Slope stabilization requires continuous monitoring of pore water pressure and prompt evacuation when thresholds are breached.",
     },
     {
       id: "iot-sensors",
       title: "IoT Disaster Sensor Fleets",
       icon: "Radio",
       level: "Beginner",
-      summary: "How rain gauges, ultrasonic river sensors, and soil probes provide real-time command telemetry.",
+      summary:
+        "How rain gauges, ultrasonic river sensors, and soil probes provide real-time command telemetry.",
       keyConcepts: [
         {
           term: "Tipping Bucket Rain Gauge",
-          description: "Measures precipitation in 0.2 mm increments, transmitting telemetry via LoRaWAN/cellular to the command center.",
+          description:
+            "Measures precipitation in 0.2 mm increments, transmitting telemetry via LoRaWAN/cellular to the command center.",
         },
         {
           term: "Ultrasonic River Stage Sensors",
-          description: "Mounted above river bridges to measure distance to water surface without physical debris contact.",
+          description:
+            "Mounted above river bridges to measure distance to water surface without physical debris contact.",
         },
         {
           term: "Time-Domain Reflectometry (TDR)",
-          description: "Measures soil dielectric permittivity to calculate volumetric water content with high precision.",
+          description:
+            "Measures soil dielectric permittivity to calculate volumetric water content with high precision.",
         },
       ],
       datasetLink: "Grounded in GeoNexus IoT Sensor Network specifications",
-      takeaway: "Redundant, multi-sensor nodes ensure telemetry transmission even during severe weather and local grid outages.",
+      takeaway:
+        "Redundant, multi-sensor nodes ensure telemetry transmission even during severe weather and local grid outages.",
     },
     {
       id: "command-protocols",
       title: "Command Center Emergency Operations",
       icon: "ShieldAlert",
       level: "Intermediate",
-      summary: "Standard operating procedures, Sendai Framework DRR targets, and multi-agency coordination.",
+      summary:
+        "Standard operating procedures, Sendai Framework DRR targets, and multi-agency coordination.",
       keyConcepts: [
         {
           term: "Incident Command System (ICS)",
-          description: "A standardized management tool for command, control, and coordination of emergency response personnel.",
+          description:
+            "A standardized management tool for command, control, and coordination of emergency response personnel.",
         },
         {
           term: "National Emergency Helpline (112)",
-          description: "India's unified emergency phone number connecting police, fire, ambulance, and disaster response teams.",
+          description:
+            "India's unified emergency phone number connecting police, fire, ambulance, and disaster response teams.",
         },
         {
           term: "Sendai Target G",
-          description: "Substantially increase the availability of and access to multi-hazard early warning systems and disaster risk information.",
+          description:
+            "Substantially increase the availability of and access to multi-hazard early warning systems and disaster risk information.",
         },
       ],
-      datasetLink: "Grounded in NDMA India Protocols & Disaster Management Framework",
-      takeaway: "Clear communication chains, verified situational intelligence, and rapid public warning dissemination form the backbone of command operations.",
+      datasetLink:
+        "Grounded in NDMA India Protocols & Disaster Management Framework",
+      takeaway:
+        "Clear communication chains, verified situational intelligence, and rapid public warning dissemination form the backbone of command operations.",
     },
   ];
 }
