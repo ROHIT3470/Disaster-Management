@@ -40,16 +40,6 @@ import "./styles/MapView.css";
 import "./styles/Animations.css";
 import "./styles/Legal.css";
 import "./styles/buttons.css";
-
-/*
- * Keep both stylesheets:
- *
- * visual-refresh.css
- *  - M.'s newer visual system
- *
- * theme-refresh.css
- *  - T_P's more comprehensive UI/theme layer
- */
 import "./styles/visual-refresh.css";
 import "./styles/theme-refresh.css";
 
@@ -60,10 +50,12 @@ import "./styles/theme-refresh.css";
 const APP_NAME = "GeoNexus";
 
 const APP_VERSION =
-  import.meta.env.VITE_APP_VERSION || "1.0.0";
+  import.meta.env.VITE_APP_VERSION ||
+  "1.0.0";
 
 const APP_ENVIRONMENT =
-  import.meta.env.MODE || "development";
+  import.meta.env.MODE ||
+  "development";
 
 const IS_DEVELOPMENT =
   Boolean(import.meta.env.DEV);
@@ -105,7 +97,8 @@ const EVENTS = Object.freeze({
    ============================================================ */
 
 const STORAGE_KEYS = Object.freeze({
-  SESSION_ID: "geonexus_app_session_id",
+  SESSION_ID:
+    "geonexus_app_session_id",
 });
 
 /* ============================================================
@@ -447,8 +440,7 @@ function recordApplicationError(
   const details =
     getErrorDetails(error);
 
-  runtimeState.errorCount +=
-    1;
+  runtimeState.errorCount += 1;
 
   runtimeState.lastError = {
     ...details,
@@ -477,9 +469,7 @@ function recordApplicationError(
    GLOBAL ERROR HANDLERS
    ============================================================ */
 
-function handleGlobalError(
-  event,
-) {
+function handleGlobalError(event) {
   const error =
     event?.error ||
     event?.message ||
@@ -491,9 +481,7 @@ function handleGlobalError(
   );
 }
 
-function handleUnhandledRejection(
-  event,
-) {
+function handleUnhandledRejection(event) {
   const reason =
     event?.reason ||
     "Unknown promise rejection";
@@ -569,8 +557,7 @@ function handleVisibilityChange() {
     {
       visibility,
       visible:
-        visibility ===
-        "visible",
+        visibility === "visible",
     },
   );
 }
@@ -579,9 +566,7 @@ function handleVisibilityChange() {
    PAGE LIFECYCLE
    ============================================================ */
 
-function handlePageShow(
-  event,
-) {
+function handlePageShow(event) {
   dispatchAppEvent(
     "app:pageshow",
     {
@@ -601,8 +586,7 @@ function handlePageHide() {
    GLOBAL LISTENER MANAGEMENT
    ============================================================ */
 
-let listenersRegistered =
-  false;
+let listenersRegistered = false;
 
 function registerGlobalListeners() {
   if (
@@ -821,7 +805,8 @@ function detectBrowserCapabilities() {
    REACT ERROR BOUNDARY
    ============================================================ */
 
-class ApplicationErrorBoundary extends React.Component {
+class ApplicationErrorBoundary
+  extends React.Component {
   constructor(props) {
     super(props);
 
@@ -1097,9 +1082,7 @@ class ApplicationErrorBoundary extends React.Component {
                       "#f87171",
                   }}
                 >
-                  {
-                    errorDetails.name
-                  }
+                  {errorDetails.name}
                 </strong>
 
                 <pre
@@ -1129,7 +1112,8 @@ class ApplicationErrorBoundary extends React.Component {
 
           <footer
             style={{
-              marginTop: "28px",
+              marginTop:
+                "28px",
               color: "#64748b",
               fontSize: "12px",
             }}
@@ -1195,29 +1179,35 @@ function renderStartupFailure(
     "assertive",
   );
 
-  Object.assign(main.style, {
-    minHeight: "100vh",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    padding: "24px",
-    boxSizing: "border-box",
-    background: "#0f172a",
-    color: "#f8fafc",
-    fontFamily:
-      "system-ui, sans-serif",
-    textAlign: "center",
-  });
+  Object.assign(
+    main.style,
+    {
+      minHeight: "100vh",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      padding: "24px",
+      boxSizing: "border-box",
+      background: "#0f172a",
+      color: "#f8fafc",
+      fontFamily:
+        "system-ui, sans-serif",
+      textAlign: "center",
+    },
+  );
 
   const section =
     document.createElement(
       "section",
     );
 
-  Object.assign(section.style, {
-    width: "100%",
-    maxWidth: "600px",
-  });
+  Object.assign(
+    section.style,
+    {
+      width: "100%",
+      maxWidth: "600px",
+    },
+  );
 
   const icon =
     document.createElement(
@@ -1226,10 +1216,13 @@ function renderStartupFailure(
 
   icon.textContent = "⚠️";
 
-  Object.assign(icon.style, {
-    fontSize: "48px",
-    marginBottom: "16px",
-  });
+  Object.assign(
+    icon.style,
+    {
+      fontSize: "48px",
+      marginBottom: "16px",
+    },
+  );
 
   const title =
     document.createElement(
@@ -1239,10 +1232,14 @@ function renderStartupFailure(
   title.textContent =
     "Application Startup Failed";
 
-  Object.assign(title.style, {
-    fontSize: "28px",
-    margin: "0 0 12px",
-  });
+  Object.assign(
+    title.style,
+    {
+      fontSize: "28px",
+      margin:
+        "0 0 12px",
+    },
+  );
 
   const message =
     document.createElement(
@@ -1252,11 +1249,14 @@ function renderStartupFailure(
   message.textContent =
     "GeoNexus could not be initialized. Please reload the application.";
 
-  Object.assign(message.style, {
-    color: "#cbd5e1",
-    lineHeight: "1.6",
-    margin: "0",
-  });
+  Object.assign(
+    message.style,
+    {
+      color: "#cbd5e1",
+      lineHeight: "1.6",
+      margin: "0",
+    },
+  );
 
   const button =
     document.createElement(
@@ -1264,19 +1264,23 @@ function renderStartupFailure(
     );
 
   button.type = "button";
+
   button.textContent =
     "Reload Application";
 
-  Object.assign(button.style, {
-    marginTop: "20px",
-    padding: "12px 20px",
-    border: "0",
-    borderRadius: "10px",
-    background: "#2563eb",
-    color: "#ffffff",
-    fontWeight: "700",
-    cursor: "pointer",
-  });
+  Object.assign(
+    button.style,
+    {
+      marginTop: "20px",
+      padding: "12px 20px",
+      border: "0",
+      borderRadius: "10px",
+      background: "#2563eb",
+      color: "#ffffff",
+      fontWeight: "700",
+      cursor: "pointer",
+    },
+  );
 
   button.addEventListener(
     "click",
@@ -1305,24 +1309,28 @@ function renderStartupFailure(
       details.message ||
       "Unknown startup error";
 
-    Object.assign(pre.style, {
-      marginTop: "24px",
-      padding: "16px",
-      textAlign: "left",
-      overflow: "auto",
-      background: "#020617",
-      color: "#f87171",
-      borderRadius: "10px",
-      fontSize: "12px",
-      lineHeight: "1.6",
-      whiteSpace: "pre-wrap",
-      wordBreak: "break-word",
-    });
+    Object.assign(
+      pre.style,
+      {
+        marginTop: "24px",
+        padding: "16px",
+        textAlign: "left",
+        overflow: "auto",
+        background: "#020617",
+        color: "#f87171",
+        borderRadius: "10px",
+        fontSize: "12px",
+        lineHeight: "1.6",
+        whiteSpace: "pre-wrap",
+        wordBreak: "break-word",
+      },
+    );
 
     section.appendChild(pre);
   }
 
   main.appendChild(section);
+
   rootElement.appendChild(main);
 }
 
@@ -1347,7 +1355,8 @@ function exposeDevelopmentDiagnostics(
         name: APP_NAME,
         version: APP_VERSION,
         environment,
-        sessionId: SESSION_ID,
+        sessionId:
+          SESSION_ID,
         capabilities:
           detectBrowserCapabilities(),
         getHealth:
@@ -1549,8 +1558,7 @@ function initializeApplication() {
    START APPLICATION
    ============================================================ */
 
-let applicationRoot =
-  null;
+let applicationRoot = null;
 
 try {
   applicationRoot =

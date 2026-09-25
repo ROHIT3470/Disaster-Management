@@ -56,14 +56,6 @@ import { animatePageEntrance } from "./utils/anime.js";
 import SOSModal from "./components/SOSModal.jsx";
 import SituationReportModal from "./components/SituationReportModal.jsx";
 
-/*
- * Keep modal imports available if they are consumed globally
- * by the existing application architecture.
- *
- * These are intentionally not rendered here because their
- * visibility/state is controlled elsewhere in the project.
- */
-
 /* ============================================================
    CONTEXT PROVIDERS
    ============================================================ */
@@ -116,8 +108,7 @@ const APP_DESCRIPTION =
   "AI-powered multi-hazard disaster management and early warning command center.";
 
 const APP_VERSION =
-  import.meta.env.VITE_APP_VERSION ||
-  "1.0.0";
+  import.meta.env.VITE_APP_VERSION || "1.0.0";
 
 const APP_BASE_URL =
   import.meta.env.BASE_URL || "/";
@@ -245,31 +236,19 @@ const PAGE_META = Object.freeze({
    ============================================================ */
 
 function PageEffects() {
-  const location =
-    useLocation();
-
-  const navigationType =
-    useNavigationType();
+  const location = useLocation();
+  const navigationType = useNavigationType();
 
   useEffect(() => {
     const normalizedPath =
-      location.pathname.replace(
-        /\/+$/,
-        "",
-      ) || "/";
+      location.pathname.replace(/\/+$/, "") || "/";
 
     const exactMeta =
-      PAGE_META[
-        normalizedPath
-      ];
+      PAGE_META[normalizedPath];
 
     const dashboardMeta =
-      normalizedPath.startsWith(
-        "/dashboard",
-      )
-        ? PAGE_META[
-            "/dashboard"
-          ]
+      normalizedPath.startsWith("/dashboard")
+        ? PAGE_META["/dashboard"]
         : null;
 
     const meta =
@@ -281,8 +260,7 @@ function PageEffects() {
           APP_DESCRIPTION,
       };
 
-    document.title =
-      meta.title;
+    document.title = meta.title;
 
     let descriptionTag =
       document.querySelector(
@@ -291,9 +269,7 @@ function PageEffects() {
 
     if (!descriptionTag) {
       descriptionTag =
-        document.createElement(
-          "meta",
-        );
+        document.createElement("meta");
 
       descriptionTag.setAttribute(
         "name",
@@ -317,9 +293,7 @@ function PageEffects() {
 
     if (!themeColor) {
       themeColor =
-        document.createElement(
-          "meta",
-        );
+        document.createElement("meta");
 
       themeColor.setAttribute(
         "name",
@@ -455,8 +429,7 @@ function AppLoading() {
 function NetworkStatus() {
   const [online, setOnline] =
     useState(() =>
-      typeof navigator !==
-      "undefined"
+      typeof navigator !== "undefined"
         ? navigator.onLine
         : true,
     );
@@ -541,9 +514,7 @@ function NetworkStatus() {
    ADMIN ROLE HELPER
    ============================================================ */
 
-function userHasAdminAccess(
-  user,
-) {
+function userHasAdminAccess(user) {
   if (!user) {
     return false;
   }
@@ -551,17 +522,15 @@ function userHasAdminAccess(
   const primaryRole =
     String(
       user?.role ||
-        user?.userRole ||
-        user?.accountType ||
-        "",
+      user?.userRole ||
+      user?.accountType ||
+      "",
     )
       .trim()
       .toLowerCase();
 
   const roles =
-    Array.isArray(
-      user?.roles,
-    )
+    Array.isArray(user?.roles)
       ? user.roles.map(
           (role) =>
             String(role)
@@ -580,13 +549,9 @@ function userHasAdminAccess(
   ];
 
   return (
-    adminRoles.includes(
-      primaryRole,
-    ) ||
+    adminRoles.includes(primaryRole) ||
     roles.some((role) =>
-      adminRoles.includes(
-        role,
-      ),
+      adminRoles.includes(role),
     ) ||
     user?.isAdmin === true
   );
@@ -641,9 +606,7 @@ function AdminRoute() {
     );
   }
 
-  if (
-    !userHasAdminAccess(user)
-  ) {
+  if (!userHasAdminAccess(user)) {
     return (
       <Navigate
         to="/dashboard"
@@ -685,9 +648,7 @@ function PublicOnlyRoute() {
    PAGE TRANSITION
    ============================================================ */
 
-function PageTransition({
-  children,
-}) {
+function PageTransition({ children }) {
   return <>{children}</>;
 }
 
@@ -728,11 +689,6 @@ function DashboardLayout() {
         </main>
       </div>
 
-      {/*
-       * These components remain available to the application
-       * architecture. Their own visibility/state handling is
-       * preserved in their respective modules.
-       */}
       <SOSModal />
       <SituationReportModal />
     </div>
@@ -744,8 +700,7 @@ function DashboardLayout() {
    ============================================================ */
 
 function NotFoundPage() {
-  const navigate =
-    useNavigate();
+  const navigate = useNavigate();
 
   return (
     <main
@@ -792,10 +747,10 @@ function AppRoutes() {
   return (
     <>
       <PageEffects />
-
       <NetworkStatus />
 
       <Routes>
+
         {/* ==================================================
             PUBLIC-ONLY ROUTES
            ================================================== */}
@@ -883,8 +838,8 @@ function AppRoutes() {
               <DashboardLayout />
             }
           >
-            {/* COMMAND DASHBOARD */}
 
+            {/* COMMAND DASHBOARD */}
             <Route
               index
               element={
@@ -893,7 +848,6 @@ function AppRoutes() {
             />
 
             {/* LIVE MONITORING */}
-
             <Route
               path="monitoring"
               element={
@@ -902,7 +856,6 @@ function AppRoutes() {
             />
 
             {/* GIS RISK MAP */}
-
             <Route
               path="risk-map"
               element={
@@ -911,7 +864,6 @@ function AppRoutes() {
             />
 
             {/* ALERT CENTER */}
-
             <Route
               path="alerts"
               element={
@@ -920,7 +872,6 @@ function AppRoutes() {
             />
 
             {/* AI SIMULATION */}
-
             <Route
               path="simulation"
               element={
@@ -929,7 +880,6 @@ function AppRoutes() {
             />
 
             {/* HISTORICAL DATA */}
-
             <Route
               path="history"
               element={
@@ -938,7 +888,6 @@ function AppRoutes() {
             />
 
             {/* EMERGENCY HUB */}
-
             <Route
               path="emergency-hub"
               element={
@@ -947,7 +896,6 @@ function AppRoutes() {
             />
 
             {/* AI ASSISTANT */}
-
             <Route
               path="ai-assistant"
               element={
@@ -956,7 +904,6 @@ function AppRoutes() {
             />
 
             {/* LEARNING ALIAS */}
-
             <Route
               path="learning"
               element={
@@ -965,7 +912,6 @@ function AppRoutes() {
             />
 
             {/* ADMIN */}
-
             <Route
               path="admin"
               element={
@@ -981,7 +927,6 @@ function AppRoutes() {
             </Route>
 
             {/* UNKNOWN DASHBOARD MODULE */}
-
             <Route
               path="*"
               element={
@@ -1098,6 +1043,7 @@ function AppRoutes() {
             <NotFoundPage />
           }
         />
+
       </Routes>
     </>
   );
@@ -1122,7 +1068,6 @@ function App() {
             basename={basename}
           >
             <ToastContainer />
-
             <AppRoutes />
           </BrowserRouter>
         </AuthProvider>
@@ -1137,8 +1082,7 @@ function App() {
 
 if (
   import.meta.env.DEV &&
-  typeof window !==
-    "undefined"
+  typeof window !== "undefined"
 ) {
   window.__GEONEXUS__ =
     window.__GEONEXUS__ || {};
