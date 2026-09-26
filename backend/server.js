@@ -22,6 +22,7 @@ import userRoutes from "./routes/userRoutes.js";
 import weatherRoutes from "./routes/weatherRoutes.js";
 import aiRoutes from "./routes/aiRoutes.js";
 import contactRoutes from "./routes/contactRoutes.js";
+import routeRoutes from "./routes/routeRoutes.js";
 import { isEmailConfigured, verifyEmailConnection } from "./services/emailService.js";
 import {
   logError,
@@ -188,6 +189,7 @@ app.use("/api/weather", weatherRoutes);
 
 app.use("/api/ai", aiRoutes);
 app.use("/api/contact", contactRoutes);
+app.use("/api/route", routeRoutes);
 
 
 // ============================================================

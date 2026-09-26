@@ -23,6 +23,7 @@ import {
   Tooltip,
   useMap,
   useMapEvents,
+  Polyline,
 } from "react-leaflet";
 
 import "leaflet/dist/leaflet.css";
@@ -623,11 +624,17 @@ function RiskPopup({
 
       <div className="popup-footer">
         <Activity size={12} />
-
-        <span>
-          Monitoring node operational
-        </span>
+        <span>Monitoring node operational</span>
       </div>
+      <button 
+        style={{marginTop: "10px", width: "100%", padding: "5px", background: "var(--primary)", color: "white", border: "none", borderRadius: "4px"}}
+        onClick={(e) => {
+          e.stopPropagation();
+          // Fire a custom event to fetch route to a shelter
+          window.dispatchEvent(new CustomEvent('request-evacuation-route', { detail: location.id }));
+        }}>
+        Find Escape Route
+      </button>
     </div>
   );
 }
@@ -668,6 +675,37 @@ function MapView({
 
   const [connectionStatus, setConnectionStatus] =
     useState("connected");
+
+  const [evacuationRoute, setEvacuationRoute] = useState(null);
+  const [routeLoading, setRouteLoading] = useState(false);
+  const [terrainMode, setTerrainMode] = useState(false);
+
+  useEffect(() => {
+    const handleRouteRequest = async (e) => {
+      const locationId = e.detail;
+      setRouteLoading(true);
+      try {
+        const response = await fetch("http://localhost:5000/api/route/calculate", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ startId: locationId, destinationId: "SHELTER-1" })
+        });
+        if (response.ok) {
+          const data = await response.json();
+          setEvacuationRoute(data);
+        } else {
+          setEvacuationRoute(null);
+          alert("No safe route available or error fetching route.");
+        }
+      } catch (err) {
+        console.error("Routing error:", err);
+      } finally {
+        setRouteLoading(false);
+      }
+    };
+    window.addEventListener('request-evacuation-route', handleRouteRequest);
+    return () => window.removeEventListener('request-evacuation-route', handleRouteRequest);
+  }, []);
 
   const mapWrapperRef = useRef(null);
 
@@ -977,22 +1015,19 @@ function MapView({
             type="button"
             className="map-header-button"
             onClick={handleFullscreen}
-            title={
-              isFullscreen
-                ? "Exit fullscreen"
-                : "Open fullscreen"
-            }
-            aria-label={
-              isFullscreen
-                ? "Exit fullscreen"
-                : "Open fullscreen"
-            }
+            title={isFullscreen ? "Exit fullscreen" : "Open fullscreen"}
+            aria-label={isFullscreen ? "Exit fullscreen" : "Open fullscreen"}
           >
-            {isFullscreen ? (
-              <X size={15} />
-            ) : (
-              <Maximize2 size={15} />
-            )}
+            {isFullscreen ? <X size={15} /> : <Maximize2 size={15} />}
+          </button>
+          
+          <button
+            type="button"
+            className="map-header-button"
+            onClick={() => setTerrainMode(!terrainMode)}
+            title="Toggle Terrain (DEM) Mode"
+          >
+            <Layers size={15} color={terrainMode ? "#38bdf8" : "currentColor"} />
           </button>
 
           <div className="live-badge">
@@ -1106,8 +1141,10 @@ function MapView({
         >
 
           <TileLayer
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            attribution="&copy; OpenStreetMap contributors"
+            url={terrainMode 
+              ? "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png"
+              : "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"}
+            attribution={terrainMode ? "Map data: &copy; OpenStreetMap contributors, SRTM | Map style: &copy; OpenTopoMap" : "&copy; OpenStreetMap contributors"}
             maxZoom={19}
           />
 
@@ -1232,6 +1269,24 @@ function MapView({
                 </div>
               );
             }
+          )}
+
+          {/* Render Evacuation Route */}
+          {evacuationRoute && (
+            <>
+              <Polyline 
+                positions={evacuationRoute.routePath.map(p => [p.lat, p.lng])}
+                color="#38bdf8"
+                weight={6}
+                dashArray="10, 10"
+              />
+              <CircleMarker center={[evacuationRoute.destination.lat, evacuationRoute.destination.lng]} radius={10} color="#22c55e" fillColor="#22c55e" fillOpacity={1}>
+                <Popup>
+                  <strong>{evacuationRoute.destination.name}</strong><br/>
+                  Safe Destination / Shelter
+                </Popup>
+              </CircleMarker>
+            </>
           )}
 
         </MapContainer>
