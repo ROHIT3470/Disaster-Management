@@ -40,16 +40,6 @@ import "./styles/MapView.css";
 import "./styles/Animations.css";
 import "./styles/Legal.css";
 import "./styles/buttons.css";
-
-/*
- * Keep both stylesheets:
- *
- * visual-refresh.css
- *  - M.'s newer visual system
- *
- * theme-refresh.css
- *  - T_P's more comprehensive UI/theme layer
- */
 import "./styles/visual-refresh.css";
 import "./styles/theme-refresh.css";
 
@@ -60,10 +50,12 @@ import "./styles/theme-refresh.css";
 const APP_NAME = "GeoNexus";
 
 const APP_VERSION =
-  import.meta.env.VITE_APP_VERSION || "1.0.0";
+  import.meta.env.VITE_APP_VERSION ||
+  "1.0.0";
 
 const APP_ENVIRONMENT =
-  import.meta.env.MODE || "development";
+  import.meta.env.MODE ||
+  "development";
 
 const IS_DEVELOPMENT =
   Boolean(import.meta.env.DEV);
@@ -78,10 +70,16 @@ const START_TIME =
 
 const environment = Object.freeze({
   mode: APP_ENVIRONMENT,
-  development: IS_DEVELOPMENT,
-  production: IS_PRODUCTION,
+
+  development:
+    IS_DEVELOPMENT,
+
+  production:
+    IS_PRODUCTION,
+
   baseUrl:
     import.meta.env.BASE_URL || "/",
+
   hostname:
     typeof window !== "undefined"
       ? window.location.hostname
@@ -93,11 +91,20 @@ const environment = Object.freeze({
    ============================================================ */
 
 const EVENTS = Object.freeze({
-  READY: "app:ready",
-  ERROR: "app:error",
-  NETWORK_STATUS: "app:network-status",
-  VISIBILITY: "app:visibility",
-  HEALTH: "app:health",
+  READY:
+    "app:ready",
+
+  ERROR:
+    "app:error",
+
+  NETWORK_STATUS:
+    "app:network-status",
+
+  VISIBILITY:
+    "app:visibility",
+
+  HEALTH:
+    "app:health",
 });
 
 /* ============================================================
@@ -105,7 +112,8 @@ const EVENTS = Object.freeze({
    ============================================================ */
 
 const STORAGE_KEYS = Object.freeze({
-  SESSION_ID: "geonexus_app_session_id",
+  SESSION_ID:
+    "geonexus_app_session_id",
 });
 
 /* ============================================================
@@ -113,6 +121,7 @@ const STORAGE_KEYS = Object.freeze({
    ============================================================ */
 
 const MAX_ERROR_MESSAGE_LENGTH = 500;
+
 const MAX_STACK_LENGTH = 2000;
 
 /* ============================================================
@@ -125,11 +134,20 @@ function safeString(
 ) {
   try {
     if (value instanceof Error) {
-      return value.message || fallback;
+      return (
+        value.message ||
+        fallback
+      );
     }
 
-    if (typeof value === "string") {
-      return value || fallback;
+    if (
+      typeof value ===
+      "string"
+    ) {
+      return (
+        value ||
+        fallback
+      );
     }
 
     if (value == null) {
@@ -147,7 +165,10 @@ function truncate(
   maxLength,
 ) {
   const stringValue =
-    safeString(value, "");
+    safeString(
+      value,
+      "",
+    );
 
   if (
     stringValue.length <=
@@ -163,16 +184,20 @@ function truncate(
 }
 
 function getErrorDetails(error) {
-  if (error instanceof Error) {
+  if (
+    error instanceof Error
+  ) {
     return {
       name: truncate(
         error.name,
         100,
       ),
+
       message: truncate(
         error.message,
         MAX_ERROR_MESSAGE_LENGTH,
       ),
+
       stack: truncate(
         error.stack,
         MAX_STACK_LENGTH,
@@ -181,11 +206,14 @@ function getErrorDetails(error) {
   }
 
   return {
-    name: "UnknownError",
+    name:
+      "UnknownError",
+
     message: truncate(
       error,
       MAX_ERROR_MESSAGE_LENGTH,
     ),
+
     stack: "",
   };
 }
@@ -197,7 +225,8 @@ function getErrorDetails(error) {
 function createSessionId() {
   try {
     if (
-      typeof crypto !== "undefined" &&
+      typeof crypto !==
+        "undefined" &&
       typeof crypto.randomUUID ===
         "function"
     ) {
@@ -344,7 +373,8 @@ const performanceMonitor = {
           : Date.now();
 
       const duration =
-        currentTime - startTime;
+        currentTime -
+        startTime;
 
       if (
         typeof performance !==
@@ -385,9 +415,13 @@ performanceMonitor.mark(
 
 const runtimeState = {
   initialized: false,
+
   ready: false,
+
   startupFailed: false,
+
   lastError: null,
+
   errorCount: 0,
 
   networkOnline:
@@ -420,13 +454,20 @@ function dispatchAppEvent(
     }
 
     window.dispatchEvent(
-      new CustomEvent(name, {
-        detail: {
-          timestamp: Date.now(),
-          sessionId: SESSION_ID,
-          ...detail,
+      new CustomEvent(
+        name,
+        {
+          detail: {
+            timestamp:
+              Date.now(),
+
+            sessionId:
+              SESSION_ID,
+
+            ...detail,
+          },
         },
-      }),
+      ),
     );
   } catch (error) {
     logger.warn(
@@ -445,15 +486,20 @@ function recordApplicationError(
   context = "unknown",
 ) {
   const details =
-    getErrorDetails(error);
+    getErrorDetails(
+      error,
+    );
 
   runtimeState.errorCount +=
     1;
 
   runtimeState.lastError = {
     ...details,
+
     context,
-    timestamp: Date.now(),
+
+    timestamp:
+      Date.now(),
   };
 
   logger.error(
@@ -465,9 +511,13 @@ function recordApplicationError(
     EVENTS.ERROR,
     {
       context,
+
       error: {
-        name: details.name,
-        message: details.message,
+        name:
+          details.name,
+
+        message:
+          details.message,
       },
     },
   );
@@ -477,9 +527,7 @@ function recordApplicationError(
    GLOBAL ERROR HANDLERS
    ============================================================ */
 
-function handleGlobalError(
-  event,
-) {
+function handleGlobalError(event) {
   const error =
     event?.error ||
     event?.message ||
@@ -520,6 +568,7 @@ function handleOnline() {
     EVENTS.NETWORK_STATUS,
     {
       online: true,
+
       state: "online",
     },
   );
@@ -537,6 +586,7 @@ function handleOffline() {
     EVENTS.NETWORK_STATUS,
     {
       online: false,
+
       state: "offline",
     },
   );
@@ -568,6 +618,7 @@ function handleVisibilityChange() {
     EVENTS.VISIBILITY,
     {
       visibility,
+
       visible:
         visibility ===
         "visible",
@@ -579,14 +630,14 @@ function handleVisibilityChange() {
    PAGE LIFECYCLE
    ============================================================ */
 
-function handlePageShow(
-  event,
-) {
+function handlePageShow(event) {
   dispatchAppEvent(
     "app:pageshow",
     {
       persisted:
-        Boolean(event?.persisted),
+        Boolean(
+          event?.persisted,
+        ),
     },
   );
 }
@@ -724,27 +775,41 @@ function getApplicationHealth() {
       : Date.now();
 
   return Object.freeze({
-    name: APP_NAME,
-    version: APP_VERSION,
+    name:
+      APP_NAME,
+
+    version:
+      APP_VERSION,
+
     environment:
       APP_ENVIRONMENT,
+
     initialized:
       runtimeState.initialized,
+
     ready:
       runtimeState.ready,
+
     startupFailed:
       runtimeState.startupFailed,
+
     networkOnline:
       runtimeState.networkOnline,
+
     visibility:
       runtimeState.visibility,
+
     errorCount:
       runtimeState.errorCount,
-    uptimeMs: Math.round(
-      currentTime -
-        START_TIME,
-    ),
-    timestamp: Date.now(),
+
+    uptimeMs:
+      Math.round(
+        currentTime -
+          START_TIME,
+      ),
+
+    timestamp:
+      Date.now(),
   });
 }
 
@@ -764,12 +829,14 @@ function detectBrowserCapabilities() {
     localStorage:
       typeof window !==
         "undefined" &&
-      "localStorage" in window,
+      "localStorage" in
+        window,
 
     sessionStorage:
       typeof window !==
         "undefined" &&
-      "sessionStorage" in window,
+      "sessionStorage" in
+        window,
 
     serviceWorker:
       typeof navigator !==
@@ -780,7 +847,8 @@ function detectBrowserCapabilities() {
     notifications:
       typeof window !==
         "undefined" &&
-      "Notification" in window,
+      "Notification" in
+        window,
 
     geolocation:
       typeof navigator !==
@@ -791,7 +859,8 @@ function detectBrowserCapabilities() {
     webSocket:
       typeof window !==
         "undefined" &&
-      "WebSocket" in window,
+      "WebSocket" in
+        window,
 
     broadcastChannel:
       typeof window !==
@@ -821,13 +890,16 @@ function detectBrowserCapabilities() {
    REACT ERROR BOUNDARY
    ============================================================ */
 
-class ApplicationErrorBoundary extends React.Component {
+class ApplicationErrorBoundary
+  extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       hasError: false,
+
       error: null,
+
       errorId: null,
     };
   }
@@ -837,7 +909,9 @@ class ApplicationErrorBoundary extends React.Component {
   ) {
     return {
       hasError: true,
+
       error,
+
       errorId:
         createSessionId(),
     };
@@ -876,7 +950,9 @@ class ApplicationErrorBoundary extends React.Component {
   handleReset = () => {
     this.setState({
       hasError: false,
+
       error: null,
+
       errorId: null,
     });
   };
@@ -1097,9 +1173,7 @@ class ApplicationErrorBoundary extends React.Component {
                       "#f87171",
                   }}
                 >
-                  {
-                    errorDetails.name
-                  }
+                  {errorDetails.name}
                 </strong>
 
                 <pre
@@ -1129,7 +1203,8 @@ class ApplicationErrorBoundary extends React.Component {
 
           <footer
             style={{
-              marginTop: "28px",
+              marginTop:
+                "28px",
               color: "#64748b",
               fontSize: "12px",
             }}
@@ -1195,29 +1270,35 @@ function renderStartupFailure(
     "assertive",
   );
 
-  Object.assign(main.style, {
-    minHeight: "100vh",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    padding: "24px",
-    boxSizing: "border-box",
-    background: "#0f172a",
-    color: "#f8fafc",
-    fontFamily:
-      "system-ui, sans-serif",
-    textAlign: "center",
-  });
+  Object.assign(
+    main.style,
+    {
+      minHeight: "100vh",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      padding: "24px",
+      boxSizing: "border-box",
+      background: "#0f172a",
+      color: "#f8fafc",
+      fontFamily:
+        "system-ui, sans-serif",
+      textAlign: "center",
+    },
+  );
 
   const section =
     document.createElement(
       "section",
     );
 
-  Object.assign(section.style, {
-    width: "100%",
-    maxWidth: "600px",
-  });
+  Object.assign(
+    section.style,
+    {
+      width: "100%",
+      maxWidth: "600px",
+    },
+  );
 
   const icon =
     document.createElement(
@@ -1226,10 +1307,13 @@ function renderStartupFailure(
 
   icon.textContent = "⚠️";
 
-  Object.assign(icon.style, {
-    fontSize: "48px",
-    marginBottom: "16px",
-  });
+  Object.assign(
+    icon.style,
+    {
+      fontSize: "48px",
+      marginBottom: "16px",
+    },
+  );
 
   const title =
     document.createElement(
@@ -1239,10 +1323,14 @@ function renderStartupFailure(
   title.textContent =
     "Application Startup Failed";
 
-  Object.assign(title.style, {
-    fontSize: "28px",
-    margin: "0 0 12px",
-  });
+  Object.assign(
+    title.style,
+    {
+      fontSize: "28px",
+      margin:
+        "0 0 12px",
+    },
+  );
 
   const message =
     document.createElement(
@@ -1252,11 +1340,14 @@ function renderStartupFailure(
   message.textContent =
     "GeoNexus could not be initialized. Please reload the application.";
 
-  Object.assign(message.style, {
-    color: "#cbd5e1",
-    lineHeight: "1.6",
-    margin: "0",
-  });
+  Object.assign(
+    message.style,
+    {
+      color: "#cbd5e1",
+      lineHeight: "1.6",
+      margin: "0",
+    },
+  );
 
   const button =
     document.createElement(
@@ -1264,19 +1355,23 @@ function renderStartupFailure(
     );
 
   button.type = "button";
+
   button.textContent =
     "Reload Application";
 
-  Object.assign(button.style, {
-    marginTop: "20px",
-    padding: "12px 20px",
-    border: "0",
-    borderRadius: "10px",
-    background: "#2563eb",
-    color: "#ffffff",
-    fontWeight: "700",
-    cursor: "pointer",
-  });
+  Object.assign(
+    button.style,
+    {
+      marginTop: "20px",
+      padding: "12px 20px",
+      border: "0",
+      borderRadius: "10px",
+      background: "#2563eb",
+      color: "#ffffff",
+      fontWeight: "700",
+      cursor: "pointer",
+    },
+  );
 
   button.addEventListener(
     "click",
@@ -1305,24 +1400,28 @@ function renderStartupFailure(
       details.message ||
       "Unknown startup error";
 
-    Object.assign(pre.style, {
-      marginTop: "24px",
-      padding: "16px",
-      textAlign: "left",
-      overflow: "auto",
-      background: "#020617",
-      color: "#f87171",
-      borderRadius: "10px",
-      fontSize: "12px",
-      lineHeight: "1.6",
-      whiteSpace: "pre-wrap",
-      wordBreak: "break-word",
-    });
+    Object.assign(
+      pre.style,
+      {
+        marginTop: "24px",
+        padding: "16px",
+        textAlign: "left",
+        overflow: "auto",
+        background: "#020617",
+        color: "#f87171",
+        borderRadius: "10px",
+        fontSize: "12px",
+        lineHeight: "1.6",
+        whiteSpace: "pre-wrap",
+        wordBreak: "break-word",
+      },
+    );
 
     section.appendChild(pre);
   }
 
   main.appendChild(section);
+
   rootElement.appendChild(main);
 }
 
@@ -1345,17 +1444,26 @@ function exposeDevelopmentDiagnostics(
     window.__GEONEXUS_APP__ =
       Object.freeze({
         name: APP_NAME,
-        version: APP_VERSION,
+
+        version:
+          APP_VERSION,
+
         environment,
-        sessionId: SESSION_ID,
+
+        sessionId:
+          SESSION_ID,
+
         capabilities:
           detectBrowserCapabilities(),
+
         getHealth:
           getApplicationHealth,
+
         getRuntimeState: () =>
           Object.freeze({
             ...runtimeState,
           }),
+
         root,
       });
   } catch (error) {
@@ -1371,7 +1479,8 @@ function exposeDevelopmentDiagnostics(
    ============================================================ */
 
 function markApplicationReady() {
-  runtimeState.ready = true;
+  runtimeState.ready =
+    true;
 
   const currentTime =
     typeof performance !==
@@ -1380,7 +1489,8 @@ function markApplicationReady() {
       : Date.now();
 
   const startupDuration =
-    currentTime - START_TIME;
+    currentTime -
+    START_TIME;
 
   performanceMonitor.measure(
     "application-startup",
@@ -1396,11 +1506,14 @@ function markApplicationReady() {
   dispatchAppEvent(
     EVENTS.READY,
     {
-      version: APP_VERSION,
+      version:
+        APP_VERSION,
+
       startupDuration:
         Math.round(
           startupDuration,
         ),
+
       networkOnline:
         typeof navigator !==
         "undefined"
@@ -1536,11 +1649,32 @@ function initializeApplication() {
     root,
   );
 
-  markApplicationReady();
+  /*
+   * React root.render() does not guarantee
+   * that the UI has already painted when it
+   * returns. Schedule the READY signal after
+   * the browser gets a rendering opportunity.
+   */
+  const scheduleReady = () => {
+    markApplicationReady();
 
-  logger.info(
-    "GeoNexus initialized successfully.",
-  );
+    logger.info(
+      "GeoNexus initialized successfully.",
+    );
+  };
+
+  if (
+    typeof window !==
+    "undefined" &&
+    typeof window.requestAnimationFrame ===
+      "function"
+  ) {
+    window.requestAnimationFrame(
+      scheduleReady,
+    );
+  } else {
+    scheduleReady();
+  }
 
   return root;
 }
@@ -1575,6 +1709,25 @@ try {
 }
 
 /* ============================================================
+   DEVELOPMENT EVENT HANDLERS
+   ============================================================ */
+
+const handleReadyEvent = () => {
+  logger.debug(
+    "GEONEXUS READY EVENT RECEIVED.",
+  );
+};
+
+const handleNetworkStatusEvent = (
+  event,
+) => {
+  logger.debug(
+    "NETWORK STATUS:",
+    event.detail,
+  );
+};
+
+/* ============================================================
    HMR
    ============================================================ */
 
@@ -1606,6 +1759,16 @@ if (import.meta.hot) {
       typeof window !==
         "undefined"
     ) {
+      window.removeEventListener(
+        EVENTS.READY,
+        handleReadyEvent,
+      );
+
+      window.removeEventListener(
+        EVENTS.NETWORK_STATUS,
+        handleNetworkStatusEvent,
+      );
+
       try {
         delete window.__GEONEXUS_APP__;
       } catch {
@@ -1632,21 +1795,12 @@ if (
 ) {
   window.addEventListener(
     EVENTS.READY,
-    () => {
-      logger.debug(
-        "GEONEXUS READY EVENT RECEIVED.",
-      );
-    },
+    handleReadyEvent,
   );
 
   window.addEventListener(
     EVENTS.NETWORK_STATUS,
-    (event) => {
-      logger.debug(
-        "NETWORK STATUS:",
-        event.detail,
-      );
-    },
+    handleNetworkStatusEvent,
   );
 }
 

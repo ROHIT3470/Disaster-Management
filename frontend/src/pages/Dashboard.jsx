@@ -702,7 +702,7 @@ function Dashboard() {
           <button
             type="button"
             className="advisory-btn primary"
-            onClick={() => goTo("/alerts")}
+            onClick={() => goTo("/dashboard/alerts")}
           >
             Review Active Alerts ({alerts.length})
             <ArrowRight size={15} />
@@ -711,7 +711,7 @@ function Dashboard() {
           <button
             type="button"
             className="advisory-btn secondary"
-            onClick={() => goTo("/emergency-hub")}
+            onClick={() => goTo("/dashboard/emergency-hub")}
           >
             Relief Protocols
             <LifeBuoy size={15} />
@@ -811,7 +811,7 @@ function Dashboard() {
           <button
             type="button"
             className="mini-action-btn"
-            onClick={() => goTo("/alerts")}
+            onClick={() => goTo("/dashboard/alerts")}
           >
             Inspect
             <ArrowRight size={13} />
@@ -831,7 +831,7 @@ function Dashboard() {
           <button
             type="button"
             className="mini-action-btn"
-            onClick={() => goTo("/admin")}
+            onClick={() => goTo("/dashboard/admin")}
           >
             Manage
             <ArrowRight size={13} />
@@ -892,7 +892,7 @@ function Dashboard() {
               <button
                 type="button"
                 className="card-action-link"
-                onClick={() => goTo("/monitoring")}
+                onClick={() => goTo("/dashboard/monitoring")}
               >
                 View Full Fleet
                 <ArrowRight size={14} />
@@ -924,7 +924,7 @@ function Dashboard() {
               <button
                 type="button"
                 className="card-action-link"
-                onClick={() => goTo("/risk-map")}
+                onClick={() => goTo("/dashboard/risk-map")}
               >
                 Open GIS View
                 <ArrowRight size={14} />
@@ -984,7 +984,7 @@ function Dashboard() {
               <button
                 type="button"
                 className="action-tile"
-                onClick={() => goTo("/simulation")}
+                onClick={() => goTo("/dashboard/simulation")}
               >
                 <div className="action-tile-icon cyan">
                   <Sliders size={20} />
@@ -1003,7 +1003,7 @@ function Dashboard() {
               <button
                 type="button"
                 className="action-tile"
-                onClick={() => goTo("/risk-map")}
+                onClick={() => goTo("/dashboard/risk-map")}
               >
                 <div className="action-tile-icon gold">
                   <MapPin size={20} />
@@ -1022,7 +1022,7 @@ function Dashboard() {
               <button
                 type="button"
                 className="action-tile"
-                onClick={() => goTo("/emergency-hub")}
+                onClick={() => goTo("/dashboard/emergency-hub")}
               >
                 <div className="action-tile-icon emerald">
                   <LifeBuoy size={20} />
@@ -1041,7 +1041,7 @@ function Dashboard() {
               <button
                 type="button"
                 className="action-tile"
-                onClick={() => goTo("/history")}
+                onClick={() => goTo("/dashboard/history")}
               >
                 <div className="action-tile-icon purple">
                   <FileSpreadsheet size={20} />
@@ -1103,7 +1103,7 @@ function Dashboard() {
               <button
                 type="button"
                 className="card-action-link"
-                onClick={() => goTo("/alerts")}
+                onClick={() => goTo("/dashboard/alerts")}
               >
                 All Alerts ({alerts.length})
                 <ArrowRight size={14} />
@@ -1128,7 +1128,7 @@ function Dashboard() {
                   <button
                     type="button"
                     className="empty-state-action"
-                    onClick={() => goTo("/monitoring")}
+                    onClick={() => goTo("/dashboard/monitoring")}
                   >
                     Open Live Monitoring
                     <ArrowRight size={14} />
@@ -1153,7 +1153,7 @@ function Dashboard() {
                     <button
                       type="button"
                       className="view-more-alerts"
-                      onClick={() => goTo("/alerts")}
+                      onClick={() => goTo("/dashboard/alerts")}
                     >
                       View {alerts.length - 5} more alerts
                       <ArrowRight size={15} />
@@ -1233,7 +1233,7 @@ function Dashboard() {
             <button
               type="button"
               className="summary-full-view-btn"
-              onClick={() => goTo("/risk-map")}
+              onClick={() => goTo("/dashboard/risk-map")}
             >
               Open Full Risk Analysis
               <ArrowRight size={15} />
@@ -1263,7 +1263,7 @@ function Dashboard() {
               <button
                 type="button"
                 className="card-action-link"
-                onClick={() => goTo("/admin")}
+                onClick={() => goTo("/dashboard/admin")}
               >
                 Manage Fleet
                 <ArrowRight size={14} />

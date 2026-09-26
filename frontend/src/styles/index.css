@@ -5,47 +5,33 @@
    ========================================================= */
 
 :root {
-    --primary: #2563eb;
-    --primary-dark: #1d4ed8;
-    --primary-light: #dbeafe;
-    --primary-lighter: #eff6ff;
-    --primary-rgb: 37, 99, 235;
+    --primary: #6366f1;
+    --primary-dark: #4f46e5;
+    --primary-light: #818cf8;
+    --primary-lighter: #e0e7ff;
+    --primary-rgb: 99, 102, 241;
 
-    --accent: #38bdf8;
-    --accent-dark: #0ea5e9;
-    --accent-light: #e0f2fe;
-    --accent-rgb: 56, 189, 248;
+    --accent: #f43f5e;
+    --accent-dark: #e11d48;
+    --accent-light: #fda4af;
+    --accent-rgb: 244, 63, 94;
 
     --secondary: #10b981;
     --secondary-dark: #059669;
-    --secondary-light: #d1fae5;
+    --secondary-light: #34d399;
     --secondary-rgb: 16, 185, 129;
 
     --success: #10b981;
-    --success-dark: #059669;
-    --success-light: #d1fae5;
-    --success-rgb: 16, 185, 129;
-
     --warning: #f59e0b;
-    --warning-dark: #d97706;
-    --warning-light: #fef3c7;
-    --warning-rgb: 245, 158, 11;
-
     --danger: #ef4444;
-    --danger-dark: #dc2626;
-    --danger-light: #fee2e2;
-    --danger-rgb: 239, 68, 68;
-
-    --info: #0ea5e9;
-    --info-light: #e0f2fe;
-    --info-rgb: 14, 165, 233;
+    --info: #06b6d4;
 
     --white: #ffffff;
-    --black: #020617;
-    --gray-50: #f8fbff;
-    --gray-100: #edf6ff;
-    --gray-200: #dfeaf9;
-    --gray-300: #cbd9ef;
+    --black: #000000;
+    --gray-50: #f8fafc;
+    --gray-100: #f1f5f9;
+    --gray-200: #e2e8f0;
+    --gray-300: #cbd5e1;
     --gray-400: #94a3b8;
     --gray-500: #64748b;
     --gray-600: #475569;
@@ -53,63 +39,66 @@
     --gray-800: #1e293b;
     --gray-900: #0f172a;
 
-    --background: #f4f9ff;
-    --background-alt: #edf6ff;
-    --surface: #ffffff;
-    --surface-strong: #f8fbff;
-    --surface-muted: #eef6ff;
-    --text-primary: #0f172a;
-    --text-secondary: #475569;
+    --background: #09090b;
+    --background-alt: #18181b;
+    --surface: rgba(24, 24, 27, 0.7);
+    --surface-strong: rgba(39, 39, 42, 0.8);
+    --surface-muted: rgba(24, 24, 27, 0.4);
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
     --text-muted: #64748b;
-    --border: rgba(148, 163, 184, 0.35);
-    --dark: #071a2a;
+    --border: rgba(255, 255, 255, 0.1);
+    --dark: #000000;
 
     --max-width: 1600px;
     --container-padding: 24px;
     --content-gutter: clamp(16px, 2.4vw, 32px);
 
-    --radius-xs: 4px;
-    --radius-sm: 7px;
-    --radius-md: 10px;
-    --radius-lg: 14px;
-    --radius-xl: 18px;
-    --radius-2xl: 22px;
-    --radius-3xl: 30px;
+    --radius-xs: 6px;
+    --radius-sm: 10px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --radius-xl: 32px;
+    --radius-2xl: 40px;
+    --radius-3xl: 50px;
     --radius-full: 9999px;
 
-    --shadow-xs: 0 1px 2px rgba(37, 99, 235, 0.05);
-    --shadow-sm: 0 2px 8px rgba(37, 99, 235, 0.06);
-    --shadow-md: 0 8px 20px rgba(37, 99, 235, 0.08);
-    --shadow-lg: 0 16px 36px rgba(37, 99, 235, 0.12);
-    --shadow-xl: 0 24px 56px rgba(37, 99, 235, 0.14);
-    --shadow-2xl: 0 30px 70px rgba(15, 23, 42, 0.10);
-    --shadow-inner: inset 0 2px 5px rgba(15, 23, 42, 0.04);
+    --shadow-xs: 0 4px 12px rgba(0, 0, 0, 0.2);
+    --shadow-sm: 0 8px 24px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 16px 32px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 24px 48px rgba(0, 0, 0, 0.5);
+    --shadow-xl: 0 32px 64px rgba(0, 0, 0, 0.6);
+    --shadow-2xl: 0 40px 80px rgba(0, 0, 0, 0.8);
+    --shadow-inner: inset 0 2px 4px rgba(0, 0, 0, 0.5);
 
-    --glow-primary: 0 0 0 1px rgba(var(--primary-rgb), 0.14), 0 12px 30px rgba(var(--primary-rgb), 0.12);
-    --glow-accent: 0 0 0 1px rgba(var(--accent-rgb), 0.14), 0 12px 30px rgba(var(--accent-rgb), 0.12);
+    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    --glass-border: 1px solid rgba(255, 255, 255, 0.08);
 
-    --transition-xs: 0.1s ease;
-    --transition-sm: 0.15s ease;
-    --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-lg: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    --glow-primary: 0 0 20px rgba(var(--primary-rgb), 0.5), 0 0 40px rgba(var(--primary-rgb), 0.3);
+    --glow-accent: 0 0 20px rgba(var(--accent-rgb), 0.5), 0 0 40px rgba(var(--accent-rgb), 0.3);
 
-    --gradient-primary: linear-gradient(135deg, #2563eb 0%, #38bdf8 100%);
-    --gradient-command: linear-gradient(135deg, #1d4ed8 0%, #2563eb 45%, #10b981 100%);
-    --gradient-violet: linear-gradient(135deg, #2563eb 0%, #0ea5e9 100%);
-    --gradient-danger: linear-gradient(135deg, #ef4444 0%, #f97316 100%);
-    --gradient-success: linear-gradient(135deg, #10b981 0%, #22c55e 100%);
-    --gradient-warning: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
-    --gradient-subtle: linear-gradient(135deg, #f8fbff 0%, #ecfdf5 100%);
-    --gradient-dark: linear-gradient(135deg, #071a2a 0%, #0f172a 100%);
+    --transition-xs: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-sm: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-lg: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 0.7s cubic-bezier(0.4, 0, 0.2, 1);
 
-    --spacing-xs: 4px;
-    --spacing-sm: 8px;
-    --spacing-md: 12px;
-    --spacing-lg: 16px;
-    --spacing-xl: 24px;
-    --spacing-2xl: 32px;
-    --spacing-3xl: 48px;
+    --gradient-primary: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+    --gradient-command: linear-gradient(135deg, #4f46e5 0%, #ec4899 100%);
+    --gradient-violet: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%);
+    --gradient-danger: linear-gradient(135deg, #f43f5e 0%, #ef4444 100%);
+    --gradient-success: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    --gradient-warning: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    --gradient-subtle: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+    --gradient-dark: linear-gradient(135deg, #09090b 0%, #18181b 100%);
+
+    --spacing-xs: 6px;
+    --spacing-sm: 12px;
+    --spacing-md: 18px;
+    --spacing-lg: 24px;
+    --spacing-xl: 36px;
+    --spacing-2xl: 48px;
+    --spacing-3xl: 64px;
 
     --z-dropdown: 1000;
     --z-sticky: 1100;
@@ -287,25 +276,12 @@ body {
     width: 100%;
     min-height: 100vh;
     overflow-x: hidden;
-    font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Roboto,
-        Oxygen,
-        Ubuntu,
-        Cantarell,
-        "Helvetica Neue",
-        sans-serif;
+    font-family: 'Outfit', sans-serif;
     font-size: 15px;
     line-height: 1.6;
     background:
-        radial-gradient(circle at 100% 0%,
-            rgba(var(--accent-rgb), 0.08),
-            transparent 28%),
-        radial-gradient(circle at 0% 100%,
-            rgba(var(--violet-rgb), 0.045),
-            transparent 24%),
+        radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.15), transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(244, 63, 94, 0.12), transparent 40%),
         var(--background);
     color: var(--text-primary);
     transition:
@@ -779,9 +755,11 @@ select:focus-visible {
     position: relative;
     overflow: hidden;
     background: var(--surface);
-    border: 1px solid var(--border);
+    border: var(--glass-border);
     border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-sm);
+    box-shadow: var(--glass-shadow);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
     transition:
         transform var(--transition),
         box-shadow var(--transition),
@@ -792,11 +770,8 @@ select:focus-visible {
     content: "";
     position: absolute;
     inset: 0 0 auto;
-    height: 2px;
-    background: linear-gradient(90deg,
-            var(--primary),
-            var(--accent),
-            var(--violet));
+    height: 3px;
+    background: var(--gradient-primary);
     opacity: 0;
     transition: opacity var(--transition);
 }
@@ -825,11 +800,11 @@ select:focus-visible {
    ========================================================= */
 
 .glass {
-    background: rgba(255, 255, 255, 0.78);
-    border: 1px solid rgba(255, 255, 255, 0.62);
-    backdrop-filter: blur(18px) saturate(130%);
-    -webkit-backdrop-filter: blur(18px) saturate(130%);
-    box-shadow: var(--shadow-md);
+    background: rgba(15, 23, 42, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    box-shadow: var(--glass-shadow);
 }
 
 /* =========================================================

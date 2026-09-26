@@ -6,11 +6,8 @@ import {
   History,
   Download,
   Search,
-  Filter,
   Calendar,
-  ShieldAlert,
   MapPin,
-  TrendingDown,
 } from "lucide-react";
 import { useToast } from "../context/ToastContext";
 
@@ -38,38 +35,62 @@ function HistoricalData() {
   };
 
   const handleExportCSV = () => {
-    if (!disasters.length) return;
+    if (!disasters.length) {
+      addToast({
+        title: "No Data Available",
+        message: "There are no historical disaster records to export.",
+        type: "warning",
+      });
+      return;
+    }
+
     const formatted = disasters.map((d) => ({
-      Location: d.location,
-      Hazard_Type: d.type,
-      Severity: d.severity,
-      Date: d.date ? new Date(d.date).toISOString().split("T")[0] : "",
-      Description: d.description,
+      "Record ID": d._id || "",
+      Location: d.location || "N/A",
+      "Hazard Type": d.type || "N/A",
+      Severity: d.severity || "N/A",
+      "Incident Date": d.date
+        ? new Date(d.date).toLocaleDateString("en-IN")
+        : "N/A",
+      Description: d.description || "N/A",
     }));
 
-    exportToCSV(`Himalayan_Disaster_Archive_${Date.now()}.csv`, formatted);
+    exportToCSV(
+      `GeoNexus_Historical_Disaster_Overall_Report_${Date.now()}.csv`,
+      formatted
+    );
+
     addToast({
-      title: "CSV Export Complete",
-      message: `Exported ${formatted.length} historical disaster records.`,
+      title: "Overall Report Exported",
+      message: `Successfully exported all ${formatted.length} historical disaster records.`,
       type: "success",
     });
   };
 
-  if (loading) return <Loading message="Loading Historical Catastrophe Datasets..." />;
+  if (loading) {
+    return (
+      <Loading message="Loading Historical Catastrophe Datasets..." />
+    );
+  }
 
   const filteredDisasters = disasters.filter((d) => {
+    const location = d.location?.toLowerCase() || "";
+    const description = d.description?.toLowerCase() || "";
+    const type = d.type?.toLowerCase() || "";
+    const severity = d.severity?.toLowerCase() || "";
+
     const matchesSearch =
-      d.location.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      d.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      d.type.toLowerCase().includes(searchTerm.toLowerCase());
+      location.includes(searchTerm.toLowerCase()) ||
+      description.includes(searchTerm.toLowerCase()) ||
+      type.includes(searchTerm.toLowerCase());
 
     const matchesType =
       selectedType === "all" ||
-      d.type.toLowerCase().includes(selectedType.toLowerCase());
+      type.includes(selectedType.toLowerCase());
 
     const matchesSeverity =
       selectedSeverity === "all" ||
-      d.severity.toLowerCase() === selectedSeverity.toLowerCase();
+      severity === selectedSeverity.toLowerCase();
 
     return matchesSearch && matchesType && matchesSeverity;
   });
@@ -81,15 +102,19 @@ function HistoricalData() {
           <div className="header-icon-box purple">
             <History size={24} className="text-purple" />
           </div>
+
           <div>
             <h1>Historical Incident Archive & Analytics</h1>
-            <p>Past floods, cloudbursts, and geological slope failures in the Garhwal & Himachal sectors</p>
+            <p>
+              Past floods, cloudbursts, and geological slope failures in the
+              Garhwal & Himachal sectors
+            </p>
           </div>
         </div>
 
         <div className="header-actions">
           <button className="btn-primary" onClick={handleExportCSV}>
-            <Download size={16} /> Export Dataset (.CSV)
+            <Download size={16} /> Export Overall Report (.CSV)
           </button>
         </div>
       </div>
@@ -98,6 +123,7 @@ function HistoricalData() {
       <div className="sensor-filter-controls">
         <div className="search-input-wrap">
           <Search size={16} className="search-icon" />
+
           <input
             type="text"
             placeholder="Search by Location (Chamoli, Kedarnath, Malpa, Kullu) or Keywords..."
@@ -151,41 +177,54 @@ function HistoricalData() {
                 <th>Incident Synopsis & Impact Details</th>
               </tr>
             </thead>
+
             <tbody>
               {filteredDisasters.map((disaster) => (
                 <tr key={disaster._id || Math.random()}>
                   <td className="font-semibold text-primary-theme">
                     <div className="table-loc-row">
                       <MapPin size={14} className="text-cyan" />
-                      <span>{disaster.location}</span>
+                      <span>{disaster.location || "N/A"}</span>
                     </div>
                   </td>
+
                   <td>
-                    <span className="hazard-type-pill">{disaster.type}</span>
-                  </td>
-                  <td>
-                    <span
-                      className={`severity-badge-pro ${disaster.severity?.toLowerCase()}`}
-                    >
-                      {disaster.severity}
+                    <span className="hazard-type-pill">
+                      {disaster.type || "N/A"}
                     </span>
                   </td>
+
+                  <td>
+                    <span
+                      className={`severity-badge-pro ${
+                        disaster.severity?.toLowerCase() || ""
+                      }`}
+                    >
+                      {disaster.severity || "N/A"}
+                    </span>
+                  </td>
+
                   <td className="text-muted-theme whitespace-nowrap">
                     <div className="table-date-row">
                       <Calendar size={13} />
+
                       <span>
                         {disaster.date
-                          ? new Date(disaster.date).toLocaleDateString("en-IN", {
-                              year: "numeric",
-                              month: "short",
-                              day: "numeric",
-                            })
+                          ? new Date(disaster.date).toLocaleDateString(
+                              "en-IN",
+                              {
+                                year: "numeric",
+                                month: "short",
+                                day: "numeric",
+                              }
+                            )
                           : "N/A"}
                       </span>
                     </div>
                   </td>
+
                   <td className="text-secondary-theme desc-cell">
-                    {disaster.description}
+                    {disaster.description || "N/A"}
                   </td>
                 </tr>
               ))}

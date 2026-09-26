@@ -136,6 +136,7 @@ def train_linear_model():
     
     # Export weights for Node.js
     os.makedirs(BACKEND_CONFIG_DIR, exist_ok=True)
+<<<<<<< HEAD
     weights = {
         "features": FEATURES,
         "scaler": {
@@ -149,6 +150,27 @@ def train_linear_model():
         "landslide_model": {
             "coefficients": model_landslide.coef_.tolist(),
             "intercept": model_landslide.intercept_
+=======
+
+    if scaler.mean_ is None or scaler.scale_ is None:
+        raise RuntimeError("Scaler was not fitted. Training failed before export.")
+    if model_flood.coef_ is None or model_landslide.coef_ is None:
+        raise RuntimeError("Model coefficients are missing. Training failed before export.")
+
+    weights = {
+        "features": FEATURES,
+        "scaler": {
+            "mean": np.asarray(scaler.mean_, dtype=float).tolist(),
+            "scale": np.asarray(scaler.scale_, dtype=float).tolist()
+        },
+        "flood_model": {
+            "coefficients": np.asarray(model_flood.coef_, dtype=float).tolist(),
+            "intercept": float(model_flood.intercept_)
+        },
+        "landslide_model": {
+            "coefficients": np.asarray(model_landslide.coef_, dtype=float).tolist(),
+            "intercept": float(model_landslide.intercept_)
+>>>>>>> a45c3824009c000b36cf2381145f183fd3dd0d42
         }
     }
     

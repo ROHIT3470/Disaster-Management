@@ -23,7 +23,14 @@ import weatherRoutes from "./routes/weatherRoutes.js";
 import aiRoutes from "./routes/aiRoutes.js";
 import contactRoutes from "./routes/contactRoutes.js";
 import routeRoutes from "./routes/routeRoutes.js";
+<<<<<<< HEAD
 import { isEmailConfigured, verifyEmailConnection } from "./services/emailService.js";
+=======
+import {
+  isEmailConfigured,
+  verifyEmailConnection,
+} from "./services/emailService.js";
+>>>>>>> a45c3824009c000b36cf2381145f183fd3dd0d42
 import {
   logError,
   logInfo,
@@ -33,7 +40,6 @@ import {
   printStartupBanner,
   printStartupSummary,
 } from "./utils/terminal.js";
-
 
 import User from "./models/User.js";
 import { seedDatabase } from "./scripts/seed.js";
@@ -66,7 +72,9 @@ const isAllowedOrigin = (origin) => {
   // Allow any local network IP (192.168.x.x, 10.x.x.x, 172.16-31.x.x) or common tunnels in dev
   if (
     process.env.NODE_ENV !== "production" ||
-    /^http:\/\/(localhost|127\.0\.0\.1|192\.168\.\d+\.\d+|10\.\d+\.\d+\.\d+|172\.(1[6-9]|2\d|3[0-1])\.\d+\.\d+)(:\d+)?$/.test(origin) ||
+    /^http:\/\/(localhost|127\.0\.0\.1|192\.168\.\d+\.\d+|10\.\d+\.\d+\.\d+|172\.(1[6-9]|2\d|3[0-1])\.\d+\.\d+)(:\d+)?$/.test(
+      origin,
+    ) ||
     origin.endsWith(".devtunnels.ms") ||
     origin.endsWith(".loca.lt") ||
     origin.endsWith(".ngrok-free.app")
@@ -190,7 +198,10 @@ app.use("/api/weather", weatherRoutes);
 app.use("/api/ai", aiRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/route", routeRoutes);
+<<<<<<< HEAD
 
+=======
+>>>>>>> a45c3824009c000b36cf2381145f183fd3dd0d42
 
 // ============================================================
 // ERROR HANDLING
@@ -232,14 +243,20 @@ async function startServer() {
       ];
 
       const missingUsers = demoAccounts.filter(
-        ({ email }) => !existingEmails.some((existingEmail) => existingEmail.toLowerCase() === email.toLowerCase()),
+        ({ email }) =>
+          !existingEmails.some(
+            (existingEmail) =>
+              existingEmail.toLowerCase() === email.toLowerCase(),
+          ),
       );
 
       if (missingUsers.length > 0) {
         logInfo("Accounts     creating missing demo command accounts...");
 
         await User.create(missingUsers);
-        logSuccess(`Accounts     created ${missingUsers.length} demo account(s)`);
+        logSuccess(
+          `Accounts     created ${missingUsers.length} demo account(s)`,
+        );
       }
     } catch (seedErr) {
       logWarning(`Accounts     auto-seed check skipped: ${seedErr.message}`);
