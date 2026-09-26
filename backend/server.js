@@ -1,5 +1,3 @@
-// backend/server.js
-
 import "dotenv/config";
 
 import express from "express";
@@ -23,14 +21,12 @@ import weatherRoutes from "./routes/weatherRoutes.js";
 import aiRoutes from "./routes/aiRoutes.js";
 import contactRoutes from "./routes/contactRoutes.js";
 import routeRoutes from "./routes/routeRoutes.js";
-<<<<<<< HEAD
-import { isEmailConfigured, verifyEmailConnection } from "./services/emailService.js";
-=======
+
 import {
   isEmailConfigured,
   verifyEmailConnection,
 } from "./services/emailService.js";
->>>>>>> a45c3824009c000b36cf2381145f183fd3dd0d42
+
 import {
   logError,
   logInfo,
@@ -53,7 +49,6 @@ const PORT = Number(process.env.PORT) || 5000;
 // ============================================================
 
 app.set("trust proxy", 1);
-
 app.use(helmet());
 
 // ============================================================
@@ -68,11 +63,17 @@ const allowedOrigins = [
 
 const isAllowedOrigin = (origin) => {
   if (!origin) return true;
-  if (allowedOrigins.includes(origin)) return true;
-  // Allow any local network IP (192.168.x.x, 10.x.x.x, 172.16-31.x.x) or common tunnels in dev
+
+  if (allowedOrigins.includes(origin)) {
+    return true;
+  }
+
+  // Allow any local network IP
+  // (192.168.x.x, 10.x.x.x, 172.16-31.x.x)
+  // or common tunnels in development.
   if (
     process.env.NODE_ENV !== "production" ||
-    /^http:\/\/(localhost|127\.0\.0\.1|192\.168\.\d+\.\d+|10\.\d+\.\d+\.\d+|172\.(1[6-9]|2\d|3[0-1])\.\d+\.\d+)(:\d+)?$/.test(
+    /^https?:\/\/(localhost|127\.0\.0\.1|192\.168\.\d+\.\d+|10\.\d+\.\d+\.\d+|172\.(1[6-9]|2\d|3[0-1])\.\d+\.\d+)(:\d+)?$/.test(
       origin,
     ) ||
     origin.endsWith(".devtunnels.ms") ||
@@ -81,6 +82,7 @@ const isAllowedOrigin = (origin) => {
   ) {
     return true;
   }
+
   return false;
 };
 
@@ -91,7 +93,6 @@ const corsOptions = {
     }
 
     console.error("CORS blocked origin:", origin);
-
     return callback(new Error(`CORS blocked origin: ${origin}`));
   },
 
@@ -135,7 +136,6 @@ const apiRateLimiter = rateLimit({
   limit: process.env.NODE_ENV === "production" ? 1000 : 10000,
 
   standardHeaders: "draft-8",
-
   legacyHeaders: false,
 
   skip: (req) => {
@@ -144,8 +144,7 @@ const apiRateLimiter = rateLimit({
       return true;
     }
 
-    // Health checks should never
-    // consume API quota.
+    // Health checks should never consume API quota.
     if (req.path === "/api/health") {
       return true;
     }
@@ -178,37 +177,23 @@ app.get("/api/health", (req, res) => {
 // ============================================================
 
 app.use("/api/auth", authRoutes);
-
 app.use("/api/alerts", alertRoutes);
-
 app.use("/api/disasters", disasterRoutes);
-
 app.use("/api/locations", locationRoutes);
-
 app.use("/api/risk", riskRoutes);
-
 app.use("/api/predictions", riskRoutes);
-
 app.use("/api/sensors", sensorRoutes);
-
 app.use("/api/users", userRoutes);
-
 app.use("/api/weather", weatherRoutes);
-
 app.use("/api/ai", aiRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/route", routeRoutes);
-<<<<<<< HEAD
-
-=======
->>>>>>> a45c3824009c000b36cf2381145f183fd3dd0d42
 
 // ============================================================
 // ERROR HANDLING
 // ============================================================
 
 app.use(notFound);
-
 app.use(errorHandler);
 
 // ============================================================
@@ -218,6 +203,7 @@ app.use(errorHandler);
 async function startServer() {
   try {
     printStartupBanner();
+
     logInfo(`Environment  ${process.env.NODE_ENV || "development"}`);
     logInfo(`Port         ${PORT}`);
 
@@ -225,6 +211,7 @@ async function startServer() {
 
     try {
       const existingEmails = await User.distinct("email");
+
       const demoAccounts = [
         {
           name: "Admin Officer",
@@ -254,6 +241,7 @@ async function startServer() {
         logInfo("Accounts     creating missing demo command accounts...");
 
         await User.create(missingUsers);
+
         logSuccess(
           `Accounts     created ${missingUsers.length} demo account(s)`,
         );
@@ -263,7 +251,10 @@ async function startServer() {
     }
 
     const server = app.listen(PORT, "0.0.0.0", () => {
-      printStartupSummary({ port: PORT, emailConfigured: isEmailConfigured() });
+      printStartupSummary({
+        port: PORT,
+        emailConfigured: isEmailConfigured(),
+      });
 
       if (isEmailConfigured()) {
         verifyEmailConnection()
@@ -280,16 +271,16 @@ async function startServer() {
       printShutdownMessage(signal);
 
       server.close(async () => {
-        logSuccess("HTTP server  closed");
+        logSuccess("HTTP server   closed");
 
         try {
           await mongoose.connection.close();
 
-          logSuccess("MongoDB      connection closed");
+          logSuccess("MongoDB       connection closed");
 
           process.exit(0);
         } catch (err) {
-          logError(`Shutdown     database close failed: ${err.message}`);
+          logError(`Shutdown      database close failed: ${err.message}`);
 
           process.exit(1);
         }
@@ -297,10 +288,9 @@ async function startServer() {
     };
 
     process.on("SIGINT", () => handleShutdown("SIGINT"));
-
     process.on("SIGTERM", () => handleShutdown("SIGTERM"));
   } catch (error) {
-    logError(`Startup      failed: ${error.message}`);
+    logError(`Startup       failed: ${error.message}`);
 
     process.exit(1);
   }
