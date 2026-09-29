@@ -1,913 +1,841 @@
-# Disaster Management System - Multi-Hazard Early Warning Platform
-
-## 🎯 Overview
-
-**Disaster Command** is a cutting-edge AI-powered early warning system designed to predict and manage natural disasters across vulnerable Himalayan regions. Using real-time IoT sensor telemetry, machine learning models, and GIS hazard mapping, the system provides critical lead times for evacuation and emergency response coordination.
-
-### Key Vision
-Protect vulnerable communities from flash floods, landslides, and cloudbursts through intelligent, data-driven disaster prediction and coordinated emergency response protocols.
-
----
-
-## ✨ Core Features
-
-### 1. **Real-Time IoT Telemetry Monitoring**
-- Continuous data collection from rainfall sensors, river gauges, and slope stability monitors
-- Multi-parameter sensor fusion (precipitation, discharge, soil saturation)
-- Live dashboard displaying all 9 telemetry stations across the Himalayan region
-- **Status**: 98.4% system uptime
-
-### 2. **AI-Powered Risk Prediction**
-- Machine learning ensemble models for flood and landslide prediction
-- 2–6 hour lead time for critical events
-- Multi-hazard risk compositing (overall risk score, flood risk, landslide risk)
-- Confidence intervals and uncertainty quantification
-- Hourly predictions with trend analysis
-
-### 3. **Automated Multi-Channel Alerting**
-- Intelligent threshold-based alert triggering
-- Sub-60-second alert delivery across SMS, WhatsApp, and dashboard
-- Risk level classification (Low, Moderate, High, Critical)
-- Targeted alerts to district authorities and vulnerable communities
-
-### 4. **Interactive GIS Hazard Mapping**
-- Real-time visualization of:
-  - Flood inundation zones
-  - Landslide susceptibility areas
-  - Vulnerable population densities
-  - Relief shelter locations and capacity
-- Customizable risk overlays and filters
-- Point-in-polygon queries for impact assessment
-
-### 5. **Secure Password Recovery**
-- Forgot-password and reset-password flow for authenticated operator accounts
-- Single-use expiring reset tokens with secure hashing
-- Generic recovery messaging that avoids exposing user existence
-- Safe password reset validation and encrypted session handling
-- SMTP delivery using `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASSWORD`, and optional `SMTP_FROM`
-
-### 5. **Emergency Response Coordination**
-- Centralized resource allocation dashboard
-- Relief shelter readiness tracking (180+ shelters)
-- NDRF and district responder contact directory
-- Evacuation protocol templates
-- Situation report generation (SITREP) for incident command
-
-### 6. **Historical Data & Analytics**
-- Complete disaster incident archive with timelines
-- Trend analysis over multiple years
-- Lessons learned documentation
-- Performance metrics for model validation
-- Export reports for after-action reviews
-
----
-
-## 🏗️ System Architecture
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    USER INTERFACE LAYER                     │
-│  React 19 + React Router | Professional UI/UX Design        │
-├─────────────────────────────────────────────────────────────┤
-│                   APPLICATION LAYER                         │
-│  Context API (Auth, Theme, Toast) | Component Library       │
-├─────────────────────────────────────────────────────────────┤
-│                      API GATEWAY LAYER                       │
-│  Axios | Rate Limiting | CORS | Error Handling              │
-├─────────────────────────────────────────────────────────────┤
-│                    EXPRESS.JS BACKEND                        │
-│  REST API | JWT Auth | Helmet Security | Morgan Logging     │
-├─────────────────────────────────────────────────────────────┤
-│                    DATABASE LAYER                            │
-│  MongoDB Atlas | Mongoose ODM | Data Validation             │
-├─────────────────────────────────────────────────────────────┤
-│                    EXTERNAL INTEGRATIONS                     │
-│  Weather API | SMS Gateway | Map Tiles (Leaflet)            │
-└─────────────────────────────────────────────────────────────┘
-```
-
-### Tech Stack
-
-**Frontend:**
-- React 19.2.8 (functional components with hooks)
-- React Router v7 (SPA routing)
-- Axios (HTTP client)
-- Lucide React (icon library)
-- Chart.js + React-ChartJS-2 (data visualization)
-- Leaflet + React-Leaflet (GIS mapping)
-- Vite 5.4 (build tool)
-- CSS3 (modern styling with gradients, animations, responsive design)
-
-**Backend:**
-- Node.js + Express 5
-- MongoDB + Mongoose 9
-- JWT (authentication/authorization)
-- Bcryptjs (password hashing)
-- Helmet (security middleware)
-- CORS (cross-origin support)
-- Morgan (request logging)
-- Express Rate Limiting
-
----
-
-## 🚀 Getting Started
-
-### Prerequisites
-- Node.js 18+ and npm 9+
-- MongoDB 6+ (local or Atlas)
-- Git
-
-### Installation
-
-#### 1. Clone the Repository
-```bash
-git clone https://github.com/yourusername/disaster-management.git
-cd disaster-management
-```
-
-#### 2. Setup Backend
-```bash
-cd backend
-
-# Install dependencies
-npm install
-
-# Create .env file
-cat > .env << EOF
-PORT=5000
-MONGO_URI=mongodb://127.0.0.1:27017/disaster_management
-JWT_SECRET=your-secret-key-here
-JWT_EXPIRES_IN=7d
-CLIENT_URL=http://localhost:5173
-NODE_ENV=development
-SMTP_HOST=smtp.gmail.com
-SMTP_PORT=465
-SMTP_USER=your-sender@gmail.com
-SMTP_PASSWORD=your-gmail-app-password
-SMTP_FROM=GeoNexus <your-sender@gmail.com>
-EOF
-
-# Seed initial data
-npm run seed
-
-# Start development server
-npm run dev
-```
-
-#### Password reset email setup
-
-The forgot-password endpoint sends a real, single-use reset link through SMTP. It
-does not send email when the SMTP variables are missing.
-
-For Gmail:
-
-1. Enable 2-Step Verification on the sender Google account.
-2. Create a Google **App Password** for Mail. Do not use the normal Gmail password.
-3. Put the sender address and 16-character App Password in `backend/.env`:
-
-```env
-SMTP_HOST=smtp.gmail.com
-SMTP_PORT=465
-SMTP_USER=your-sender@gmail.com
-SMTP_PASSWORD=your-16-character-app-password
-SMTP_FROM=GeoNexus <your-sender@gmail.com>
-```
-
-4. Restart the backend after changing `.env`.
-5. Open `/forgot-password`, submit the recipient address, and check its inbox
-   and spam folder.
-
-The backend logs a warning when SMTP is not configured. In production, reset
-requests return a generic response and never expose whether an email address
-exists.
-
-In development only, if SMTP is not configured, the request page displays the
-generated reset link so the complete reset flow can still be tested locally.
-That development fallback is never returned when `NODE_ENV=production`.
-
-#### 3. Setup Frontend
-```bash
-cd ../frontend
-
-# Install dependencies
-npm install
-
-# Start development server
-npm run dev
-```
-
-#### Optional Python data and emergency tools
-
-The project keeps the NASA GPM downloader and the standalone emergency terminal
-under `my_project/`. Install their dependencies from that directory:
-
-```bash
-cd ../my_project
-python -m pip install -r requirements.txt
-```
-
-Set `GEMINI_API_KEY` and, when using MongoDB-backed terminal memory,
-`MONGO_URI` before starting `chat_terminal.py`. The downloader authenticates
-with NASA Earthdata only when it is run, and supports configurable filters:
-
-The Python tools automatically read the first available file from
-`my_project/.env` and `backend/.env`. Create `my_project/.env` from
-`my_project/.env.example` for a standalone setup. Existing shell environment
-variables take precedence, so you can also configure them with PowerShell:
-
-```powershell
-Copy-Item .env.example .env
-$env:GEMINI_API_KEY = "your-key"
-python chat_terminal.py
-```
-
-Never commit a real API key or password.
-
-```bash
-python download_files_GPM_3IMERGDF_07.py `
-  --start 2025-08-31T00:00:00.000Z `
-  --end 2025-09-30T23:59:59.000Z `
-  --bbox 91.55,25.95,91.9,26.3 `
-  --output-dir ./GPM_3IMERGDF_07 `
-  --workers 5
-```
-
-The web application uses the authenticated `/api/ai/emergency` route for the
-same Planner → Safety Auditor → Writer → Reviewer workflow; the terminal
-script is retained for offline/operator use.
-
-#### 4. Access Application
-- **Home/Landing Page**: http://localhost:5173/home
-- **Login**: http://localhost:5173/login
-- **Dashboard**: http://localhost:5173/ (requires login)
-- **Backend API**: http://localhost:5000/api/health
-
-### Demo Credentials
-
-```
-Administrator:
-Email: admin@disaster.org
-Password: admin123
-
-Operator:
-Email: operator@disaster.org
-Password: operator123
-```
-
----
-
-## 📋 Pages & Modules
-
-For a step-by-step operating guide covering every page, AI mode, emergency
-workflow, Python tool, and troubleshooting procedure, see
-[OPERATOR_MANUAL.md](./OPERATOR_MANUAL.md).
-
-| Page | Route | Purpose |
-|------|-------|---------|
-| **Landing Page** | `/` | Project showcase & features |
-| **Login/Register** | `/login` | User authentication |
-| **Dashboard** | `/dashboard` | Command center with KPIs & alerts |
-| **Live Monitoring** | `/dashboard/monitoring` | Real-time telemetry from sensors |
-| **Risk Map** | `/dashboard/risk-map` | Interactive GIS hazard mapping |
-| **Alerts** | `/dashboard/alerts` | Active & historical warning log |
-| **Simulation Lab** | `/dashboard/simulation` | What-if scenario modeling |
-| **Historical Data** | `/dashboard/history` | Incident archive & analytics |
-| **Emergency Hub** | `/dashboard/emergency-hub` | Relief coordination & contacts |
-| **AI Assistant** | `/dashboard/ai-assistant` | Learning, emergency agents, and project context |
-| **Admin Panel** | `/dashboard/admin` | System configuration & management |
-
----
-
-## 🎨 Design System
-
-### Color Palette
-- **Primary**: #2563eb (Blue - Trust, Authority)
-- **Success**: #16a34a (Green - Safety, All Clear)
-- **Warning**: #f59e0b (Amber - Caution)
-- **Danger**: #dc2626 (Red - Critical Alert)
-- **Cyan**: #0ea5e9 (Info, Data)
-- **Dark**: #0f172a (Background)
-
-### Typography
-- **Font Family**: Inter, Segoe UI, Roboto
-- **Headings**: 700–800 weight, letter-spacing -0.02em
-- **Body**: 400–500 weight, 1.6 line-height
-- **Mono**: Code blocks and technical data
-
-### Spacing & Radius
-- **Padding**: 4px, 8px, 12px, 16px, 24px, 32px (8px grid)
-- **Border Radius**: 6px (sm), 12px (md), 20px (lg), 999px (pill)
-- **Shadows**: Subtle to strong (0 → 30px blur)
-
-### Animations
-- Smooth transitions: 0.25s cubic-bezier(0.4, 0, 0.2, 1)
-- Pulse animations for live status indicators
-- Hover elevations (+2 to +8px)
-- Fade-in on page load
-
----
-
-## 🔐 Security Features
-
-- **JWT Authentication**: 7-day token expiration
-- **Password Hashing**: Bcryptjs with salt rounds
-- **HTTPS/TLS**: 1.3 encryption in production
-- **Helmet**: Security headers (CSP, X-Frame-Options, etc.)
-- **CORS**: Whitelisted origins only
-- **Rate Limiting**: 300 requests/15 minutes per IP
-- **Input Validation**: Mongoose schemas + server-side checks
-- **SQL Injection Prevention**: Parametrized queries (MongoDB)
-
----
-
-## 📊 API Endpoints
-
-### Authentication
-```
-POST   /api/auth/register       - Register new user
-POST   /api/auth/login          - Login with email & password
-GET    /api/auth/me             - Get current user (protected)
-```
-
-### Alerts & Warnings
-```
-GET    /api/alerts              - List all active alerts
-POST   /api/alerts              - Create new alert
-GET    /api/alerts/:id          - Get alert details
-PUT    /api/alerts/:id          - Update alert status
-```
-
-### Risk & Predictions
-```
-GET    /api/predictions         - Get latest risk predictions
-GET    /api/risk                - Multi-hazard risk scores
-POST   /api/risk/historical     - Historical risk trends
-```
-
-### Sensors & Telemetry
-```
-GET    /api/sensors             - List all telemetry stations
-GET    /api/sensors/:id         - Get sensor readings
-POST   /api/sensors/:id/data    - Log new sensor data
-```
-
-### Weather
-```
-GET    /api/weather             - Current weather conditions
-GET    /api/weather/forecast    - 48-hour forecast
-```
-
----
-
-## 🧪 Testing & Quality
-
-### Run Tests (Backend)
-```bash
-cd backend
-npm test
-```
-
-### Build Frontend
-```bash
-cd frontend
-npm run build
-```
-
-### Preview Production Build
-```bash
-cd frontend
-npm run preview
-```
-
----
-
-## 📈 Performance Metrics
-
-- **Bundle Size**: ~715 KB (unoptimized), ~226 KB gzipped
-- **Initial Load**: ~3-4 seconds on 4G
-- **API Response**: <100ms average (well under SLA)
-- **Database Queries**: <50ms with indexing
-- **System Uptime**: 99.8% (industry standard)
-
-### Optimization Recommendations
-1. Implement code splitting for lazy-loaded pages
-2. Compress images and use WebP format
-3. Enable HTTP/2 Server Push for critical assets
-4. Add service worker for offline caching
-5. Minify and defer non-critical CSS/JS
-
----
-
-## 🔄 Deployment
-
-### Production Deployment (Sample)
-
-**Frontend (Vercel/Netlify):**
-```bash
-cd frontend
-npm run build
-# Upload dist/ folder to Vercel or Netlify
-```
-
-**Backend (Heroku/Railway/DigitalOcean):**
-```bash
-cd backend
-# Set production environment variables
-heroku create your-app-name
-heroku config:set NODE_ENV=production
-heroku config:set MONGO_URI=mongodb+srv://user:pass@cluster...
-git push heroku main
-```
-
-**Database (MongoDB Atlas):**
-- Create Atlas cluster
-- Enable IP whitelist for backend server
-- Update MONGO_URI in production environment
-
-**Environment Variables (Production):**
-```
-PORT=5000
-MONGO_URI=mongodb+srv://user:pass@cluster.mongodb.net/disaster_management
-JWT_SECRET=<generate-secure-key>
-CLIENT_URL=https://yourdomain.com
-NODE_ENV=production
-```
-
----
-
-## 📚 Project Structure
-
-```
-disaster-management/
-├── backend/
-│   ├── config/
-│   │   └── db.js                 # MongoDB connection
-│   ├── controllers/
-│   │   ├── authController.js
-│   │   ├── alertController.js
-│   │   ├── riskController.js
-│   │   └── ...
-│   ├── middleware/
-│   │   ├── authMiddleware.js     # JWT verification
-│   │   └── errorMiddleware.js
-│   ├── models/
-│   │   ├── User.js
-│   │   ├── Alert.js
-│   │   ├── Sensor.js
-│   │   └── ...
-│   ├── routes/
-│   │   ├── authRoutes.js
-│   │   ├── alertRoutes.js
-│   │   └── ...
-│   ├── services/
-│   │   ├── predictService.js     # ML predictions
-│   │   └── alertService.js
-│   ├── scripts/
-│   │   └── seed.js               # Database seeding
-│   ├── server.js                 # Express app setup
-│   └── package.json
+🏔️ Hill_Gaurd — AI + IoT + GIS Multi-Hazard Early Warning System
+Sense → Fuse → Predict → Alert → Respond
+Hill_Gaurd is an AI-powered, IoT-enabled, GIS-based disaster intelligence and early warning platform designed for vulnerable hilly and mountainous regions.
+The platform combines sensor telemetry, risk analysis, geospatial visualization, historical disaster data, weather information, automated alerts, and AI-assisted emergency decision support into a unified Disaster Command Center.
+🎯 Problem Statement
+Hilly and mountainous regions are highly vulnerable to rapidly developing hazards such as:
+🌊 Flash floods
+⛰️ Landslides
+🌧️ Cloudbursts
+🌊 River-level surges
+🌱 Soil saturation and slope instability
+Traditional monitoring systems can struggle to provide localized and actionable information quickly enough.
+Hill_Gaurd addresses this challenge by combining multiple sources of information into a single operational platform that can help authorities monitor risk, identify vulnerable areas, issue warnings, and coordinate emergency response.
+🚀 Key Capabilities
+📡 1. Real-Time IoT Telemetry
+Hill_Gaurd monitors multiple environmental parameters from distributed telemetry stations.
+Supported measurements
+🌧️ Rainfall
+🌊 River/water level
+🌱 Soil moisture
+⛰️ Slope stability
+🌡️ Temperature
+📍 Station/location information
+🟢 Sensor health and connectivity
+The command dashboard provides centralized visibility into the sensor network.
+🤖 2. AI-Powered Risk Prediction
+Hill_Gaurd combines environmental indicators to generate multi-hazard risk intelligence.
+Risk dimensions
+Rainfall
+   │
+   ├──► Flood Risk
+   │
+Water Level
+   │
+   └──► Overall Risk
+        ▲
+Soil Moisture ──► Landslide Risk
+        ▲
+Slope Stability
+        ▲
+Historical Risk
+Risk classification
+Score
+Classification
+0–29
+🟢 Low
+30–54
+🟡 Moderate
+55–74
+🟠 High
+75–100
+🔴 Critical
+The system can display:
+Overall risk
+Flood risk
+Landslide risk
+Risk trend
+Lead-time estimate
+Model version
+Prediction inputs
+Confidence/uncertainty information where available
+Important: Risk predictions are decision-support outputs and should be validated against official monitoring and emergency-management procedures before real-world action.
+🗺️ 3. Interactive GIS Risk Map
+The GIS module provides a geographic view of disaster intelligence.
+Map layers
+🌊 Flood-risk areas
+⛰️ Landslide-risk areas
+📡 IoT monitoring stations
+👥 Population/vulnerable communities
+🏥 Emergency shelters
+🚨 Active alerts
+📍 Monitored locations
+Built with:
+Leaflet
+React-Leaflet
+OpenStreetMap-compatible map tiles
+The map can be used to understand the spatial relationship between hazards, monitoring stations, population centers, and emergency resources.
+🚨 4. Intelligent Alert Management
+Hill_Gaurd provides a centralized alert-management system.
+Alert levels
+LOW
+ ↓
+MODERATE
+ ↓
+HIGH
+ ↓
+CRITICAL
+Alerts can contain:
+Hazard type
+Severity
+Location
+Message
+Timestamp
+Expiration
+Active/inactive state
+Response status
+The platform also supports emergency notification concepts such as:
+SOS broadcasts
+Alert escalation
+Operator acknowledgement
+Targeted notifications
+Emergency response workflows
+📊 5. Live Monitoring Dashboard
+The command dashboard provides a consolidated operational view.
+Dashboard indicators
+Overall risk
+Flood risk
+Landslide risk
+Active alerts
+Sensor status
+Weather conditions
+Telemetry trends
+Monitored locations
+Emergency response information
+Data can be refreshed periodically to provide updated operational information.
+🧪 6. AI Simulation Lab
+The Simulation Lab allows users to explore hypothetical disaster scenarios.
+Example scenarios
+Rainfall ↑
+       +
+Soil Saturation ↑
+       +
+River Level ↑
+       ↓
+Potential Hazard Risk ↑
+Users can investigate how changing environmental parameters can affect the calculated risk.
+Simulation capabilities
+Flood scenarios
+Landslide scenarios
+What-if analysis
+Risk comparison
+Model inputs
+Prediction outputs
+Historical comparison
+Model performance information
+📈 7. Historical Disaster Intelligence
+Hill_Gaurd maintains historical disaster information for analysis and comparison.
+Historical analytics
+Incident timeline
+Disaster type
+Location
+Severity
+Historical patterns
+Seasonal trends
+Risk comparison
+Post-incident analysis
+Supported reporting concepts include:
+CSV export
+PDF reports
+Incident summaries
+After-action analysis
+🏥 8. Emergency Hub
+The Emergency Hub centralizes emergency-response information.
+Features
+🏠 Shelter availability
+👥 Shelter capacity
+🚑 Responder information
+📦 Resource allocation
+📞 Emergency contacts
+🛣️ Evacuation planning
+📄 Situation Report generation
+📢 Community communication
+The goal is to connect risk intelligence with response coordination.
+🤖 9. AI Emergency Assistant
+Hill_Gaurd includes an AI-assisted disaster intelligence interface.
+The emergency workflow follows a controlled multi-stage pipeline:
+User Request
+     │
+     ▼
+┌───────────────┐
+│    Planner    │
+└───────┬───────┘
+        ▼
+┌──────────────────┐
+│ Safety Auditor   │
+└────────┬─────────┘
+         ▼
+┌───────────────┐
+│     Writer    │
+└───────┬───────┘
+        ▼
+┌────────────────┐
+│    Reviewer    │
+└────────┬───────┘
+         ▼
+   Final Response
+The AI layer can assist with:
+Disaster-risk explanations
+Emergency scenario analysis
+Project knowledge
+Learning modules
+Incident reasoning
+Situation-report generation
+Emergency-response guidance
+The AI assistant is designed as decision support, not as a replacement for emergency authorities or official warnings.
+🔐 10. Authentication & Security
+Hill_Gaurd implements multiple application-security controls.
+Authentication
+JWT authentication
+Password hashing with bcrypt
+Protected routes
+Role-based access control
+Session expiration
+Login/logout handling
+Password reset workflow
+Password recovery
+The password-reset system supports:
+Secure random reset tokens
+SHA-256 token hashing
+Expiring reset tokens
+Single-use reset tokens
+Generic account-recovery responses
+SMTP email delivery
+Development-only reset-link fallback
+Application security
+Helmet security headers
+CORS configuration
+Express rate limiting
+Input validation
+MongoDB/Mongoose validation
+Protected API routes
+Environment-variable configuration
+Request logging
+👥 Role-Based Access Control
+Hill_Gaurd supports role-oriented application access.
+Role
+Example Responsibilities
+👑 Admin
+User management, configuration, system administration
+🏢 Authority
+Risk monitoring, alerts and incident coordination
+🚑 Responder
+Emergency response and resource coordination
+🧑‍💻 Operator
+Monitoring and operational workflows
+👤 Citizen
+Public-facing information where enabled
+Authorization is enforced on protected application routes and backend APIs.
+🏗️ System Architecture
+                         HILL_GAURD
+                              │
+                ┌─────────────┴─────────────┐
+                │                           │
+             DATA SOURCES              USER INPUT
+                │                           │
+        ┌───────┼────────┐                  │
+        │       │        │                  │
+      IoT    Weather   Historical           │
+    Sensors    Data      Data               │
+        │       │        │                  │
+        └───────┴────────┘                  │
+                 │                          │
+                 ▼                          ▼
+          ┌────────────────────────────────────┐
+          │       DATA FUSION / API LAYER      │
+          └────────────────┬───────────────────┘
+                           │
+                           ▼
+              ┌────────────────────────┐
+              │ RISK & PREDICTION ENGINE│
+              └────────────┬───────────┘
+                           │
+             ┌─────────────┼─────────────┐
+             ▼             ▼             ▼
+          Flood        Landslide       Overall
+           Risk           Risk           Risk
+             │             │             │
+             └─────────────┼─────────────┘
+                           ▼
+                ┌────────────────────┐
+                │ ALERT / ESCALATION │
+                └──────────┬─────────┘
+                           │
+              ┌────────────┼────────────┐
+              ▼            ▼            ▼
+           Dashboard      GIS       Emergency Hub
+              │            │            │
+              └────────────┼────────────┘
+                           ▼
+                    HUMAN DECISION
+🧰 Technology Stack
+Frontend
+Technology
+Purpose
+React 19
+UI framework
+React Router v7
+SPA routing
+Vite
+Build tooling
+Axios
+API communication
+Leaflet
+GIS mapping
+React-Leaflet
+React GIS integration
+Chart.js
+Data visualization
+Lucide React
+Icons
+Motion
+UI animations
+CSS3
+Styling and responsive design
+Backend
+Technology
+Purpose
+Node.js
+Runtime
+Express.js 5
+REST API
+MongoDB
+Database
+Mongoose 9
+ODM
+JWT
+Authentication
+bcryptjs
+Password hashing
+Helmet
+Security headers
+CORS
+Cross-origin control
+Morgan
+HTTP logging
+Express Rate Limit
+API protection
+AI / Data Tools
+Google Gemini / GenAI integration
+Python emergency tools
+NASA GPM IMERG precipitation data tooling
+MongoDB-backed AI memory
+Risk-calculation engine
+Historical disaster dataset
+📁 Project Structure
+Hill_Gaurd/
 │
 ├── frontend/
 │   ├── public/
-│   │   └── assets/               # Images, favicon
+│   │   └── assets/
+│   │
 │   ├── src/
 │   │   ├── components/
-│   │   │   ├── Navbar.jsx
-│   │   │   ├── Sidebar.jsx
-│   │   │   ├── AlertCard.jsx
-│   │   │   ├── RiskCard.jsx
-│   │   │   ├── MapView.jsx
-│   │   │   └── ...
 │   │   ├── context/
-│   │   │   ├── AuthContext.jsx
-│   │   │   ├── ThemeContext.jsx
-│   │   │   └── ToastContext.jsx
 │   │   ├── pages/
-│   │   │   ├── Home.jsx          # Landing page
-│   │   │   ├── Dashboard.jsx
-│   │   │   ├── Login.jsx
-│   │   │   ├── LiveMonitoring.jsx
-│   │   │   ├── RiskMap.jsx
-│   │   │   ├── Alerts.jsx
-│   │   │   └── ...
 │   │   ├── services/
-│   │   │   └── api.js            # Axios instance & endpoints
-│   │   ├── App.jsx               # Root component
-│   │   ├── main.jsx              # Entry point
+│   │   ├── styles/
+│   │   ├── utils/
+│   │   ├── App.jsx
+│   │   ├── main.jsx
 │   │   └── index.css
-│   ├── styles/
-│   │   ├── index.css             # Global reset
-│   │   ├── App.css               # App-wide styles
-│   │   ├── Home.css              # Landing page styles
-│   │   └── ...
-│   ├── package.json
-│   └── vite.config.js
-│
-├── README.md                      # This file
-└── LICENSE
-```
-
----
-
-## 🤝 Contributing
-
-1. **Fork** the repository
-2. **Create** a feature branch (`git checkout -b feature/amazing-feature`)
-3. **Commit** changes (`git commit -m 'Add amazing feature'`)
-4. **Push** to branch (`git push origin feature/amazing-feature`)
-5. **Open** a pull request
-
-### Code Style
-- Use ESLint + Prettier for formatting
-- Components should be functional with hooks
-- Prop validation with PropTypes or TypeScript
-- Meaningful commit messages
-
----
-
-## 📄 License
-
-This project is licensed under the **MIT License** — see the [LICENSE](./LICENSE) file for details.
-
----
-
-## 🙋 Support & Contact
-
-- **Issue Tracker**: https://github.com/yourusername/disaster-management/issues
-- **Email Support**: support@disaster-management.org
-
----
-
-**Built with ❤️ for disaster resilience and community safety.**
-
-*Last updated: 2026-08-30*
-
-- SOS broadcast capability for emergency notifications
-- Auto-escalation based on risk thresholds
-
-### 🤖 AI Simulation Lab
-- Scenario-based flood and landslide simulations
-- What-if analysis for emergency preparedness
-- ML model performance metrics
-- Training data visualization
-
-### 📈 Historical Data Archive
-- Post-incident analysis and reporting
-- Trend detection and seasonal patterns
-- Export capabilities (CSV, PDF)
-- Comparative risk assessment
-
-### 🏥 Emergency Hub & Shelter Management
-- Shelter availability and capacity tracking
-- Resource allocation tools
-- Community communication dashboard
-- Relief supply chain coordination
-
-### 👤 Mission Control (Admin Panel)
-- User management and role-based access control
-- System configuration and alerts thresholds
-- Audit logs and activity tracking
-- Performance monitoring and KPI dashboards
-
----
-
-## 🏗️ Architecture
-
-### Tech Stack
-
-**Frontend:**
-- React 19+ with functional components
-- React Router v7 for navigation
-- Axios for API communication
-- Leaflet + React-Leaflet for geospatial visualization
-- Chart.js for telemetry analytics
-- Lucide React for professional iconography
-- Vite for ultra-fast bundling
-
-**Backend:**
-- Node.js + Express.js
-- MongoDB with Mongoose ODM
-- JWT authentication with bcrypt hashing
-- CORS + Helmet for security
-- Morgan for request logging
-
-**Database:**
-- MongoDB for flexible document storage
-- Collections: Users, Sensors, Alerts, Predictions, WeatherData, IncidentReports
-
-**Deployment:**
-- Docker containerization ready
-- Environment-based configuration
-- CORS for cross-domain requests
-
-### Project Structure
-
-```
-Disaster Management/
-├── frontend/
-│   ├── src/
-│   │   ├── pages/              # Page components
-│   │   │   ├── Dashboard.jsx
-│   │   │   ├── LiveMonitoring.jsx
-│   │   │   ├── RiskMap.jsx
-│   │   │   ├── Alerts.jsx
-│   │   │   ├── SimulationLab.jsx
-│   │   │   ├── HistoricalData.jsx
-│   │   │   ├── EmergencyHub.jsx
-│   │   │   ├── AdminPanel.jsx
-│   │   │   └── Login.jsx
-│   │   ├── components/          # Reusable components
-│   │   ├── context/             # Auth, Theme, Toast providers
-│   │   ├── services/            # API integration
-│   │   └── styles/              # Premium CSS system
+│   │
 │   ├── index.html
 │   ├── package.json
 │   └── vite.config.js
+│
 ├── backend/
-│   ├── routes/
-│   ├── controllers/
-│   ├── models/
-│   ├── middleware/
 │   ├── config/
+│   ├── controllers/
+│   ├── middleware/
+│   ├── models/
+│   ├── routes/
+│   ├── scripts/
+│   ├── services/
+│   ├── utils/
 │   ├── server.js
 │   └── package.json
-└── database/
-    └── mongodb-setup.md
-```
+│
+├── my_project/
+│   ├── chat_terminal.py
+│   ├── chat_api.py
+│   ├── download_files_GPM_3IMERGDF_07.py
+│   ├── requirements.txt
+│   └── .env.example
+│
+├── OPERATOR_MANUAL.md
+├── README.md
+└── LICENSE
+📋 Application Modules
+Module
+Route
+Function
+🏠 Home
+/
+Project overview
+🔐 Login
+/login
+Authentication
+🔑 Forgot Password
+/forgot-password
+Account recovery
+🔄 Reset Password
+/reset-password
+Password reset
+📊 Dashboard
+/dashboard
+Command center
+📡 Live Monitoring
+/dashboard/monitoring
+IoT telemetry
+🗺️ Risk Map
+/dashboard/risk-map
+GIS risk visualization
+🚨 Alerts
+/dashboard/alerts
+Warning management
+🧪 Simulation Lab
+/dashboard/simulation
+What-if analysis
+📈 Historical Data
+/dashboard/history
+Disaster archive
+🏥 Emergency Hub
+/dashboard/emergency-hub
+Response coordination
+🤖 AI Assistant
+/dashboard/ai-assistant
+AI intelligence
+⚙️ Mission Control
+/dashboard/admin
+Administration
+🔌 REST API
+Authentication
+POST /api/auth/register
+POST /api/auth/login
+GET  /api/auth/me
+POST /api/auth/forgot-password
+POST /api/auth/reset-password/:token
+Sensors
+GET  /api/sensors
+GET  /api/sensors/:id
+POST /api/sensors
+POST /api/sensors/:id/data
+DELETE /api/sensors/:id
+Risk & Prediction
+GET  /api/risk
+POST /api/risk/predict
+GET  /api/predictions
+POST /api/risk/historical
+Alerts
+GET  /api/alerts
+POST /api/alerts
+GET  /api/alerts/:id
+PUT  /api/alerts/:id
+Weather
+GET /api/weather
+GET /api/weather/forecast
+AI
+POST   /api/ai/chat
+GET    /api/ai/session
+PATCH  /api/ai/session
+DELETE /api/ai/session
 
----
+POST /api/ai/emergency
 
-## 🚀 Getting Started
+GET /api/ai/study-modules
+GET /api/ai/project-context
+⚙️ Local Development
+Prerequisites
+Install:
+Node.js 18+
+npm 9+
+MongoDB 6+
+Git
+Python 3.11+ for optional Python tools
+1. Clone Repository
+git clone https://github.com/ROHIT3470/Disaster-Management.git
 
-### Prerequisites
-- Node.js v18+ and npm v9+
-- MongoDB running locally or Atlas connection
-- Git for version control
-
-### Frontend Setup
-
-```bash
-cd frontend
-
-# Install dependencies
-npm install
-
-# Start development server (with Vite hot reload)
-npm run dev
-
-# Build for production
-npm run build
-
-# Preview production build
-npm run preview
-```
-
-**Frontend runs on**: `http://localhost:5173`
-
-### Backend Setup
-
-```bash
+cd Disaster-Management
+2. Backend Setup
 cd backend
 
-# Install dependencies
 npm install
+Create:
+backend/.env
+Example:
+PORT=5000
 
-# Create .env file with:
-# MONGODB_URI=mongodb+srv://<user>:<pass>@cluster.mongodb.net/disaster-db
-# JWT_SECRET=your_secret_key_here
-# PORT=5000
-# NODE_ENV=development
+MONGO_URI=mongodb://127.0.0.1:27017/disaster_management
 
-# Start development server (with auto-reload via nodemon)
+JWT_SECRET=replace-with-a-long-random-secret
+JWT_EXPIRES_IN=7d
+
+CLIENT_URL=http://localhost:5173
+
+NODE_ENV=development
+
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=465
+SMTP_USER=your-email@gmail.com
+SMTP_PASSWORD=your-gmail-app-password
+SMTP_FROM=Hill_Gaurd <your-email@gmail.com>
+Start backend:
 npm run dev
+Backend:
+http://localhost:5000
+Health endpoint:
+http://localhost:5000/api/health
+3. Frontend Setup
+Open another terminal:
+cd frontend
 
-# Start production server
-npm start
-```
-
-**Backend runs on**: `http://localhost:5000`
-
-### Demo Credentials
-
-```
-Administrator:
+npm install
+Create:
+frontend/.env
+For local development:
+VITE_API_URL=http://localhost:5000/api
+Start:
+npm run dev
+Frontend:
+http://localhost:5173
+4. Database Seeding
+From the backend directory:
+npm run seed
+⚠️ Warning: The current seed script clears existing application collections before inserting demo data. Do not execute it against a production database containing important data.
+🔑 Demo Accounts
+For local/demo environments:
+Administrator
 Email: admin@disaster.org
 Password: admin123
-
-Emergency Operator:
+Emergency Operator
 Email: user@disaster.org
 Password: user123
-```
+⚠️ Change or remove demo credentials before production deployment.
+📧 Gmail Password Reset Configuration
+For Gmail SMTP:
+Enable 2-Step Verification.
+Create a Google App Password.
+Configure the SMTP variables.
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=465
+SMTP_USER=your-email@gmail.com
+SMTP_PASSWORD=your-16-character-app-password
+SMTP_FROM=Hill_Gaurd <your-email@gmail.com>
+Do not use the normal Gmail account password as SMTP_PASSWORD.
+Never commit .env files or API keys to GitHub.
+🐍 Optional Python Tools
+The project includes additional Python-based tools under:
+my_project/
+Install dependencies:
+cd my_project
 
----
-
-## 📱 UI/UX Design Highlights
-
-### Professional Design System
-- **Color Palette**: Enterprise blue, cyan accents, semantic status colors
-- **Typography**: System font stack with clear hierarchy
-- **Spacing**: 8px-based grid for consistent layouts
-- **Shadows & Depth**: Layered shadows for visual hierarchy
-- **Animations**: Smooth transitions and micro-interactions
-
-### Responsive Design
-- Desktop-first approach with mobile optimization
-- Breakpoints: 1024px, 768px, 480px
-- Sidebar collapse on mobile with backdrop overlay
-- Touch-friendly button sizes (44px+ height)
-- Optimized chart layouts for smaller screens
-
-### Accessibility
-- ARIA labels and semantic HTML
-- Keyboard navigation support
-- Color contrast compliance (WCAG AA)
-- Focus states on interactive elements
-- Screen reader friendly structure
-
----
-
-## 🔐 Security Features
-
-- **Authentication**: JWT-based with refresh tokens
-- **Password Security**: bcryptjs hashing (10+ rounds)
-- **API Security**: CORS configuration, rate limiting
-- **Data Encryption**: TLS 1.3 for transit, encryption at rest
-- **Authorization**: Role-based access control (RBAC)
-- **Input Validation**: Server-side validation with sanitization
-- **Audit Logs**: Track all critical actions
-
----
-
-## 📊 Key APIs
-
-### Authentication
-```
-POST /api/auth/login
-POST /api/auth/register
-POST /api/auth/logout
-POST /api/auth/refresh
-```
-
-### Sensors & Telemetry
-```
-GET /api/sensors
-GET /api/sensors/:id
-POST /api/telemetry
-GET /api/telemetry/:sensorId
-```
-
-### Alerts & Predictions
-```
-GET /api/alerts
-POST /api/alerts
-GET /api/predictions
-POST /api/predictions
-```
-
-### Weather & GIS Data
-```
-GET /api/weather
-GET /api/gis/hazards
-GET /api/gis/districts
-```
-
-### Emergency Management
-```
-GET /api/shelters
-POST /api/emergency/sos
-GET /api/incident-reports
-```
-
----
-
-## 📈 Performance Metrics
-
-- **Page Load Time**: < 2 seconds (with optimization)
-- **API Response Time**: < 200ms (95th percentile)
-- **UI Responsiveness**: 60 FPS animations
-- **System Availability**: 99.4% target uptime
-- **Data Freshness**: Real-time updates via WebSocket (v2 roadmap)
-
----
-
-## 🛣️ Roadmap & Future Enhancements
-
-### Phase 2 (Q4 2026)
-- [ ] WebSocket integration for live push notifications
-- [ ] Mobile app (React Native)
-- [ ] SMS/WhatsApp integration for alerts
-- [ ] Advanced ML models (LSTM time-series forecasting)
-- [ ] Drone/satellite imagery integration
-
-### Phase 3 (2027)
-- [ ] Community feedback system
-- [ ] Multi-language support (Hindi, regional dialects)
-- [ ] Offline capability with service workers
-- [ ] Video streaming from field units
-- [ ] 3D terrain visualization
-
-### Phase 4 (2027+)
-- [ ] IoT edge computing
-- [ ] Blockchain for incident verification
-- [ ] Integration with national disaster management portal
-- [ ] Climate impact modeling
-
----
-
-## 🧪 Testing
-
-```bash
-# Frontend tests (Jest + React Testing Library)
-cd frontend
-npm run test
-
-# Backend tests (Jest + Supertest)
+python -m pip install -r requirements.txt
+Configure:
+GEMINI_API_KEY=your-key
+MONGO_URI=your-mongodb-uri
+Example GPM downloader:
+python download_files_GPM_3IMERGDF_07.py \
+  --start 2025-08-31T00:00:00.000Z \
+  --end 2025-09-30T23:59:59.000Z \
+  --bbox 91.55,25.95,91.9,26.3 \
+  --output-dir ./GPM_3IMERGDF_07 \
+  --workers 5
+🧪 Testing
+Backend
 cd backend
-npm run test
 
-# E2E tests (Cypress)
-npm run cypress:open
-```
+npm test
+Frontend
+cd frontend
 
----
+npm run build
+Preview production build:
+npm run preview
+📊 Performance Targets
+The platform is designed around the following engineering targets:
+Metric
+Target
+API response
+<100 ms for typical cached/simple requests
+Database query
+<50 ms for indexed operations
+Alert processing
+Near-real-time
+Dashboard refresh
+~30 seconds
+Frontend bundle
+Optimized through code splitting
+Availability
+Production deployment dependent
+Actual performance depends on infrastructure, database configuration, network conditions, traffic, and external APIs.
+☁️ Production Deployment
+Frontend
+The Vite frontend can be deployed to:
+Vercel
+Netlify
+Static hosting/CDN
+Build:
+cd frontend
 
-## 📝 Development Guidelines
+npm run build
+Output:
+frontend/dist/
+Configure:
+VITE_API_URL=https://your-backend-domain/api
+Backend
+The Express backend can be deployed using a Node.js-compatible hosting provider.
+Required production variables:
+NODE_ENV=production
 
-### Code Style
-- Use functional React components with hooks
-- Prefer composition over inheritance
-- Keep components focused and reusable
-- Document complex logic with comments
-- Follow ESLint configuration
+PORT=5000
 
-### Naming Conventions
-- Files: PascalCase for components, camelCase for utilities
-- Variables: camelCase
-- Constants: UPPER_SNAKE_CASE
-- CSS Classes: kebab-case
+MONGO_URI=mongodb+srv://...
 
-### Git Workflow
-```bash
-# Create feature branch
-git checkout -b feature/description
+JWT_SECRET=strong-random-production-secret
 
-# Commit with descriptive messages
-git commit -m "feat: add SOS broadcast modal"
+JWT_EXPIRES_IN=7d
 
-# Push and create PR
-git push origin feature/description
-```
+CLIENT_URL=https://your-frontend-domain
 
----
+SMTP_HOST=...
+SMTP_PORT=...
+SMTP_USER=...
+SMTP_PASSWORD=...
+SMTP_FROM=...
+🍃 MongoDB Atlas
+For production:
+Create a MongoDB Atlas cluster.
+Create a database user.
+Configure network access.
+Create the database connection string.
+Add the connection string to MONGO_URI.
+Never expose the database credentials in frontend code.
+Example:
+MONGO_URI=mongodb+srv://USERNAME:PASSWORD@CLUSTER.mongodb.net/disaster_management
+🔒 Production Security Checklist
+Before deploying Hill_Gaurd publicly:
+[ ] Remove demo credentials
+[ ] Generate a strong JWT_SECRET
+[ ] Configure MongoDB Atlas securely
+[ ] Restrict CORS origins
+[ ] Configure HTTPS
+[ ] Configure SMTP securely
+[ ] Never commit .env
+[ ] Rotate exposed credentials
+[ ] Enable production rate limiting
+[ ] Validate all API inputs
+[ ] Review authorization on every protected endpoint
+[ ] Disable development reset-link responses
+[ ] Configure secure logging
+[ ] Review MongoDB indexes
+[ ] Test password recovery
+[ ] Test expired JWT handling
+[ ] Test unauthorized API access
+[ ] Test admin authorization
+🛡️ Cybersecurity Considerations
+Hill_Gaurd follows a security-oriented application architecture.
+Authentication
+User
+ │
+ ▼
+Login
+ │
+ ▼
+Credentials
+ │
+ ▼
+bcrypt verification
+ │
+ ▼
+JWT issued
+ │
+ ▼
+Protected API
+Password recovery
+Forgot Password
+       │
+       ▼
+Random Token
+       │
+       ▼
+SHA-256 Hash
+       │
+       ▼
+Database
+       │
+       ▼
+Expiring Reset Link
+       │
+       ▼
+Password Reset
+       │
+       ▼
+Token Invalidated
+Recommended future security enhancements include:
+Refresh-token rotation
+HttpOnly secure cookies
+CSRF protection where cookie authentication is used
+MFA
+Audit-log integrity
+Security event monitoring
+Strong password policy
+Account lockout/risk-based authentication
+API schema validation
+Automated dependency scanning
+SAST/DAST in CI/CD
+🔄 Development Workflow
+Recommended Git workflow:
+git checkout -b feature/<feature-name>
 
-## 🤝 Contributing
+git add .
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+git commit -m "feat: add <feature>"
 
----
+git push origin feature/<feature-name>
+Then open a Pull Request.
+Commit convention
+feat: new functionality
+fix: bug correction
+refactor: code restructuring
+docs: documentation
+style: UI/formatting
+test: tests
+security: security improvement
+perf: performance improvement
+🧭 Future Roadmap
+Phase 1 — Platform Hardening
+[ ]
+Production authentication architecture
+[ ]
+Advanced RBAC
+[ ]
+Audit logging
+[ ]
+API validation
+[ ]
+Automated testing
+[ ]
+CI/CD security checks
+Phase 2 — Intelligence
+[ ]
+Improved ML models
+[ ]
+Model evaluation pipeline
+[ ]
+Feature importance visualization
+[ ]
+Prediction confidence calibration
+[ ]
+Model version registry
+[ ]
+Continuous model monitoring
+Phase 3 — IoT
+[ ]
+MQTT integration
+[ ]
+Device authentication
+[ ]
+Sensor heartbeat monitoring
+[ ]
+Offline sensor detection
+[ ]
+Telemetry anomaly detection
+[ ]
+Real-time streaming
+Phase 4 — GIS
+[ ]
+Advanced hazard polygons
+[ ]
+Evacuation-route analysis
+[ ]
+Shelter proximity analysis
+[ ]
+Population exposure estimation
+[ ]
+Terrain/elevation integration
+[ ]
+Satellite-data integration
+Phase 5 — Emergency Operations
+[ ]
+Multi-agency coordination
+[ ]
+Resource tracking
+[ ]
+Incident command workflows
+[ ]
+Automated SITREP generation
+[ ]
+Notification provider integration
+[ ]
+Offline emergency mode
+🧠 Engineering Philosophy
+Hill_Gaurd follows:
+SENSE
+  ↓
+Collect environmental information
 
-## 📞 Support & Contact
+FUSE
+  ↓
+Combine telemetry + weather + historical context
 
-- **Issues**: Report via GitHub Issues
-- **Discussions**: Use GitHub Discussions for ideas
-- **Email**: support@disastermanagement.org
-- **Documentation**: See `docs/` folder for detailed guides
+PREDICT
+  ↓
+Estimate hazard risk
 
----
+ALERT
+  ↓
+Generate actionable warnings
 
-## 📄 License
+RESPOND
+  ↓
+Coordinate emergency resources
 
-This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
-
----
-
-## 🙏 Acknowledgments
-
-- National Disaster Management Authority (NDMA)
-- Indian Meteorological Department (IMD)
-- State Emergency Operations Centers
-- Community volunteers and field responders
-- Open-source community (React, Leaflet, Chart.js)
-
----
-
-## 📊 Project Statistics
-
-- **Lines of Code**: ~8,500 (Frontend) + ~4,200 (Backend)
-- **Components**: 25+ React components
-- **API Endpoints**: 30+ RESTful endpoints
-- **Database Collections**: 8
-- **Development Time**: 200+ hours
-- **Test Coverage**: 75%+
-- **Accessibility Score**: 92/100
-
----
-
-**Built with ❤️ for disaster risk reduction and community resilience.**
-
-Last Updated: August 30, 2026  
-Version: 1.0.0-final
+LEARN
+  ↓
+Analyze historical incidents and improve models
+The platform is designed around human-in-the-loop disaster intelligence, where automated systems support operational teams rather than replacing official emergency decision-making.
+📚 Documentation
+Additional documentation:
+OPERATOR_MANUAL.md
+The operator manual covers:
+Dashboard operation
+Monitoring
+Risk maps
+Alerts
+Simulation
+Historical data
+Emergency Hub
+AI assistant
+Administration
+Python tools
+Troubleshooting
+👨‍💻 Project
+Project: Hill_Gaurd
+Category: Disaster Management / Software
+Focus: Flash Flood & Landslide Early Warning
+Architecture: MERN + AI + IoT + GIS
+Development Model: Full-stack web application
+📜 License
+This project is licensed under the MIT License.
+See:
+LICENSE
+for details.
+⚠️ Disclaimer
+Hill_Gaurd is a software research/development project intended for disaster-management intelligence, simulation, education, and decision-support purposes.
+Risk predictions, simulations, alerts, and AI-generated recommendations should not be treated as a substitute for official government warnings, trained emergency personnel, hydrological/geotechnical assessments, or established emergency-response protocols.
+For real-world emergencies, follow instructions from the relevant official emergency-management authorities.
+🏔️ Hill_Gaurd
+Sense → Fuse → Predict → Alert → Respond
+Technology for faster disaster intelligence and better-informed emergency coordination.
+Built for disaster resilience.
