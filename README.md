@@ -755,7 +755,7 @@ Example:
 ```env
 PORT=5000
 
-MONGO_URI=mongodb://127.0.0.1:27017/disaster_management
+MONGO_URI=mongodb://127.0.0.1.............
 
 JWT_SECRET=replace-with-a-long-random-secret
 JWT_EXPIRES_IN=7d
