@@ -1,28 +1,4 @@
-/**
- * ============================================================
- * GEONEXUS
- * APPLICATION ROUTER & ROOT COMPONENT
- * ============================================================
- *
- * File:
- * frontend/src/App.jsx
- *
- * Responsibilities:
- * - Application providers
- * - Routing
- * - Authentication guards
- * - Admin authorization
- * - Dashboard layout
- * - Page metadata
- * - Network status
- * - Legacy route redirects
- * ============================================================
- */
-
-import React, {
-  useEffect,
-  useState,
-} from "react";
+import React, { useEffect, useState } from "react";
 
 import {
   BrowserRouter,
@@ -35,10 +11,7 @@ import {
   useNavigationType,
 } from "react-router-dom";
 
-import {
-  AnimatePresence,
-  motion,
-} from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 
 /* ============================================================
    GLOBAL COMPONENTS
@@ -46,7 +19,9 @@ import {
 
 import Navbar from "./components/Navbar.jsx";
 import Sidebar from "./components/Sidebar.jsx";
+import ThemeToggle from "./components/ThemeToggle.jsx";
 import ToastContainer from "./components/ToastContainer.jsx";
+
 import { animatePageEntrance } from "./utils/anime.js";
 
 /* ============================================================
@@ -65,13 +40,8 @@ import {
   useAuth,
 } from "./context/AuthContext.jsx";
 
-import {
-  ThemeProvider,
-} from "./context/ThemeContext.jsx";
-
-import {
-  ToastProvider,
-} from "./context/ToastContext.jsx";
+import { ThemeProvider } from "./context/ThemeContext.jsx";
+import { ToastProvider } from "./context/ToastContext.jsx";
 
 /* ============================================================
    PUBLIC PAGES
@@ -97,6 +67,7 @@ import HistoricalData from "./pages/HistoricalData.jsx";
 import EmergencyHub from "./pages/EmergencyHub.jsx";
 import AdminPanel from "./pages/AdminPanel.jsx";
 import AIAssistant from "./pages/AIAssistant.jsx";
+import Prediction from "./pages/Prediction.jsx";
 
 /* ============================================================
    APPLICATION CONFIGURATION
@@ -113,126 +84,212 @@ const APP_VERSION =
 const APP_BASE_URL =
   import.meta.env.BASE_URL || "/";
 
+const APP_ROUTES = Object.freeze([
+  "/",
+  "/contact",
+  "/privacy",
+  "/login",
+  "/forgot-password",
+  "/reset-password",
+  "/dashboard",
+  "/dashboard/monitoring",
+  "/dashboard/risk-map",
+  "/dashboard/prediction",
+  "/dashboard/alerts",
+  "/dashboard/simulation",
+  "/dashboard/history",
+  "/dashboard/emergency-hub",
+  "/dashboard/admin",
+  "/dashboard/ai-assistant",
+  "/dashboard/learning",
+]);
+
 /* ============================================================
    PAGE METADATA
    ============================================================ */
 
 const PAGE_META = Object.freeze({
   "/": {
-    title:
-      "GeoNexus | Disaster Management Command Center",
-    description:
-      APP_DESCRIPTION,
+    title: "GeoNexus | Disaster Management Command Center",
+    description: APP_DESCRIPTION,
   },
 
   "/contact": {
-    title:
-      "Contact | GeoNexus",
+    title: "Contact | GeoNexus",
     description:
       "Contact the GeoNexus disaster management command center.",
   },
 
   "/privacy": {
-    title:
-      "Privacy Policy | GeoNexus",
+    title: "Privacy Policy | GeoNexus",
     description:
       "GeoNexus privacy and data protection information.",
   },
 
   "/login": {
-    title:
-      "Secure Command Login | GeoNexus",
+    title: "Secure Command Login | GeoNexus",
     description:
       "Secure access to the GeoNexus disaster management command center.",
   },
 
   "/forgot-password": {
-    title:
-      "Forgot Password | GeoNexus",
+    title: "Forgot Password | GeoNexus",
     description:
       "Reset your GeoNexus command account password securely.",
   },
 
   "/reset-password": {
-    title:
-      "Reset Password | GeoNexus",
+    title: "Reset Password | GeoNexus",
     description:
       "Create a new secure password for your GeoNexus account.",
   },
 
   "/dashboard": {
-    title:
-      "Command Dashboard | GeoNexus",
+    title: "Command Dashboard | GeoNexus",
     description:
       "Real-time disaster risk, telemetry, alerts and response intelligence.",
   },
 
   "/dashboard/monitoring": {
-    title:
-      "Live IoT Monitoring | GeoNexus",
+    title: "Live IoT Monitoring | GeoNexus",
     description:
       "Real-time IoT telemetry and sensor fleet monitoring.",
   },
 
   "/dashboard/risk-map": {
-    title:
-      "GIS Risk Map | GeoNexus",
+    title: "GIS Risk Map | GeoNexus",
     description:
       "Interactive geospatial disaster risk intelligence.",
   },
 
+  "/dashboard/prediction": {
+    title: "Disaster Risk Prediction | GeoNexus",
+    description:
+      "AI-assisted flood and landslide risk prediction for monitored locations.",
+  },
+
   "/dashboard/alerts": {
-    title:
-      "Early Warnings | GeoNexus",
+    title: "Early Warnings | GeoNexus",
     description:
       "Active disaster alerts and warning management.",
   },
 
   "/dashboard/simulation": {
-    title:
-      "AI Simulation Lab | GeoNexus",
+    title: "AI Simulation Lab | GeoNexus",
     description:
       "Predictive disaster scenario simulation and analysis.",
   },
 
   "/dashboard/history": {
-    title:
-      "Incident Archive | GeoNexus",
+    title: "Incident Archive | GeoNexus",
     description:
       "Historical disaster incidents and analytics.",
   },
 
   "/dashboard/emergency-hub": {
-    title:
-      "Emergency Hub | GeoNexus",
+    title: "Emergency Hub | GeoNexus",
     description:
       "Emergency response, shelters and resource coordination.",
   },
 
   "/dashboard/admin": {
-    title:
-      "Mission Control | GeoNexus",
+    title: "Mission Control | GeoNexus",
     description:
       "GeoNexus system administration and sensor management.",
   },
 
   "/dashboard/ai-assistant": {
-    title:
-      "AI Learning & Multi-Agent Studio | GeoNexus",
+    title: "AI Assistant | GeoNexus",
     description:
-      "Specialized AI disaster risk reduction learning lab, scenario testing, and emergency safety agent.",
+      "AI-powered disaster risk reduction, scenario analysis and emergency safety assistance.",
   },
 
   "/dashboard/learning": {
-    title:
-      "AI Learning & Multi-Agent Studio | GeoNexus",
+    title: "AI Learning Studio | GeoNexus",
     description:
-      "Specialized AI disaster risk reduction learning lab, scenario testing, and emergency safety agent.",
+      "Disaster risk reduction learning, scenario testing and emergency safety assistance.",
   },
 });
 
 /* ============================================================
-   PAGE EFFECTS
+   SHARED HELPERS
+   ============================================================ */
+
+function normalizePath(pathname) {
+  if (!pathname) {
+    return "/";
+  }
+
+  return pathname.replace(/\/+$/, "") || "/";
+}
+
+function getPageMetadata(pathname) {
+  const normalizedPath = normalizePath(pathname);
+
+  if (PAGE_META[normalizedPath]) {
+    return PAGE_META[normalizedPath];
+  }
+
+  if (normalizedPath.startsWith("/dashboard/")) {
+    return {
+      title: "Dashboard Module | GeoNexus",
+      description: APP_DESCRIPTION,
+    };
+  }
+
+  return {
+    title: `${APP_NAME} | Disaster Management`,
+    description: APP_DESCRIPTION,
+  };
+}
+
+function getDocumentTheme() {
+  const root = document.documentElement;
+
+  return (
+    root.dataset.theme === "dark" ||
+    root.classList.contains("dark")
+  )
+    ? "dark"
+    : "light";
+}
+
+function userHasAdminAccess(user) {
+  if (!user || typeof user !== "object") {
+    return false;
+  }
+
+  const normalizeRole = (role) =>
+    String(role ?? "")
+      .trim()
+      .toLowerCase()
+      .replace(/[\s-]+/g, "_");
+
+  const primaryRole = normalizeRole(
+    user.role ?? user.userRole ?? user.accountType,
+  );
+
+  const roles = Array.isArray(user.roles)
+    ? user.roles.map(normalizeRole)
+    : [];
+
+  const adminRoles = new Set([
+    "admin",
+    "administrator",
+    "superadmin",
+    "super_admin",
+    "system_admin",
+  ]);
+
+  return (
+    adminRoles.has(primaryRole) ||
+    roles.some((role) => adminRoles.has(role)) ||
+    user.isAdmin === true
+  );
+}
+
+/* ============================================================
+   PAGE METADATA AND ROUTE EFFECTS
    ============================================================ */
 
 function PageEffects() {
@@ -240,149 +297,81 @@ function PageEffects() {
   const navigationType = useNavigationType();
 
   useEffect(() => {
-    const normalizedPath =
-      location.pathname.replace(/\/+$/, "") || "/";
+    const metadata = getPageMetadata(location.pathname);
 
-    const exactMeta =
-      PAGE_META[normalizedPath];
+    document.title = metadata.title;
 
-    const dashboardMeta =
-      normalizedPath.startsWith("/dashboard")
-        ? PAGE_META["/dashboard"]
-        : null;
-
-    const meta =
-      exactMeta ||
-      dashboardMeta || {
-        title:
-          `${APP_NAME} | Disaster Management`,
-        description:
-          APP_DESCRIPTION,
-      };
-
-    document.title = meta.title;
-
-    let descriptionTag =
-      document.querySelector(
-        'meta[name="description"]',
-      );
+    let descriptionTag = document.querySelector(
+      'meta[name="description"]',
+    );
 
     if (!descriptionTag) {
-      descriptionTag =
-        document.createElement("meta");
-
-      descriptionTag.setAttribute(
-        "name",
-        "description",
-      );
-
-      document.head.appendChild(
-        descriptionTag,
-      );
+      descriptionTag = document.createElement("meta");
+      descriptionTag.name = "description";
+      document.head.appendChild(descriptionTag);
     }
 
-    descriptionTag.setAttribute(
-      "content",
-      meta.description,
-    );
-
-    let themeColor =
-      document.querySelector(
-        'meta[name="theme-color"]',
-      );
-
-    if (!themeColor) {
-      themeColor =
-        document.createElement("meta");
-
-      themeColor.setAttribute(
-        "name",
-        "theme-color",
-      );
-
-      document.head.appendChild(
-        themeColor,
-      );
-    }
-
-    themeColor.setAttribute(
-      "content",
-      "#07111f",
-    );
+    descriptionTag.content = metadata.description;
   }, [location.pathname]);
 
+  /* Keep the browser theme color synchronized with the theme. */
   useEffect(() => {
-    const mainContent =
-      document.getElementById(
-        "main-content",
-      );
+    let themeColorTag = document.querySelector(
+      'meta[name="theme-color"]',
+    );
 
-    if (
-      mainContent &&
-      navigationType !== "POP"
-    ) {
-      mainContent.focus({
-        preventScroll: true,
-      });
+    if (!themeColorTag) {
+      themeColorTag = document.createElement("meta");
+      themeColorTag.name = "theme-color";
+      document.head.appendChild(themeColorTag);
     }
-  }, [
-    location.pathname,
-    navigationType,
-  ]);
 
+    const updateThemeColor = () => {
+      themeColorTag.content =
+        getDocumentTheme() === "dark"
+          ? "#08191d"
+          : "#f4f8f7";
+    };
+
+    updateThemeColor();
+
+    const observer = new MutationObserver(updateThemeColor);
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme", "class"],
+    });
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
+  /* Move keyboard focus to the main dashboard content on navigation. */
+  useEffect(() => {
+    if (navigationType === "POP") {
+      return;
+    }
+
+    const mainContent = document.getElementById("main-content");
+
+    if (mainContent) {
+      mainContent.focus({ preventScroll: true });
+    }
+  }, [location.pathname, navigationType]);
+
+  /* Run the existing entrance animation safely. */
   useEffect(() => {
     try {
-      animatePageEntrance(
-        document,
-      );
+      animatePageEntrance(document);
     } catch (error) {
       if (import.meta.env.DEV) {
         console.warn(
-          "[GeoNexus] Page animation failed:",
+          "[GeoNexus] Page entrance animation failed:",
           error,
         );
       }
     }
-  }, [location.pathname]);
-
-  useEffect(() => {
-    const links =
-      document.querySelectorAll(
-        "a[href]",
-      );
-
-    links.forEach((link) => {
-      link.removeAttribute(
-        "aria-current",
-      );
-    });
-
-    const currentPath =
-      location.pathname;
-
-    links.forEach((link) => {
-      try {
-        const url =
-          new URL(
-            link.href,
-            window.location.origin,
-          );
-
-        if (
-          url.origin ===
-            window.location.origin &&
-          url.pathname ===
-            currentPath
-        ) {
-          link.setAttribute(
-            "aria-current",
-            "page",
-          );
-        }
-      } catch {
-        // Ignore malformed links.
-      }
-    });
   }, [location.pathname]);
 
   return null;
@@ -400,7 +389,7 @@ function AppLoading() {
       aria-live="polite"
       aria-label="Loading GeoNexus"
     >
-      <div className="loading-orbit">
+      <div className="loading-orbit" aria-hidden="true">
         <div className="loading-spinner" />
       </div>
 
@@ -408,15 +397,10 @@ function AppLoading() {
         <h2>GeoNexus</h2>
 
         <p>
-          Initializing Disaster
-          Management Command
-          Center...
+          Initializing Disaster Management Command Center...
         </p>
 
-        <span>
-          Secure telemetry
-          systems loading
-        </span>
+        <span>Secure telemetry systems loading</span>
       </div>
     </div>
   );
@@ -427,42 +411,22 @@ function AppLoading() {
    ============================================================ */
 
 function NetworkStatus() {
-  const [online, setOnline] =
-    useState(() =>
-      typeof navigator !== "undefined"
-        ? navigator.onLine
-        : true,
-    );
+  const [online, setOnline] = useState(() =>
+    typeof navigator === "undefined"
+      ? true
+      : navigator.onLine,
+  );
 
   useEffect(() => {
-    const handleOnline = () => {
-      setOnline(true);
-    };
+    const handleOnline = () => setOnline(true);
+    const handleOffline = () => setOnline(false);
 
-    const handleOffline = () => {
-      setOnline(false);
-    };
-
-    window.addEventListener(
-      "online",
-      handleOnline,
-    );
-
-    window.addEventListener(
-      "offline",
-      handleOffline,
-    );
+    window.addEventListener("online", handleOnline);
+    window.addEventListener("offline", handleOffline);
 
     return () => {
-      window.removeEventListener(
-        "online",
-        handleOnline,
-      );
-
-      window.removeEventListener(
-        "offline",
-        handleOffline,
-      );
+      window.removeEventListener("online", handleOnline);
+      window.removeEventListener("offline", handleOffline);
     };
   }, []);
 
@@ -470,39 +434,25 @@ function NetworkStatus() {
     <AnimatePresence>
       {!online && (
         <motion.div
+          key="network-offline"
           className="network-status-banner"
-          initial={{
-            opacity: 0,
-            y: -30,
-          }}
-          animate={{
-            opacity: 1,
-            y: 0,
-          }}
-          exit={{
-            opacity: 0,
-            y: -30,
-          }}
-          transition={{
-            duration: 0.25,
-          }}
-          role="alert"
-          aria-live="assertive"
+          initial={{ opacity: 0, y: -24 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -24 }}
+          transition={{ duration: 0.2 }}
+          role="status"
+          aria-live="polite"
         >
           <span
             className="network-status-dot"
             aria-hidden="true"
           />
 
-          <strong>
-            OFFLINE MODE
-          </strong>
+          <strong>OFFLINE MODE</strong>
 
           <span>
-            Internet connection
-            unavailable. Cached
-            application data may
-            still be accessible.
+            Internet connection unavailable. Cached data may
+            remain accessible.
           </span>
         </motion.div>
       )}
@@ -511,145 +461,81 @@ function NetworkStatus() {
 }
 
 /* ============================================================
-   ADMIN ROLE HELPER
-   ============================================================ */
-
-function userHasAdminAccess(user) {
-  if (!user) {
-    return false;
-  }
-
-  const primaryRole =
-    String(
-      user?.role ||
-      user?.userRole ||
-      user?.accountType ||
-      "",
-    )
-      .trim()
-      .toLowerCase();
-
-  const roles =
-    Array.isArray(user?.roles)
-      ? user.roles.map(
-          (role) =>
-            String(role)
-              .trim()
-              .toLowerCase(),
-        )
-      : [];
-
-  const adminRoles = [
-    "admin",
-    "administrator",
-    "superadmin",
-    "super-admin",
-    "super_admin",
-    "system_admin",
-  ];
-
-  return (
-    adminRoles.includes(primaryRole) ||
-    roles.some((role) =>
-      adminRoles.includes(role),
-    ) ||
-    user?.isAdmin === true
-  );
-}
-
-/* ============================================================
-   PROTECTED ROUTE
+   ROUTE GUARDS
    ============================================================ */
 
 function ProtectedRoute() {
-  const {
-    user,
-    loading,
-  } = useAuth();
+  const { user, loading } = useAuth();
 
   if (loading) {
     return <AppLoading />;
   }
 
   if (!user) {
-    return (
-      <Navigate
-        to="/login"
-        replace
-      />
-    );
+    return <Navigate to="/login" replace />;
   }
 
   return <Outlet />;
 }
 
-/* ============================================================
-   ADMIN ROUTE
-   ============================================================ */
-
 function AdminRoute() {
-  const {
-    user,
-    loading,
-  } = useAuth();
+  const { user, loading } = useAuth();
 
   if (loading) {
     return <AppLoading />;
   }
 
   if (!user) {
-    return (
-      <Navigate
-        to="/login"
-        replace
-      />
-    );
+    return <Navigate to="/login" replace />;
   }
 
   if (!userHasAdminAccess(user)) {
-    return (
-      <Navigate
-        to="/dashboard"
-        replace
-      />
-    );
+    return <Navigate to="/dashboard" replace />;
   }
 
   return <Outlet />;
 }
 
-/* ============================================================
-   PUBLIC-ONLY ROUTE
-   ============================================================ */
-
 function PublicOnlyRoute() {
-  const {
-    user,
-    loading,
-  } = useAuth();
+  const { user, loading } = useAuth();
 
   if (loading) {
     return <AppLoading />;
   }
 
   if (user) {
-    return (
-      <Navigate
-        to="/dashboard"
-        replace
-      />
-    );
+    return <Navigate to="/dashboard" replace />;
   }
 
-  return <Outlet />;
+  return (
+    <>
+      <ThemeToggle variant="floating" />
+      <Outlet />
+    </>
+  );
 }
 
 /* ============================================================
-   PAGE TRANSITION
+   PAGE TRANSITIONS
    ============================================================ */
 
 function PageTransition({ children }) {
-  return <>{children}</>;
+  const location = useLocation();
+
+  return (
+    <AnimatePresence mode="wait" initial={false}>
+      <motion.div
+        key={location.pathname}
+        className="page-transition"
+        initial={{ opacity: 0, y: 6 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -4 }}
+        transition={{ duration: 0.18, ease: "easeOut" }}
+      >
+        {children}
+      </motion.div>
+    </AnimatePresence>
+  );
 }
 
 /* ============================================================
@@ -659,6 +545,7 @@ function PageTransition({ children }) {
 function PublicLayout() {
   return (
     <div className="public-layout">
+      <ThemeToggle variant="floating" />
       <PageTransition>
         <Outlet />
       </PageTransition>
@@ -690,15 +577,13 @@ function DashboardLayout() {
         </main>
       </div>
 
-      <SOSModal />
 
-      <SituationReportModal />
     </div>
   );
 }
 
 /* ============================================================
-   404 PAGE
+   NOT FOUND PAGES
    ============================================================ */
 
 function NotFoundPage() {
@@ -707,32 +592,23 @@ function NotFoundPage() {
   return (
     <main
       className="not-found-page"
-      role="main"
       aria-labelledby="not-found-title"
     >
       <div className="not-found-card">
-        <div
-          className="not-found-code"
-          aria-hidden="true"
-        >
+        <div className="not-found-code" aria-hidden="true">
           404
         </div>
 
-        <h1 id="not-found-title">
-          Page Not Found
-        </h1>
+        <h1 id="not-found-title">Page Not Found</h1>
 
         <p>
-          The requested GeoNexus
-          module does not exist.
+          The requested GeoNexus module could not be found.
         </p>
 
         <button
           type="button"
-          className="not-found-home"
-          onClick={() =>
-            navigate("/")
-          }
+          className="btn-primary not-found-home"
+          onClick={() => navigate("/")}
         >
           Return to Command Center
         </button>
@@ -741,325 +617,190 @@ function NotFoundPage() {
   );
 }
 
+function DashboardNotFoundPage() {
+  const navigate = useNavigate();
+
+  return (
+    <section
+      className="dashboard-not-found"
+      aria-labelledby="dashboard-not-found-title"
+    >
+      <div className="not-found-card">
+        <div className="not-found-code" aria-hidden="true">
+          404
+        </div>
+
+        <h1 id="dashboard-not-found-title">
+          Module Not Found
+        </h1>
+
+        <p>
+          This dashboard module does not exist or may have
+          moved.
+        </p>
+
+        <button
+          type="button"
+          className="btn-primary"
+          onClick={() => navigate("/dashboard")}
+        >
+          Back to Dashboard
+        </button>
+      </div>
+    </section>
+  );
+}
+
 /* ============================================================
-   APPLICATION ROUTES
+   ROUTE DEFINITIONS
    ============================================================ */
 
 function AppRoutes() {
   return (
     <>
       <PageEffects />
-
       <NetworkStatus />
 
       <Routes>
-
-        {/* ==================================================
-            PUBLIC-ONLY ROUTES
-           ================================================== */}
-
-        <Route
-          element={
-            <PublicOnlyRoute />
-          }
-        >
-          <Route
-            path="/login"
-            element={
-              <Login />
-            }
-          />
+        {/* Public-only routes */}
+        <Route element={<PublicOnlyRoute />}>
+          <Route path="/login" element={<Login />} />
         </Route>
 
-        {/* ==================================================
-            PUBLIC ROUTES
-           ================================================== */}
-
-        <Route
-          element={
-            <PublicLayout />
-          }
-        >
-          <Route
-            path="/"
-            element={
-              <Home />
-            }
-          />
+        {/* Public pages */}
+        <Route element={<PublicLayout />}>
+          <Route path="/" element={<Home />} />
 
           <Route
             path="/home"
-            element={
-              <Navigate
-                to="/"
-                replace
-              />
-            }
+            element={<Navigate to="/" replace />}
           />
 
-          <Route
-            path="/contact"
-            element={
-              <Contact />
-            }
-          />
-
-          <Route
-            path="/privacy"
-            element={
-              <Privacy />
-            }
-          />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/privacy" element={<Privacy />} />
 
           <Route
             path="/forgot-password"
-            element={
-              <ForgotPassword />
-            }
+            element={<ForgotPassword />}
           />
 
           <Route
             path="/reset-password"
-            element={
-              <ResetPassword />
-            }
+            element={<ResetPassword />}
           />
         </Route>
 
-        {/* ==================================================
-            PROTECTED APPLICATION
-           ================================================== */}
-
-        <Route
-          element={
-            <ProtectedRoute />
-          }
-        >
+        {/* Authenticated application */}
+        <Route element={<ProtectedRoute />}>
           <Route
             path="/dashboard"
-            element={
-              <DashboardLayout />
-            }
+            element={<DashboardLayout />}
           >
-
-            {/* COMMAND DASHBOARD */}
-
-            <Route
-              index
-              element={
-                <Dashboard />
-              }
-            />
-
-            {/* LIVE MONITORING */}
+            <Route index element={<Dashboard />} />
 
             <Route
               path="monitoring"
-              element={
-                <LiveMonitoring />
-              }
+              element={<LiveMonitoring />}
             />
-
-            {/* GIS RISK MAP */}
 
             <Route
               path="risk-map"
-              element={
-                <RiskMap />
-              }
+              element={<RiskMap />}
             />
-
-            {/* ALERT CENTER */}
 
             <Route
-              path="alerts"
-              element={
-                <Alerts />
-              }
+              path="prediction"
+              element={<Prediction />}
             />
 
-            {/* AI SIMULATION */}
+            <Route path="alerts" element={<Alerts />} />
 
             <Route
               path="simulation"
-              element={
-                <SimulationLab />
-              }
+              element={<SimulationLab />}
             />
-
-            {/* HISTORICAL DATA */}
 
             <Route
               path="history"
-              element={
-                <HistoricalData />
-              }
+              element={<HistoricalData />}
             />
-
-            {/* EMERGENCY HUB */}
 
             <Route
               path="emergency-hub"
-              element={
-                <EmergencyHub />
-              }
+              element={<EmergencyHub />}
             />
-
-            {/* AI ASSISTANT */}
 
             <Route
               path="ai-assistant"
-              element={
-                <AIAssistant />
-              }
+              element={<AIAssistant />}
             />
-
-            {/* LEARNING ALIAS */}
 
             <Route
               path="learning"
-              element={
-                <AIAssistant />
-              }
+              element={<Navigate to="/dashboard/ai-assistant" replace />}
             />
 
-            {/* ADMIN */}
-
-            <Route
-              path="admin"
-              element={
-                <AdminRoute />
-              }
-            >
-              <Route
-                index
-                element={
-                  <AdminPanel />
-                }
-              />
+            {/* Admin-only module */}
+            <Route path="admin" element={<AdminRoute />}>
+              <Route index element={<AdminPanel />} />
             </Route>
 
-            {/* UNKNOWN DASHBOARD MODULE */}
-
+            {/* Unknown dashboard module */}
             <Route
               path="*"
-              element={
-                <Navigate
-                  to="/dashboard"
-                  replace
-                />
-              }
+              element={<DashboardNotFoundPage />}
             />
-
           </Route>
 
-          {/* ==================================================
-              LEGACY ROUTES
-             ================================================== */}
-
+          {/* Legacy route redirects */}
           <Route
             path="/monitoring"
-            element={
-              <Navigate
-                to="/dashboard/monitoring"
-                replace
-              />
-            }
+            element={<Navigate to="/dashboard/monitoring" replace />}
           />
 
           <Route
             path="/risk-map"
-            element={
-              <Navigate
-                to="/dashboard/risk-map"
-                replace
-              />
-            }
+            element={<Navigate to="/dashboard/risk-map" replace />}
           />
 
           <Route
             path="/alerts"
-            element={
-              <Navigate
-                to="/dashboard/alerts"
-                replace
-              />
-            }
+            element={<Navigate to="/dashboard/alerts" replace />}
           />
 
           <Route
             path="/simulation"
-            element={
-              <Navigate
-                to="/dashboard/simulation"
-                replace
-              />
-            }
+            element={<Navigate to="/dashboard/simulation" replace />}
           />
 
           <Route
             path="/history"
-            element={
-              <Navigate
-                to="/dashboard/history"
-                replace
-              />
-            }
+            element={<Navigate to="/dashboard/history" replace />}
           />
 
           <Route
             path="/emergency-hub"
-            element={
-              <Navigate
-                to="/dashboard/emergency-hub"
-                replace
-              />
-            }
+            element={<Navigate to="/dashboard/emergency-hub" replace />}
           />
 
           <Route
             path="/admin"
-            element={
-              <Navigate
-                to="/dashboard/admin"
-                replace
-              />
-            }
+            element={<Navigate to="/dashboard/admin" replace />}
           />
 
           <Route
             path="/ai-assistant"
-            element={
-              <Navigate
-                to="/dashboard/ai-assistant"
-                replace
-              />
-            }
+            element={<Navigate to="/dashboard/ai-assistant" replace />}
           />
 
           <Route
             path="/learning"
-            element={
-              <Navigate
-                to="/dashboard/ai-assistant"
-                replace
-              />
-            }
+            element={<Navigate to="/dashboard/ai-assistant" replace />}
           />
-
         </Route>
 
-        {/* ==================================================
-            GLOBAL 404
-           ================================================== */}
-
-        <Route
-          path="*"
-          element={
-            <NotFoundPage />
-          }
-        />
-
+        {/* Global fallback */}
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </>
   );
@@ -1071,20 +812,14 @@ function AppRoutes() {
 
 function App() {
   const basename =
-    APP_BASE_URL.replace(
-      /\/+$/,
-      "",
-    ) || undefined;
+    APP_BASE_URL.replace(/\/+$/, "") || undefined;
 
   return (
     <ThemeProvider>
       <ToastProvider>
         <AuthProvider>
-          <BrowserRouter
-            basename={basename}
-          >
+          <BrowserRouter basename={basename}>
             <ToastContainer />
-
             <AppRoutes />
           </BrowserRouter>
         </AuthProvider>
@@ -1097,40 +832,13 @@ function App() {
    DEVELOPMENT DIAGNOSTICS
    ============================================================ */
 
-if (
-  import.meta.env.DEV &&
-  typeof window !== "undefined"
-) {
-  window.__GEONEXUS__ =
-    window.__GEONEXUS__ || {};
-
-  Object.assign(
-    window.__GEONEXUS__,
-    {
-      name: APP_NAME,
-      version: APP_VERSION,
-      baseUrl: APP_BASE_URL,
-
-      routes: [
-        "/",
-        "/contact",
-        "/privacy",
-        "/login",
-        "/forgot-password",
-        "/reset-password",
-        "/dashboard",
-        "/dashboard/monitoring",
-        "/dashboard/risk-map",
-        "/dashboard/alerts",
-        "/dashboard/simulation",
-        "/dashboard/history",
-        "/dashboard/emergency-hub",
-        "/dashboard/admin",
-        "/dashboard/ai-assistant",
-        "/dashboard/learning",
-      ],
-    },
-  );
+if (import.meta.env.DEV && typeof window !== "undefined") {
+  window.__GEONEXUS__ = {
+    name: APP_NAME,
+    version: APP_VERSION,
+    baseUrl: APP_BASE_URL,
+    routes: APP_ROUTES,
+  };
 }
 
 export default App;

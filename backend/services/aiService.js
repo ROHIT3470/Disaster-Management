@@ -29,7 +29,7 @@ function getClient() {
   return _client;
 }
 
-const MODEL = process.env.GEMINI_MODEL || "gemini-3.5-flash";
+const MODEL = process.env.GEMINI_MODEL || "gemini-2.0-flash";
 
 // ============================================================
 // SYSTEM PROMPT — GEONEXUS LEARNING & COMMAND ASSISTANT

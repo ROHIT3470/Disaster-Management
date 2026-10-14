@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import MapView from "../components/MapView";
 import {
   Shield,
@@ -107,7 +107,7 @@ function Home() {
             <div className="map-status-card critical">
               <span className="status-label">Critical Zones</span>
               <strong>03</strong>
-              <small>Joshimath ? Alaknanda ? Chamoli</small>
+              <small>Joshimath · Alaknanda · Chamoli</small>
             </div>
             <div className="map-status-card safe">
               <span className="status-label">Shelters Ready</span>
@@ -145,9 +145,9 @@ function Home() {
               Real-time sensor data from rainfall, river gauges, and slope stability
               monitoring stations deployed across vulnerable zones.
             </p>
-            <a href="#" className="feature-link">
+            <Link to="/dashboard/monitoring" className="feature-link">
               View Monitoring <ArrowRight size={14} />
-            </a>
+            </Link>
           </div>
 
           <div className="feature-card">
@@ -159,9 +159,9 @@ function Home() {
               Machine learning ensemble models predict flood and landslide risk with
               hour-ahead forecasting and uncertainty quantification.
             </p>
-            <a href="#" className="feature-link">
+            <Link to="/dashboard/prediction" className="feature-link">
               Explore Models <ArrowRight size={14} />
-            </a>
+            </Link>
           </div>
 
           <div className="feature-card">
@@ -173,9 +173,9 @@ function Home() {
               Intelligent thresholds trigger multi-channel warnings via SMS, WhatsApp,
               and dashboard notifications to district authorities instantly.
             </p>
-            <a href="#" className="feature-link">
+            <Link to="/dashboard/alerts" className="feature-link">
               Review Alerts <ArrowRight size={14} />
-            </a>
+            </Link>
           </div>
 
           <div className="feature-card">
@@ -187,9 +187,9 @@ function Home() {
               Interactive maps visualize flood inundation zones, landslide susceptibility,
               and vulnerable population densities in real time.
             </p>
-            <a href="#" className="feature-link">
+            <Link to="/dashboard/risk-map" className="feature-link">
               Explore Map <ArrowRight size={14} />
-            </a>
+            </Link>
           </div>
 
           <div className="feature-card">
@@ -201,9 +201,9 @@ function Home() {
               Centralized resource allocation, shelter readiness, and relief distribution
               coordination for vulnerable communities.
             </p>
-            <a href="#" className="feature-link">
+            <Link to="/dashboard/emergency-hub" className="feature-link">
               Relief Hub <ArrowRight size={14} />
-            </a>
+            </Link>
           </div>
 
           <div className="feature-card">
@@ -215,9 +215,9 @@ function Home() {
               Archive and analysis of past disasters with trend detection and lessons
               learned to improve future response strategies.
             </p>
-            <a href="#" className="feature-link">
+            <Link to="/dashboard/history" className="feature-link">
               View History <ArrowRight size={14} />
-            </a>
+            </Link>
           </div>
         </div>
       </section>
@@ -392,7 +392,7 @@ function Home() {
           <div className="footer-section">
             <div className="footer-logo">
               <Shield size={24} />
-              <span>Disaster Command</span>
+              <span>GeoNexus</span>
             </div>
             <p>National Early Warning & Telemetry System</p>
           </div>
@@ -400,24 +400,24 @@ function Home() {
           <div className="footer-links">
             <div className="footer-column">
               <h4>Platform</h4>
-              <a href="#">Dashboard</a>
-              <a href="#">Monitoring</a>
-              <a href="#">Alerts</a>
-              <a href="#">Maps</a>
+              <Link to="/login">Dashboard</Link>
+              <Link to="/login">Monitoring</Link>
+              <Link to="/login">Alerts</Link>
+              <Link to="/login">Maps</Link>
             </div>
             <div className="footer-column">
               <h4>Resources</h4>
-              <a href="#">Documentation</a>
-              <a href="#">API Docs</a>
-              <a href="#">Training</a>
-              <a href="#">Support</a>
+              <a href="https://github.com" target="_blank" rel="noreferrer">Documentation</a>
+              <a href="https://github.com" target="_blank" rel="noreferrer">API Docs</a>
+              <a href="https://github.com" target="_blank" rel="noreferrer">Training</a>
+              <Link to="/contact">Support</Link>
             </div>
             <div className="footer-column">
               <h4>Legal</h4>
-              <a href="#">Privacy Policy</a>
-              <a href="#">Terms of Use</a>
-              <a href="#">Accessibility</a>
-              <a href="#">Security</a>
+              <Link to="/privacy">Privacy Policy</Link>
+              <Link to="/privacy">Terms of Use</Link>
+              <Link to="/privacy">Accessibility</Link>
+              <Link to="/privacy">Security</Link>
             </div>
           </div>
 

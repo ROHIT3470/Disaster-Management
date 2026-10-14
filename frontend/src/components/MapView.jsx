@@ -1047,6 +1047,8 @@ function MapView({
             className="map-header-button"
             onClick={() => setTerrainMode(!terrainMode)}
             title="Toggle Terrain (DEM) Mode"
+            aria-label="Toggle terrain basemap"
+            aria-pressed={terrainMode}
           >
             <Layers size={15} color={terrainMode ? "#38bdf8" : "currentColor"} />
           </button>

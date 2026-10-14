@@ -38,7 +38,6 @@ import {
 } from "./utils/terminal.js";
 
 import User from "./models/User.js";
-import { seedDatabase } from "./scripts/seed.js";
 
 const app = express();
 

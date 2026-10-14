@@ -367,7 +367,6 @@ function Dashboard() {
     },
     [
       addToast,
-      lastUpdated,
       success,
       toastError,
       warning,
@@ -611,7 +610,7 @@ function Dashboard() {
           </div>
 
           <div>
-            <strong>FLASHGUARD AI COMMAND GRID</strong>
+            <strong>GEONEXUS AI COMMAND GRID</strong>
             <span>
               Multi-hazard intelligence & early-warning operations
             </span>

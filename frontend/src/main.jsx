@@ -42,6 +42,9 @@ import "./styles/Legal.css";
 import "./styles/buttons.css";
 import "./styles/visual-refresh.css";
 import "./styles/theme-refresh.css";
+import "./styles/prediction.css";
+import "./styles/ai-assistant.css";
+import "./styles/enterprise-polish.css";
 
 /* ============================================================
    APPLICATION CONFIGURATION

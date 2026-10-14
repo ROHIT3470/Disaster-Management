@@ -165,24 +165,28 @@ function EmergencyHub() {
                 <div className="contact-numbers">
                   <div className="phone-row">
                     <span className="phone-label">Primary Hotline:</span>
-                    <strong
+                    <button
+                      type="button"
                       className="phone-val"
                       onClick={() => handleCopyPhone(c.phone, c.agency)}
                       title="Click to copy"
+                      aria-label={`Copy ${c.agency} primary hotline ${c.phone}`}
                     >
                       {c.phone}
-                    </strong>
+                    </button>
                   </div>
                   {c.alt && (
                     <div className="phone-row">
                       <span className="phone-label">Alternate:</span>
-                      <span
+                      <button
+                        type="button"
                         className="phone-val-alt"
                         onClick={() => handleCopyPhone(c.alt, c.agency)}
                         title="Click to copy"
+                        aria-label={`Copy ${c.agency} alternate hotline ${c.alt}`}
                       >
                         {c.alt}
-                      </span>
+                      </button>
                     </div>
                   )}
                 </div>
@@ -274,10 +278,12 @@ function EmergencyHub() {
               {CHECKLIST.map((item, idx) => {
                 const isChecked = !!checkedItems[idx];
                 return (
-                  <div
+                  <button
+                    type="button"
                     key={idx}
                     className={`checklist-item ${isChecked ? "completed" : ""}`}
                     onClick={() => toggleCheck(idx)}
+                    aria-pressed={isChecked}
                   >
                     <div className="check-box-icon">
                       {isChecked ? (
@@ -287,7 +293,7 @@ function EmergencyHub() {
                       )}
                     </div>
                     <span className="check-text">{item}</span>
-                  </div>
+                  </button>
                 );
               })}
             </div>

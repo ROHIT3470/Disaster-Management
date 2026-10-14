@@ -21,7 +21,6 @@ import {
   LayoutDashboard,
   LifeBuoy,
   Map,
-  Menu,
   Radio,
   Server,
   ShieldCheck,
@@ -59,6 +58,13 @@ const NAV_ITEMS = [
     label: "GIS Hazard Map",
     description: "Geospatial risk intelligence",
     icon: Map,
+  },
+
+  {
+    to: "/dashboard/prediction",
+    label: "Risk Prediction",
+    description: "Flood and landslide outlook",
+    icon: Activity,
   },
 
   {
@@ -215,12 +221,6 @@ function Sidebar({
 
   const closeSidebar = () => {
     setMobileOpen(false);
-  };
-
-  const toggleSidebar = () => {
-    setMobileOpen(
-      (previous) => !previous
-    );
   };
 
   useEffect(() => {
@@ -436,34 +436,6 @@ function Sidebar({
 
   return (
     <>
-      <button
-        type="button"
-        className="mobile-sidebar-toggle"
-        onClick={toggleSidebar}
-        aria-label={
-          mobileOpen
-            ? "Close navigation menu"
-            : "Open navigation menu"
-        }
-        aria-expanded={mobileOpen}
-        aria-controls="main-sidebar"
-      >
-        {mobileOpen ? (
-          <X size={21} />
-        ) : (
-          <Menu size={21} />
-        )}
-
-        {!mobileOpen &&
-          safeAlertCount > 0 && (
-            <span className="mobile-alert-indicator">
-              {safeAlertCount > 99
-                ? "99+"
-                : safeAlertCount}
-            </span>
-          )}
-      </button>
-
       {mobileOpen && (
         <button
           type="button"

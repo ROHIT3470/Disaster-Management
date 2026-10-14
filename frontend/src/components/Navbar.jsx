@@ -7,7 +7,6 @@ import {
 } from "react";
 
 import {
-  NavLink,
   useLocation,
   useNavigate,
 } from "react-router-dom";
@@ -25,13 +24,11 @@ import {
   LogOut,
   Map,
   Menu,
-  Moon,
   Radio,
   RefreshCw,
   Settings,
   Shield,
   Siren,
-  Sun,
   Wifi,
   WifiOff,
   X,
@@ -45,6 +42,7 @@ import { getAlerts } from "../services/api.js";
 
 import SOSModal from "./SOSModal.jsx";
 import SituationReportModal from "./SituationReportModal.jsx";
+import ThemeToggle from "./ThemeToggle.jsx";
 
 const ALERT_REFRESH_INTERVAL = 30_000;
 const MAX_NOTIFICATION_ITEMS = 5;
@@ -82,6 +80,14 @@ const DASHBOARD_NAVIGATION = Object.freeze([
     path: "/dashboard/risk-map",
     icon: Map,
     description: "Geospatial hazard intelligence",
+  },
+  {
+    id: "prediction",
+    label: "Risk Prediction",
+    shortLabel: "Predict",
+    path: "/dashboard/prediction",
+    icon: Activity,
+    description: "Flood and landslide outlook",
   },
   {
     id: "alerts",
@@ -261,7 +267,7 @@ function Navbar({
   alerts: externalAlerts = EMPTY_ALERTS,
 }) {
   const { user, logout } = useAuth();
-  const { theme, toggleTheme } = useTheme();
+  const { resolvedTheme } = useTheme();
   const { addToast } = useToast();
 
   const navigate = useNavigate();
@@ -299,9 +305,6 @@ function Navbar({
     useState(false);
 
   const [isUserMenuOpen, setIsUserMenuOpen] =
-    useState(false);
-
-  const [isNavigationOpen, setIsNavigationOpen] =
     useState(false);
 
   const navbarRef = useRef(null);
@@ -632,7 +635,6 @@ function Navbar({
   const closeAllMenus = useCallback(() => {
     setIsNotificationOpen(false);
     setIsUserMenuOpen(false);
-    setIsNavigationOpen(false);
   }, []);
 
   const navigateTo = useCallback(
@@ -691,26 +693,6 @@ function Navbar({
   }, [toggleMobileSidebar]);
 
   useEffect(() => {
-    const handleSidebarState = () => {
-      setIsNavigationOpen(
-        (previous) => !previous
-      );
-    };
-
-    window.addEventListener(
-      "app:toggle-sidebar",
-      handleSidebarState
-    );
-
-    return () => {
-      window.removeEventListener(
-        "app:toggle-sidebar",
-        handleSidebarState
-      );
-    };
-  }, []);
-
-  useEffect(() => {
     const handleKeyDown = (event) => {
       if (event.key === "Escape") {
         closeAllMenus();
@@ -761,7 +743,7 @@ function Navbar({
       <header
         ref={navbarRef}
         className={`navbar ${
-          theme === "dark"
+          resolvedTheme === "dark"
             ? "navbar-dark"
             : "navbar-light"
         }`}
@@ -931,6 +913,8 @@ function Navbar({
             onClick={() =>
               setIsSitrepOpen(true)
             }
+            title="Open situation report"
+            aria-label="Open situation report"
           >
             <FileText
               size={16}
@@ -968,23 +952,7 @@ function Navbar({
             />
           </button>
 
-          <button
-            type="button"
-            className="nav-icon-btn theme-toggle-btn"
-            onClick={toggleTheme}
-          >
-            {theme === "dark" ? (
-              <Sun
-                size={18}
-                className="theme-icon sun"
-              />
-            ) : (
-              <Moon
-                size={18}
-                className="theme-icon moon"
-              />
-            )}
-          </button>
+          <ThemeToggle variant="navbar" />
 
           <div className="navbar-dropdown-wrapper">
             <button
@@ -1428,111 +1396,6 @@ function Navbar({
           )}
         </div>
 
-        {isNavigationOpen && (
-          <div className="navbar-mobile-navigation">
-            <div className="mobile-navigation-header">
-              <div>
-                <strong>
-                  Command Modules
-                </strong>
-
-                <span>
-                  GeoNexus Operations
-                </span>
-              </div>
-
-              <button
-                type="button"
-                onClick={() =>
-                  setIsNavigationOpen(false)
-                }
-                aria-label="Close navigation menu"
-              >
-                <X size={18} />
-              </button>
-            </div>
-
-            <nav
-              className="mobile-navigation-list"
-              aria-label="Dashboard navigation"
-            >
-              {visibleNavigation.map(
-                (item) => {
-                  const Icon = item.icon;
-                  const active =
-                    isRouteActive(
-                      item.path
-                    );
-
-                  return (
-                    <NavLink
-                      key={item.id}
-                      to={item.path}
-                      className={`mobile-nav-item ${
-                        active
-                          ? "active"
-                          : ""
-                      }`}
-                      onClick={() =>
-                        setIsNavigationOpen(
-                          false
-                        )
-                      }
-                      aria-current={
-                        active
-                          ? "page"
-                          : undefined
-                      }
-                    >
-                      <span className="mobile-nav-icon">
-                        <Icon size={18} />
-                      </span>
-
-                      <span className="mobile-nav-copy">
-                        <strong>
-                          {item.label}
-                        </strong>
-
-                        <small>
-                          {
-                            item.description
-                          }
-                        </small>
-                      </span>
-
-                      {active && (
-                        <span className="mobile-nav-active-dot" />
-                      )}
-                    </NavLink>
-                  );
-                }
-              )}
-            </nav>
-
-            <div className="mobile-navigation-status">
-              <div>
-                <span
-                  className={`mobile-status-dot ${
-                    isOnline
-                      ? "online"
-                      : "offline"
-                  }`}
-                />
-
-                <span>
-                  {isOnline
-                    ? "Command network operational"
-                    : "Network connection unavailable"}
-                </span>
-              </div>
-
-              <span>
-                {alertStats.priority}{" "}
-                priority warnings
-              </span>
-            </div>
-          </div>
-        )}
       </header>
 
       <SOSModal

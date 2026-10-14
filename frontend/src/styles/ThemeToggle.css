@@ -1,0 +1,112 @@
+.theme-switcher {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 4px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  box-shadow: var(--theme-shadow-sm);
+}
+
+.theme-switcher-option {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 34px;
+  padding: 0 11px;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.theme-switcher-option:hover {
+  background: var(--surface-hover);
+  color: var(--text-primary);
+}
+
+.theme-switcher-option.active {
+  border-color: var(--border);
+  background: var(--surface-strong);
+  color: var(--primary-dark);
+  box-shadow: var(--theme-shadow-xs);
+}
+
+.theme-switcher-option:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.theme-switcher--floating {
+  position: fixed;
+  top: 14px;
+  right: 16px;
+  z-index: var(--z-overlay, 1200);
+  backdrop-filter: blur(12px);
+}
+
+[data-theme="dark"] .home-page {
+  --home-bg: var(--background);
+  --home-surface: var(--surface);
+  --home-surface-soft: var(--surface-strong);
+  --home-text: var(--text-primary);
+  --home-text-secondary: var(--text-secondary);
+  --home-border: var(--border);
+}
+
+[data-theme="dark"] .features-section,
+[data-theme="dark"] .workflow-section {
+  background: var(--background-alt);
+}
+
+[data-theme="dark"] .feature-card,
+[data-theme="dark"] .workflow-step:hover {
+  background: var(--surface);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .feature-card h3,
+[data-theme="dark"] .workflow-step h3,
+[data-theme="dark"] .section-header h2 {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .feature-card p,
+[data-theme="dark"] .workflow-step p,
+[data-theme="dark"] .section-header p {
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .live-ops-map-section {
+  background: var(--background);
+}
+
+[data-theme="dark"] .map-status-card {
+  background: var(--surface);
+  border-color: var(--border);
+  box-shadow: var(--theme-shadow-sm);
+}
+
+@media (max-width: 520px) {
+  .theme-switcher--floating {
+    top: 10px;
+    right: 10px;
+  }
+
+  .theme-switcher--floating .theme-switcher-option {
+    min-height: 32px;
+    padding-inline: 9px;
+  }
+}

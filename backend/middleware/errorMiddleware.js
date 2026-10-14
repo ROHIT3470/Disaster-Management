@@ -26,6 +26,6 @@ export function errorHandler(error, req, res, next) {
 
   res.status(error.statusCode || status).json({
     success: false,
-    message: error.message && status === 500 ? error.message : message,
+    message: status === 500 ? error.message || message : message,
   });
 }
