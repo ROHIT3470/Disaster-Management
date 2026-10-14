@@ -15,8 +15,7 @@ import {
 } from "lucide-react";
 
 import {
-  Circle,
-  CircleMarker,
+  Marker,
   MapContainer,
   Popup,
   TileLayer,
@@ -26,6 +25,7 @@ import {
   Polyline,
 } from "react-leaflet";
 
+import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "../styles/MapView.css";
 
@@ -210,21 +210,30 @@ const getRiskColor = (level) => {
 };
 
 
-const getRiskRadius = (level) => {
-  switch (normalizeLevel(level)) {
-    case "Critical":
-      return 14000;
+const MAP_PIN_MARKUP = [
+  '<svg viewBox="0 0 28 36" focusable="false">',
+  '<path class="risk-map-pin-shape" d="M14 1.75C7.12 1.75 1.75 7.12 1.75 14c0 8.42 12.25 20.25 12.25 20.25S26.25 22.42 26.25 14C26.25 7.12 20.88 1.75 14 1.75Z"/>',
+  '<path class="risk-map-pin-mark" d="m14 9.25 4.75 4.75L14 18.75 9.25 14 14 9.25Z"/>',
+  '</svg>',
+].join("");
 
-    case "High":
-      return 10500;
+const createMapPinIcon = (color, kind = "risk") =>
+  L.divIcon({
+    className: "risk-map-div-icon",
+    html: [
+      `<span class="risk-map-pin risk-map-pin--${kind}"`,
+      `style="--pin-color:${color}" aria-hidden="true">`,
+      MAP_PIN_MARKUP,
+      "</span>",
+    ].join(""),
+    iconSize: [28, 36],
+    iconAnchor: [14, 34],
+    popupAnchor: [0, -32],
+    tooltipAnchor: [0, -28],
+  });
 
-    case "Moderate":
-      return 8000;
-
-    default:
-      return 6000;
-  }
-};
+const USER_LOCATION_ICON = createMapPinIcon("#0284c7", "user");
+const SHELTER_ICON = createMapPinIcon("#15803d", "shelter");
 
 
 const sanitizeLocation = (location, index) => {
@@ -449,18 +458,12 @@ function UserLocationMarker({
   }
 
   return (
-    <CircleMarker
-      center={[
+    <Marker
+      position={[
         location.lat,
         location.lng,
       ]}
-      radius={8}
-      pathOptions={{
-        color: "#ffffff",
-        weight: 3,
-        fillColor: "#38bdf8",
-        fillOpacity: 1,
-      }}
+      icon={USER_LOCATION_ICON}
     >
       <Tooltip direction="top">
         Your current location
@@ -476,7 +479,7 @@ function UserLocationMarker({
           </span>
         </div>
       </Popup>
-    </CircleMarker>
+    </Marker>
   );
 }
 
@@ -862,6 +865,24 @@ function MapView({
     filter,
   ]);
 
+  const locationIcons = useMemo(
+    () =>
+      new Map(
+        filteredLocations.map((location) => [
+          location.id,
+          createMapPinIcon(
+            getRiskColor(
+              normalizeLevel(
+                location.level,
+                location.risk
+              )
+            )
+          ),
+        ])
+      ),
+    [filteredLocations]
+  );
+
 
   /* ==========================================================
      STATISTICS
@@ -1179,94 +1200,32 @@ function MapView({
                   location.risk
                 );
 
-              const color =
-                getRiskColor(level);
-
-              const radius =
-                getRiskRadius(level);
-
               return (
-                <div
+                <Marker
                   key={location.id}
+                  position={[
+                    location.latitude,
+                    location.longitude,
+                  ]}
+                  icon={locationIcons.get(location.id)}
                 >
-                  <Circle
-                    center={[
-                      location.latitude,
-                      location.longitude,
-                    ]}
-                    radius={radius}
-                    pathOptions={{
-                      color,
-                      fillColor: color,
-                      fillOpacity:
-                        level ===
-                        "Critical"
-                          ? 0.17
-                          : 0.1,
-                      weight:
-                        level ===
-                        "Critical"
-                          ? 2
-                          : 1,
-                      opacity: 0.7,
-                    }}
-                  />
-
-                  <CircleMarker
-                    center={[
-                      location.latitude,
-                      location.longitude,
-                    ]}
-                    radius={
-                      level ===
-                      "Critical"
-                        ? 12
-                        : level ===
-                          "High"
-                        ? 10
-                        : 9
-                    }
-                    pathOptions={{
-                      color: "#ffffff",
-                      weight: 3,
-                      fillColor: color,
-                      fillOpacity: 1,
-                    }}
+                  <Tooltip
+                    direction="top"
+                    offset={[0, -10]}
+                    opacity={0.96}
                   >
+                    <div className="map-tooltip">
+                      <strong>{location.name}</strong>
+                      <span>
+                        {level} Risk · {Math.round(location.risk)}%
+                      </span>
+                    </div>
+                  </Tooltip>
 
-                    <Tooltip
-                      direction="top"
-                      offset={[0, -10]}
-                      opacity={0.96}
-                    >
-                      <div className="map-tooltip">
-                        <strong>
-                          {location.name}
-                        </strong>
-
-                        <span>
-                          {level} Risk ·{" "}
-                          {Math.round(
-                            location.risk
-                          )}
-                          %
-                        </span>
-                      </div>
-                    </Tooltip>
-
-                    <Popup
-                      closeButton
-                      maxWidth={320}
-                    >
-                      <RiskPopup
-                        location={
-                          location
-                        }
-                      />
-                    </Popup>
-
-                  </CircleMarker>
-                </div>
+                  <Popup closeButton maxWidth={320}>
+                    <RiskPopup location={location} />
+                  </Popup>
+                </Marker>
               );
             }
           )}
@@ -1280,21 +1239,23 @@ function MapView({
                 weight={6}
                 dashArray="10, 10"
               />
-              <CircleMarker center={[evacuationRoute.destination.lat, evacuationRoute.destination.lng]} radius={10} color="#22c55e" fillColor="#22c55e" fillOpacity={1}>
+              <Marker
+                position={[
+                  evacuationRoute.destination.lat,
+                  evacuationRoute.destination.lng,
+                ]}
+                icon={SHELTER_ICON}
+              >
                 <Popup>
                   <strong>{evacuationRoute.destination.name}</strong><br/>
                   Safe Destination / Shelter
                 </Popup>
-              </CircleMarker>
+              </Marker>
             </>
           )}
 
         </MapContainer>
 
-
-        {/* ====================================================
-            MAP CONTROL OVERLAY
-            ==================================================== */}
 
         <div className="map-overlay-controls">
 
@@ -1334,9 +1295,6 @@ function MapView({
           </div>
         </div>
 
-        {/* Map controls */}
-
-        <MapControlOverlay />
       </div>
 
 
@@ -1376,34 +1334,6 @@ function MapView({
 
     </section>
   );
-}
-
-
-/* ============================================================
-   MAP CONTROL OVERLAY
-   ============================================================ */
-
-function MapControlOverlay() {
-  const map = useMapSafe();
-
-  if (!map) {
-    return null;
-  }
-
-  return null;
-}
-
-
-/*
- * This helper intentionally returns null.
- *
- * Actual controls are rendered through MapController,
- * because MapController has access to the Leaflet map.
- *
- * Kept here as a safe extension point for future controls.
- */
-function useMapSafe() {
-  return null;
 }
 
 
