@@ -1,0 +1,244 @@
+- generic [active] [ref=f2e1]:
+  - text: "```"
+  - application "Disaster Management Command Center" [ref=f2e2]:
+    - generic [ref=f2e5]:
+      - generic [ref=f2e6]:
+        - generic [ref=f2e8]:
+          - generic [ref=f2e9]: AI-Powered Disaster Management System
+          - heading "Early Warning & Emergency Response Intelligence Platform" [level=1] [ref=f2e12]:
+            - text: Early Warning & Emergency Response
+            - generic [ref=f2e13]: Intelligence Platform
+          - paragraph [ref=f2e14]: Real-time multi-hazard monitoring, AI-driven risk prediction, and coordinated emergency response for vulnerable communities across the Himalayan region. Protect lives with actionable intelligence before disasters strike.
+          - generic [ref=f2e15]:
+            - button "Access Command Portal" [ref=f2e16] [cursor=pointer]
+            - button "Learn More" [ref=f2e19] [cursor=pointer]
+          - generic [ref=f2e20]:
+            - generic [ref=f2e21]:
+              - strong [ref=f2e22]: "24"
+              - generic [ref=f2e23]: Districts Monitored
+            - generic [ref=f2e24]:
+              - strong [ref=f2e25]: "9"
+              - generic [ref=f2e26]: Telemetry Stations
+            - generic [ref=f2e27]:
+              - strong [ref=f2e28]: 98.4%
+              - generic [ref=f2e29]: System Uptime
+            - generic [ref=f2e30]:
+              - strong [ref=f2e31]: 4.2h
+              - generic [ref=f2e32]: Avg Response Time
+        - generic [ref=f2e35]:
+          - paragraph [ref=f2e43]: Live IoT Network
+          - paragraph [ref=f2e49]: Early Warnings
+          - paragraph [ref=f2e54]: GIS Mapping
+      - generic [ref=f2e55]:
+        - generic [ref=f2e56]:
+          - generic [ref=f2e57]: Live Operations Center
+          - heading "Regional command map with live risk zones" [level=2] [ref=f2e58]
+          - paragraph [ref=f2e59]: Tracking active sensor coverage, threatened districts, and emergency shelter readiness in real time.
+        - generic [ref=f2e60]:
+          - generic [ref=f2e61]:
+            - generic [ref=f2e62]:
+              - generic [ref=f2e63]: Critical Zones
+              - strong [ref=f2e64]: "03"
+              - generic [ref=f2e65]: Joshimath · Alaknanda · Chamoli
+            - generic [ref=f2e66]:
+              - generic [ref=f2e67]: Shelters Ready
+              - strong [ref=f2e68]: "12"
+              - generic [ref=f2e69]: 18,500 beds available
+            - generic [ref=f2e70]:
+              - generic [ref=f2e71]: Network Status
+              - strong [ref=f2e72]: 98.4%
+              - generic [ref=f2e73]: Telemetry uptime
+          - region "Live disaster risk monitoring map" [ref=f2e75]:
+            - generic:
+              - generic:
+                - generic: Live Disaster Risk Map
+                - paragraph: Real-time risk monitoring for vulnerable hilly regions
+              - generic:
+                - generic: TELEMETRY ONLINE
+                - button "Refresh telemetry"
+                - button "Open fullscreen"
+                - button "Toggle Terrain (DEM) Mode"
+                - generic: LIVE
+            - generic [ref=f2e76]:
+              - generic [ref=f2e83]:
+                - generic [ref=f2e84]: MONITORING NODES
+                - strong [ref=f2e85]: "8"
+              - generic [ref=f2e90]:
+                - generic [ref=f2e91]: AVERAGE RISK
+                - strong [ref=f2e92]: 67%
+              - generic [ref=f2e97]:
+                - generic [ref=f2e98]: CRITICAL ZONES
+                - strong [ref=f2e99]: "2"
+            - generic [ref=f2e100]:
+              - button "8 All" [pressed] [ref=f2e101] [cursor=pointer]:
+                - strong [ref=f2e102]: "8"
+                - generic [ref=f2e103]: All
+              - button "1 Low" [ref=f2e104] [cursor=pointer]:
+                - strong [ref=f2e105]: "1"
+                - generic [ref=f2e106]: Low
+              - button "2 Moderate" [ref=f2e107] [cursor=pointer]:
+                - strong [ref=f2e108]: "2"
+                - generic [ref=f2e109]: Moderate
+              - button "3 High" [ref=f2e110] [cursor=pointer]:
+                - strong [ref=f2e111]: "3"
+                - generic [ref=f2e112]: High
+              - button "2 Critical" [ref=f2e113] [cursor=pointer]:
+                - strong [ref=f2e114]: "2"
+                - generic [ref=f2e115]: Critical
+            - generic [ref=f2e116]:
+              - generic [ref=f2e117]:
+                - generic [ref=f2e118]:
+                  - link "Leaflet" [ref=f2e119] [cursor=pointer]:
+                    - /url: https://leafletjs.com
+                  - text: "| © OpenStreetMap contributors"
+                - generic [ref=f2e124]:
+                  - button "Locate current position" [ref=f2e125] [cursor=pointer]
+                  - button "Reset map view" [ref=f2e129] [cursor=pointer]
+                  - button "Zoom in" [ref=f2e132] [cursor=pointer]: +
+                  - button "Zoom out" [ref=f2e133] [cursor=pointer]: −
+              - generic [ref=f2e134]: Monitoring region
+            - generic "Risk level legend" [ref=f2e138]:
+              - generic [ref=f2e139]: RISK LEVEL
+              - generic [ref=f2e145]: Low
+              - generic [ref=f2e148]: Moderate
+              - generic [ref=f2e151]: High
+              - generic [ref=f2e154]: Critical
+            - generic [ref=f2e157]:
+              - generic [ref=f2e158]: Telemetry synchronized
+              - generic [ref=f2e159]: Last update 01:52:56 PM
+      - generic [ref=f2e160]:
+        - generic [ref=f2e161]:
+          - generic [ref=f2e162]: Core Capabilities
+          - heading "Comprehensive Disaster Management Suite" [level=2] [ref=f2e163]
+          - paragraph [ref=f2e164]: Integrated tools for monitoring, prediction, alerting, and coordinated response
+        - generic [ref=f2e165]:
+          - generic [ref=f2e166]:
+            - heading "Live IoT Telemetry" [level=3] [ref=f2e174]
+            - paragraph [ref=f2e175]: Real-time sensor data from rainfall, river gauges, and slope stability monitoring stations deployed across vulnerable zones.
+            - link "View Monitoring" [ref=f2e176] [cursor=pointer]:
+              - /url: /dashboard/monitoring
+          - generic [ref=f2e179]:
+            - heading "AI Risk Prediction" [level=3] [ref=f2e184]
+            - paragraph [ref=f2e185]: Machine learning ensemble models predict flood and landslide risk with hour-ahead forecasting and uncertainty quantification.
+            - link "Explore Models" [ref=f2e186] [cursor=pointer]:
+              - /url: /dashboard/prediction
+          - generic [ref=f2e189]:
+            - heading "Automated Alerting" [level=3] [ref=f2e193]
+            - paragraph [ref=f2e194]: Intelligent thresholds trigger multi-channel warnings via SMS, WhatsApp, and dashboard notifications to district authorities instantly.
+            - link "Review Alerts" [ref=f2e195] [cursor=pointer]:
+              - /url: /dashboard/alerts
+          - generic [ref=f2e198]:
+            - heading "GIS Hazard Mapping" [level=3] [ref=f2e203]
+            - paragraph [ref=f2e204]: Interactive maps visualize flood inundation zones, landslide susceptibility, and vulnerable population densities in real time.
+            - link "Explore Map" [ref=f2e205] [cursor=pointer]:
+              - /url: /dashboard/risk-map
+          - generic [ref=f2e208]:
+            - heading "Emergency Coordination" [level=3] [ref=f2e215]
+            - paragraph [ref=f2e216]: Centralized resource allocation, shelter readiness, and relief distribution coordination for vulnerable communities.
+            - link "Relief Hub" [ref=f2e217] [cursor=pointer]:
+              - /url: /dashboard/emergency-hub
+          - generic [ref=f2e220]:
+            - heading "Historical Analytics" [level=3] [ref=f2e224]
+            - paragraph [ref=f2e225]: Archive and analysis of past disasters with trend detection and lessons learned to improve future response strategies.
+            - link "View History" [ref=f2e226] [cursor=pointer]:
+              - /url: /dashboard/history
+      - generic [ref=f2e230]:
+        - generic [ref=f2e231]:
+          - generic [ref=f2e232]: Proven Impact
+          - heading "Saving Lives Through Intelligent Warning" [level=2] [ref=f2e233]
+          - paragraph [ref=f2e234]: Our system has been tested across the Himalayan region, providing critical lead times for evacuation and emergency response.
+          - generic [ref=f2e235]:
+            - generic [ref=f2e240]:
+              - strong [ref=f2e241]: 2–6 Hour Lead Time
+              - text: For flood and landslide events
+            - generic [ref=f2e245]:
+              - strong [ref=f2e246]: Zero False Negatives
+              - text: Critical events never missed
+            - generic [ref=f2e250]:
+              - strong [ref=f2e251]: Sub-60s Alert Delivery
+              - text: Rapid multi-channel dissemination
+            - generic [ref=f2e256]:
+              - strong [ref=f2e257]: 24/7 System Availability
+              - text: 99.8% uptime SLA
+        - generic [ref=f2e258]:
+          - generic [ref=f2e260]:
+            - generic [ref=f2e261]: 785+
+            - generic [ref=f2e262]: Lives Protected
+          - generic [ref=f2e264]:
+            - generic [ref=f2e265]: "24"
+            - generic [ref=f2e266]: Districts Served
+          - generic [ref=f2e268]:
+            - generic [ref=f2e269]: 180+
+            - generic [ref=f2e270]: Relief Shelters
+      - generic [ref=f2e271]:
+        - generic [ref=f2e272]:
+          - generic [ref=f2e273]: How It Works
+          - heading "Four-Stage Intelligence Pipeline" [level=2] [ref=f2e274]
+        - generic [ref=f2e275]:
+          - generic [ref=f2e276]:
+            - generic [ref=f2e277]: "01"
+            - heading "Continuous Monitoring" [level=3] [ref=f2e285]
+            - paragraph [ref=f2e286]: Telemetry stations continuously capture rainfall, river discharge, soil saturation, and slope movement data 24/7.
+          - generic [ref=f2e287]: →
+          - generic [ref=f2e288]:
+            - generic [ref=f2e289]: "02"
+            - heading "AI Analysis" [level=3] [ref=f2e294]
+            - paragraph [ref=f2e295]: Machine learning models analyze telemetry in real-time and compute multi-hazard risk scores with confidence intervals.
+          - generic [ref=f2e296]: →
+          - generic [ref=f2e297]:
+            - generic [ref=f2e298]: "03"
+            - heading "Intelligent Alerting" [level=3] [ref=f2e302]
+            - paragraph [ref=f2e303]: When thresholds breach, automated alerts are sent to authorities and public channels within seconds.
+          - generic [ref=f2e304]: →
+          - generic [ref=f2e305]:
+            - generic [ref=f2e306]: "04"
+            - heading "Coordinated Response" [level=3] [ref=f2e313]
+            - paragraph [ref=f2e314]: Field teams mobilize, shelters are activated, and relief resources are deployed based on GIS risk zones.
+      - generic [ref=f2e316]:
+        - generic [ref=f2e317]: Ready to Deploy
+        - heading "Protect Your Region Today" [level=2] [ref=f2e321]
+        - paragraph [ref=f2e322]: Join 24 districts already using AI-powered disaster management to save lives and accelerate emergency response.
+        - generic [ref=f2e323]:
+          - button "Access Portal" [ref=f2e324] [cursor=pointer]
+          - button "Request Demo" [ref=f2e327] [cursor=pointer]
+        - paragraph [ref=f2e328]: Enterprise deployments available. Contact national coordination center for integration and training.
+      - contentinfo [ref=f2e329]:
+        - generic [ref=f2e330]:
+          - generic [ref=f2e331]:
+            - generic [ref=f2e332]: GeoNexus
+            - paragraph [ref=f2e336]: National Early Warning & Telemetry System
+          - generic [ref=f2e337]:
+            - generic [ref=f2e338]:
+              - heading "Platform" [level=4] [ref=f2e339]
+              - link "Dashboard" [ref=f2e340] [cursor=pointer]:
+                - /url: /login
+              - link "Monitoring" [ref=f2e341] [cursor=pointer]:
+                - /url: /login
+              - link "Alerts" [ref=f2e342] [cursor=pointer]:
+                - /url: /login
+              - link "Maps" [ref=f2e343] [cursor=pointer]:
+                - /url: /login
+            - generic [ref=f2e344]:
+              - heading "Resources" [level=4] [ref=f2e345]
+              - link "Documentation" [ref=f2e346] [cursor=pointer]:
+                - /url: https://github.com
+              - link "API Docs" [ref=f2e347] [cursor=pointer]:
+                - /url: https://github.com
+              - link "Training" [ref=f2e348] [cursor=pointer]:
+                - /url: https://github.com
+              - link "Support" [ref=f2e349] [cursor=pointer]:
+                - /url: /contact
+            - generic [ref=f2e350]:
+              - heading "Legal" [level=4] [ref=f2e351]
+              - link "Privacy Policy" [ref=f2e352] [cursor=pointer]:
+                - /url: /privacy
+              - link "Terms of Use" [ref=f2e353] [cursor=pointer]:
+                - /url: /privacy
+              - link "Accessibility" [ref=f2e354] [cursor=pointer]:
+                - /url: /privacy
+              - link "Security" [ref=f2e355] [cursor=pointer]:
+                - /url: /privacy
+          - generic [ref=f2e356]:
+            - paragraph [ref=f2e357]: © 2026 National Disaster Management Authority. All rights reserved.
+            - paragraph [ref=f2e358]: 🔒 Secured by TLS 1.3 Encryption & JWT Authorization
+  - text: "```"

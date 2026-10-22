@@ -1,0 +1,36 @@
+- generic [active] [ref=e1]:
+  - text: "```"
+  - application "Disaster Management Command Center" [ref=e2]:
+    - main [ref=e3]:
+      - generic [ref=e4]:
+        - generic [ref=e5]:
+          - heading "DISASTER EARLY WARNING" [level=1] [ref=e11]
+          - paragraph [ref=e12]: National Command & Multi-Hazard Telemetry Portal
+        - region "Secure command authentication" [ref=e13]:
+          - tablist "Authentication mode" [ref=e14]:
+            - tab "Command Sign In" [selected] [ref=e15] [cursor=pointer]
+            - tab "Create Account" [ref=e16] [cursor=pointer]
+          - generic [ref=e17]:
+            - textbox "Official Email Address" [ref=e22]
+            - textbox "Secure Password" [ref=e27]
+            - link "Forgot password?" [ref=e29] [cursor=pointer]:
+              - /url: /forgot-password
+            - button "Access Command Portal" [ref=e30] [cursor=pointer]
+          - generic [ref=e33]:
+            - generic [ref=e34]: 1-CLICK DEMO ACCESS
+            - generic [ref=e38]:
+              - button "Command Administrator Full System Access" [ref=e39] [cursor=pointer]:
+                - generic [ref=e43]:
+                  - strong [ref=e44]: Command Administrator
+                  - generic [ref=e45]: Full System Access
+              - button "Emergency Operator Telemetry Surveillance" [ref=e46] [cursor=pointer]:
+                - generic [ref=e53]:
+                  - strong [ref=e54]: Emergency Operator
+                  - generic [ref=e55]: Telemetry Surveillance
+            - generic [ref=e57]:
+              - text: "Demo Access:"
+              - code [ref=e58]: admin@disaster.org
+              - text: /
+              - code [ref=e59]: admin123
+        - generic [ref=e60]: Secure authentication and encrypted session handling
+  - text: "```"

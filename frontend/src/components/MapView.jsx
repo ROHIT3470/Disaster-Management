@@ -1,4 +1,3 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   Activity,
   Crosshair,
@@ -13,16 +12,17 @@ import {
   WifiOff,
   X,
 } from "lucide-react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import {
-  Marker,
   MapContainer,
+  Marker,
+  Polyline,
   Popup,
   TileLayer,
   Tooltip,
   useMap,
   useMapEvents,
-  Polyline,
 } from "react-leaflet";
 
 import L from "leaflet";
